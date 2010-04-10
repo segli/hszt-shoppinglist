@@ -1,0 +1,32 @@
+Vorwort
+Management Summary
+Inhaltsverzeichnis
+Aufgabenstellung (HSZ-T, EBS)
+Pflichtenheft mit Usecases
+Kriterien
+	Muss
+	Soll
+	Kann
+	Abgrenzung
+Planung (IPERKA)
+Milestones
+Aufwandschätzung
+Tools (Aufgabe, Tool, Link)
+
+Software-Archtiktur
+Kompoenentendiagramm
+Klassendiagram
+ER Diagramm
+GUIs
+
+Testing
+Unit Tests
+Selenium
+
+Probleme
+
+Learnings
+
+Quellenverzeichnis
+
+

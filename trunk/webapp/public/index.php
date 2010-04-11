@@ -27,5 +27,7 @@
         <h1 class="base">Shopping List</h1>
 
         <script type="text/javascript" src="javascripts/jquery-1.4.2.min.js"></script>
+        <script type="text/javascript" src="javascripts/shoppinglist.js"></script>
+        <script type="text/javascript" src="javascripts/shoppinglist.login.js"></script>
     </body>
 </html>

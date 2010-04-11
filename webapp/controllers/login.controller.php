@@ -2,8 +2,8 @@
 include('lib/authentication.class.php');
 
 // POST / GET variables
-$id = 'max.muster@gmail.com';
-$password = '1234';
+$id = $_POST['user_email'];
+$password = $_POST['user_password'];
 
 // Logic
 $session_id = Authentication::authenticate_user($id, $password);

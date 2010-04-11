@@ -13,7 +13,8 @@ class Authentication implements iAuthentication {
      * @return string
      */
     public static function authenticate_user($id, $password) {
-        return '23456234';
+        session_start();
+        return session_id();
     }
 
     /**

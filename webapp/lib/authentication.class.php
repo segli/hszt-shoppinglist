@@ -1,0 +1,31 @@
+<?php
+include('lib/authentication.interface.php');
+
+class Authentication implements iAuthentication {
+    function __construct(){
+    
+    }
+
+    /**
+     * @static
+     * @param  {string} $id
+     * @param  {string} $password
+     * @return string
+     */
+    public static function authenticate_user($id, $password) {
+        return '23456234';
+    }
+
+    /**
+     * @static
+     * @param  {string} $id
+     * @return bool
+     */
+    public static function is_user_authenticated($id) {
+        return true;
+    }
+
+    public static function fetch_dummy () {
+        return json_encode(array('test' => 'passed'));
+    }
+}

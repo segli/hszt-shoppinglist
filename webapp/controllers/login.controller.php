@@ -8,6 +8,8 @@ $password = $_POST['user_password'];
 // Logic
 $session_id = Authentication::authenticate_user($id, $password);
 
+setcookie('session_id', $session_id);
+
 // Prepare Data
 $data = array(
     'session_id' => $session_id,

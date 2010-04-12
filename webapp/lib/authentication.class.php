@@ -26,7 +26,4 @@ class Authentication implements iAuthentication {
         return true;
     }
 
-    public static function fetch_dummy () {
-        return json_encode(array('test' => 'passed'));
-    }
 }

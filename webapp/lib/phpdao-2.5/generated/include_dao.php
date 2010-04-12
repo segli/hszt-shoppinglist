@@ -1,0 +1,41 @@
+<?php
+	//include all DAO files
+	require_once('class/sql/Connection.class.php');
+	require_once('class/sql/ConnectionFactory.class.php');
+	require_once('class/sql/ConnectionProperty.class.php');
+	require_once('class/sql/QueryExecutor.class.php');
+	require_once('class/sql/Transaction.class.php');
+	require_once('class/sql/SqlQuery.class.php');
+	require_once('class/core/ArrayList.class.php');
+	require_once('class/dao/DAOFactory.class.php');
+ 	
+	require_once('class/dao/BillDAO.class.php');
+	require_once('class/dto/Bill.class.php');
+	require_once('class/mysql/BillMySqlDAO.class.php');
+	require_once('class/mysql/ext/BillMySqlExtDAO.class.php');
+	require_once('class/dao/BudgetDAO.class.php');
+	require_once('class/dto/Budget.class.php');
+	require_once('class/mysql/BudgetMySqlDAO.class.php');
+	require_once('class/mysql/ext/BudgetMySqlExtDAO.class.php');
+	require_once('class/dao/HouseholdDAO.class.php');
+	require_once('class/dto/Household.class.php');
+	require_once('class/mysql/HouseholdMySqlDAO.class.php');
+	require_once('class/mysql/ext/HouseholdMySqlExtDAO.class.php');
+	require_once('class/dao/ItemDAO.class.php');
+	require_once('class/dto/Item.class.php');
+	require_once('class/mysql/ItemMySqlDAO.class.php');
+	require_once('class/mysql/ext/ItemMySqlExtDAO.class.php');
+	require_once('class/dao/ListDAO.class.php');
+	require_once('class/dto/List.class.php');
+	require_once('class/mysql/ListMySqlDAO.class.php');
+	require_once('class/mysql/ext/ListMySqlExtDAO.class.php');
+	require_once('class/dao/UserDAO.class.php');
+	require_once('class/dto/User.class.php');
+	require_once('class/mysql/UserMySqlDAO.class.php');
+	require_once('class/mysql/ext/UserMySqlExtDAO.class.php');
+	require_once('class/dao/UserHouseholdDAO.class.php');
+	require_once('class/dto/UserHousehold.class.php');
+	require_once('class/mysql/UserHouseholdMySqlDAO.class.php');
+	require_once('class/mysql/ext/UserHouseholdMySqlExtDAO.class.php');
+
+?>

@@ -1,10 +1,22 @@
 var Shoppinglist = Shoppinglist || {};
 
-(Shoppinglist.login = function () {
-    var $ctx = $('.modLogin'),
-        init = {};
+(Shoppinglist.login = function (options) {
+    var $ctx = null,
+        init = {},
+        config = null,
+        defaults = null;
+
+    defaults = {
+        onLogin : function () {}    
+    };
+
+    config = $.extend({}, defaults, options);
+
+   
 
     init = function () {
+        $ctx = $('.modLogin');
+        
         $btn_submit = $('input[type="submit"]', $ctx);
 
         $btn_submit.click(function () {
@@ -16,16 +28,21 @@ var Shoppinglist = Shoppinglist || {};
                'success' : function (data) {
                    if (data.session_id) {
                        $('.bd', $ctx).append('<div>Your session id: ' + data.session_id + '</div>');
+                       config.onLogin();
                    }
                 }
             });
             return false;
         });
-
-        console.info('modLogin loaded');
     };
 
     return {
         init : init
     };
-}());
+}(
+{
+    'onLogin' : function () {
+        console.info('yeah');
+    }
+}
+));

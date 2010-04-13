@@ -1,7 +1,5 @@
 <?php
-
-include('authentication.interface.php');
-include('include_dao.php');
+include('lib/authentication.interface.php');
 
 class Authentication implements iAuthentication {
     function __construct(){
@@ -15,13 +13,8 @@ class Authentication implements iAuthentication {
      * @return string
      */
     public static function authenticate_user($id, $password) {
-
-
-		$user = DAOFactory::getUserDAO()->queryByEmail($id);
-
-        echo $user->password;
-
-		return true;
+        session_start();
+        return session_id();
     }
 
     /**
@@ -34,5 +27,3 @@ class Authentication implements iAuthentication {
     }
 
 }
-
-?>

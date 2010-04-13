@@ -28,6 +28,9 @@ var Shoppinglist = Shoppinglist || {};
                'success' : function (data) {
                    if (data.session_id) {
                        $('.bd', $ctx).append('<div>Your session id: ' + data.session_id + '</div>');
+                       $('.bd', $ctx).append('<div>Your session id: ' + data.id + '</div>');
+                       $('.bd', $ctx).append('<div>Your session id: ' + data.firstname + '</div>');
+                       $('.bd', $ctx).append('<div>Your session id: ' + data.lastname + '</div>');
                        config.onLogin();
                    }
                 }

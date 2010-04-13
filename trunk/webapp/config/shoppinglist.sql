@@ -9,6 +9,9 @@
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
+DROP database shoppinglist;
+CREATE database shoppinglist;
+USE shoppinglist;
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -29,7 +32,7 @@ CREATE TABLE `bill` (
   `bill_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `date` date NOT NULL,
   `cost` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
-  `list_id` mediumint(8) unsigned NOT NULL,
+  `shoppinglist_id` mediumint(8) unsigned NOT NULL,
   `user_id` mediumint(8) unsigned NOT NULL,
   PRIMARY KEY (`bill_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
@@ -89,7 +92,7 @@ CREATE TABLE `item` (
   `description` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
   `price` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
   `status` tinyint(3) unsigned NOT NULL,
-  `list_id` mediumint(8) unsigned NOT NULL,
+  `shoppinglist_id` mediumint(8) unsigned NOT NULL,
   PRIMARY KEY (`item_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
@@ -104,12 +107,12 @@ CREATE TABLE `item` (
 -- Table structure for table `list`
 --
 
-CREATE TABLE `list` (
-  `list_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
+CREATE TABLE `shoppinglist` (
+  `shoppinglist_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(60) COLLATE utf8_unicode_ci NOT NULL,
   `status` tinyint(3) unsigned NOT NULL,
   `household_id` mediumint(8) unsigned NOT NULL,
-  PRIMARY KEY (`list_id`)
+  PRIMARY KEY (`shoppinglist_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 --
@@ -130,7 +133,8 @@ CREATE TABLE `user` (
   `salt` varchar(60) COLLATE utf8_unicode_ci NOT NULL,
   `firstname` varchar(60) COLLATE utf8_unicode_ci DEFAULT NULL,
   `lastname` varchar(60) COLLATE utf8_unicode_ci DEFAULT NULL,
-  PRIMARY KEY (`user_id`)
+  PRIMARY KEY (`user_id`),
+  UNIQUE KEY (`email`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 --

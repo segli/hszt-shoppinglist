@@ -7,21 +7,42 @@ $password = $_POST['user_password'];
 
 // Logic
 
-session_start();
-//session_id();
 
+//;
 
+$user = new User();
 $user = Authentication::authenticate_user($id, $password);
 
-setcookie('session_id', $session_id);
+if(count($user) == 1) {
 
-// Prepare Data
-$data = array(
-    //'session_id' => $session_id,
-    'session_id' => $user->firstname,
-    'id' => $id,
-    'password' => $password
-);
+    session_start();
+    $_SESSION['isAuth'] = 1;
+
+    $session_id = session_id();
+
+    // Prepare Data
+    $data = array(
+        'id' => $user->email,
+        'password' => $user->password,
+        'firstname' => $user->firstname,
+        'lastname' => $user->lastname,
+        'session_id' => $session_id
+    );
+
+
+
+} else {
+
+    // Prepare Data
+    $data = array(
+        'id' => null,
+        'password' => null,
+        'firstname' => null,
+        'lastname' => null,
+        'session_id' => null
+    );
+
+}
 
 // Convert to JSON
 $json = json_encode($data);

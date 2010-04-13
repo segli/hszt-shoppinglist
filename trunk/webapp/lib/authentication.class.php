@@ -1,6 +1,6 @@
 <?php
 include('lib/authentication.interface.php');
-include_once('lib/include_dao.php');
+include('lib/include_dao.php');
 
 class Authentication implements iAuthentication {
     function __construct(){
@@ -17,8 +17,7 @@ class Authentication implements iAuthentication {
 
         $user = DAOFactory::getUserDAO()->queryByEmail($id);
 
-
-        return $user;
+        return $user[0];
     }
 
     /**

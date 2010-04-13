@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Apr 13, 2010 at 07:08 PM
+-- Generation Time: Apr 12, 2010 at 07:38 PM
 -- Server version: 5.1.37
 -- PHP Version: 5.2.11
 
@@ -130,8 +130,7 @@ CREATE TABLE `user` (
   `salt` varchar(60) COLLATE utf8_unicode_ci NOT NULL,
   `firstname` varchar(60) COLLATE utf8_unicode_ci DEFAULT NULL,
   `lastname` varchar(60) COLLATE utf8_unicode_ci DEFAULT NULL,
-  PRIMARY KEY (`user_id`),
-  UNIQUE KEY `email` (`email`)
+  PRIMARY KEY (`user_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 --

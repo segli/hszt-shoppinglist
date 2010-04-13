@@ -134,6 +134,7 @@ class UserMySqlDAO implements UserDAO{
 		return $this->getList($sqlQuery);
 	}
 
+
 	public function deleteByEmail($value){
 		$sql = 'DELETE FROM user WHERE email = ?';
 		$sqlQuery = new SqlQuery($sql);

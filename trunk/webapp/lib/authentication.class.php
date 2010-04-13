@@ -19,8 +19,7 @@ class Authentication implements iAuthentication {
 
 		$user = DAOFactory::getUserDAO()->queryByEmail($id);
 
-
-        //echo $user->password;
+        echo $user->password;
 
 		return true;
     }

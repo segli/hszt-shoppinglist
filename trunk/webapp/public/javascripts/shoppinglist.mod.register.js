@@ -27,7 +27,7 @@ var Shoppinglist = Shoppinglist || {};
                'dataType' : 'json',
                'success' : function (data) {
                    if (!data.error) {
-                       $('.bd', $ctx).append('<div>New user id: ' + data.id + '</div>');
+                       $($('.bd', $ctx).get(0)).append('<div>New user id: ' + data.id + '</div>');
 
                        config.onRegister();
                    } else {

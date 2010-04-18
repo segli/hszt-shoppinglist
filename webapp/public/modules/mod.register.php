@@ -9,7 +9,7 @@ include_once('../config/environment.php');
             <h2 class="base">Register</h2>
         </div>
         <div class="bd">
-            <form method="post" action="">
+            <form method="post" action="controller_proxy.php?controller=register">
                 <fieldset>
                     <div><label>First Name</label>
                     <input name="user_first_name" /></div>

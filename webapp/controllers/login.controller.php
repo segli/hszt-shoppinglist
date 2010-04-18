@@ -6,10 +6,6 @@ $id = $_POST['user_email'];
 $password = $_POST['user_password'];
 
 // Logic
-
-
-//;
-
 $user = new User();
 $user = Authentication::authenticate_user($id, $password);
 

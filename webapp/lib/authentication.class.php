@@ -13,9 +13,9 @@ class Authentication implements iAuthentication {
      * @param  {string} $password
      * @return string
      */
-    public static function authenticate_user($id, $password) {
+    public static function authenticate_user($email, $password) {
 
-        $user = DAOFactory::getUserDAO()->queryByEmail($id);
+        $user = DAOFactory::getUserDAO()->queryByEmail($email);
 
         return $user[0];
     }

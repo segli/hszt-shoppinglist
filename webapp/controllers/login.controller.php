@@ -12,13 +12,14 @@ $user = Authentication::authenticate_user($id, $password);
 if(count($user) == 1) {
 
     session_start();
-    $_SESSION['isAuth'] = 1;
+    $_SESSION['isAuth'] = $user->userId;
 
     $session_id = session_id();
 
     // Prepare Data
     $data = array(
-        'id' => $user->email,
+        'user_id' => $user->userId,
+        'email' => $user->email,
         'password' => $user->password,
         'firstname' => $user->firstname,
         'lastname' => $user->lastname,

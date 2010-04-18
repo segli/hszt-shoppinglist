@@ -29,17 +29,12 @@ if(count($user) == 1) {
         'session_id' => $session_id
     );
 
-
-
 } else {
 
     // Prepare Data
     $data = array(
-        'id' => null,
-        'password' => null,
-        'firstname' => null,
-        'lastname' => null,
-        'session_id' => null
+        'error' => '1',
+        'message' => 'Incorrect creditentials'
     );
 
 }

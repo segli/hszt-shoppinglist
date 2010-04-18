@@ -26,7 +26,7 @@ var Shoppinglist = Shoppinglist || {};
                'type' : 'post',
                'dataType' : 'json',
                'success' : function (data) {
-                   if (data.session_id) {
+                   if (!data.error) {
                        $('.bd', $ctx).append('<div>Your session id: ' + data.session_id + '</div>');
                        $('.bd', $ctx).append('<div>Your session id: ' + data.id + '</div>');
                        $('.bd', $ctx).append('<div>Your session id: ' + data.firstname + '</div>');

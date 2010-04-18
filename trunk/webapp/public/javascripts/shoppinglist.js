@@ -6,12 +6,15 @@ jQuery(document).ready(function () {
 
     var i = 0,
         modules_length = $modules.length;
-   for (i = 0; i < modules_length; i++) {
+    for (i = 0; i < modules_length; i++) {
 
-       // get 2nd class which should be modMymodule and convert "modMymodule" to "mymodule"
-       var js_class = $($modules.get(i)).attr('class').split(' ')[1].split('mod')[1].toLowerCase();
+        // get 2nd class which should be modMymodule and convert "modMymodule" to "mymodule"
+        var js_class = $($modules.get(i)).attr('class').split(' ')[1].split('mod')[1].toLowerCase();
 
-       // load module
-       Shoppinglist[js_class].init();
+        // load module
+        if (Shoppinglist[js_class]) {
+            Shoppinglist[js_class].init();
+        }
+
    }
 });

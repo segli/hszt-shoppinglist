@@ -42,7 +42,7 @@ var Shoppinglist = Shoppinglist || {};
 }(
 {
     'onLogin' : function () {
-        console.info('yeah');
+        location.href = 'households.php';
     }
 }
 ));

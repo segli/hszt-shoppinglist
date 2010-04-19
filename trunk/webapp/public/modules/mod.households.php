@@ -8,7 +8,7 @@ include_once('../config/environment.php');
         <div class="hd">
             <h2 class="base">Existing</h2>
         </div>
-        <div class="bd">
+        <div class="bd bdExisting">
             
         </div>
         <div class="hd">

@@ -6,7 +6,7 @@
  * @date: 2010-04-13 22:30
  */
 class UserHouseholdMySqlExtDAO extends UserHouseholdMySqlDAO{
-
+   
 	
 }
 ?>

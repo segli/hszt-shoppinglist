@@ -1,15 +1,21 @@
 var Shoppinglist = Shoppinglist || {};
 
 (Shoppinglist.households = function (options) {
-    var $ctx = null,
+    var $btn_submit_create = null,
+        $ctx = null,
+        $form_create = null,
         init = {},
         config = null,
-        defaults = null;
+        defaults = null,
+        fetch_households_by_user_id = null,
+        update_existing_view = null;
 
     defaults = {
         onCreateHousehold : function () {},
         onFetchHouseholds : function () {}
     };
+
+   
 
     config = $.extend({}, defaults, options);
 
@@ -20,7 +26,7 @@ var Shoppinglist = Shoppinglist || {};
            'dataType' : 'json',
            'success' : function (data) {
                if (!data.error) {
-                   console.info(data);
+                   callback(data);
 
                    config.onFetchHouseholds();
                } else {
@@ -30,11 +36,23 @@ var Shoppinglist = Shoppinglist || {};
         });
     };
 
+    update_existing_view = function (data) {
+        console.info(data);
+        var tmpHtml = [];
+        tmpHtml.push('<ul>');
+        for (var i = 0, len = data.households.length; i < len; i++) {
+            tmpHtml.push('<li>' + data.households[i].name + '</li>');
+        }
+        tmpHtml.push('<ul>');
+
+        $('.bdExisting', $ctx).html(tmpHtml.join(''));
+    };
+
     init = function () {
         $ctx = $('.modHouseholds');
-
         $form_create = $('.create_household', $ctx);
         $btn_submit_create = $('input[type="submit"]', $form_create);
+
         $btn_submit_create.click(function () {
             $.ajax({
                'url' : $form_create.attr('action'),
@@ -42,10 +60,10 @@ var Shoppinglist = Shoppinglist || {};
                'type' : $form_create.attr('method'),
                'dataType' : 'json',
                'success' : function (data) {
-                   if (!data.error) {
-                       console.info(data);
+                    if (!data.error) {
+                        $ctx.trigger('householdschanged');
 
-                       config.onCreateHousehold();
+                        config.onCreateHousehold();
                    } else {
                        console.info(data.error, data.message);
                    }
@@ -54,7 +72,14 @@ var Shoppinglist = Shoppinglist || {};
             return false;
         });
 
-        fetch_households_by_user_id();
+        $ctx.bind('householdschanged', function () {
+            fetch_households_by_user_id(function (data) {
+                update_existing_view(data);
+            });
+        });
+
+        $ctx.trigger('householdschanged');
+
     };
 
     return {

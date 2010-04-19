@@ -2,7 +2,8 @@
 include_once('lib/include_dao.php');
 
 session_start();
-if (!isset($_SESSION['isAuth']) || !is_int($_SESSION['isAuth'])) {
+
+if (!isset($_SESSION['isAuth']) || !is_int($_SESSION['isAuth'] * 1)) {
     // Return to login page
     header('location: index.php');
     exit;
@@ -10,15 +11,13 @@ if (!isset($_SESSION['isAuth']) || !is_int($_SESSION['isAuth'])) {
 
 // POST / GET variables
 $user_id = $_SESSION['isAuth'];
-$household_name = 'WG Kummer Junghans'; //$_POST['household_name'];
+$household_name = $_POST['household_name'];
 
 // Logic
 $household = new Household();
 $household->name = $household_name;
 
 $id = DAOFactory::getHouseholdDAO()->insert($household);
-
-
 $userhousehold = new UserHousehold();
 $userhousehold->userId = $user_id;
 $userhousehold->householdId = $id;

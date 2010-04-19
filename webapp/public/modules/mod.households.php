@@ -21,8 +21,12 @@ include_once('../config/environment.php');
             <h2 class="base">Create New</h2>
         </div>
         <div class="bd">
-            <form action="" method="post">
-                
+            <form class="create_household" action="controller_proxy.php?controller=createhousehold" method="post">
+                <fieldset>
+                    <div><label class="base">Household name</label>
+                    <input name="household_name" /></div>
+                    <input type="submit" value="create household" />
+                </fieldset>
             </form>
         </div>
     </div>

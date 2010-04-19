@@ -11,15 +11,15 @@ include_once('../config/environment.php');
         <div class="bd">
             <form method="post" action="controller_proxy.php?controller=register">
                 <fieldset>
-                    <div><label>First Name</label>
+                    <div><label class="base">First Name</label>
                     <input name="user_first_name" /></div>
-                    <div><label>Last Name</label>
+                    <div><label class="base">Last Name</label>
                     <input name="user_last_name" /></div>
-                    <div><label>E-Mail</label>
+                    <div><label class="base">E-Mail</label>
                     <input name="user_email" /></div>
-                    <div><label>Password</label>
+                    <div><label class="base">Password</label>
                     <input type="password" name="user_password" /></div>
-                    <div><label>Confirm Password</label>
+                    <div><label class="base">Confirm Password</label>
                     <input type="password" name="user_confirm_password" /></div>
                     <div><input type="submit" value="Register" /></div>
                 </fieldset>

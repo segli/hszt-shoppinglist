@@ -11,7 +11,7 @@ $user = Authentication::authenticate_user($id, $password);
 
 if($user != null) {
 
-    session_name("ShopList");
+    //session_name("ShopList");
     session_start();
     $_SESSION['isAuth'] = 1;
     $_SESSION['user'] = $user;

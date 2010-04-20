@@ -21,6 +21,10 @@
 	require_once('persistent/dto/Household.class.php');
 	require_once('persistent/mysql/HouseholdMySqlDAO.class.php');
 	require_once('persistent/mysql/ext/HouseholdMySqlExtDAO.class.php');
+	require_once('persistent/dao/InvitationDAO.class.php');
+	require_once('persistent/dto/Invitation.class.php');
+	require_once('persistent/mysql/InvitationMySqlDAO.class.php');
+	require_once('persistent/mysql/ext/InvitationMySqlExtDAO.class.php');
 	require_once('persistent/dao/ItemDAO.class.php');
 	require_once('persistent/dto/Item.class.php');
 	require_once('persistent/mysql/ItemMySqlDAO.class.php');

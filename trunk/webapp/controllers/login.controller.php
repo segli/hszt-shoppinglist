@@ -1,5 +1,5 @@
 <?php
-include('lib/authentication.class.php');
+include('../lib/authentication.class.php');
 
 // POST / GET variables
 $id = $_POST['user_email'];
@@ -9,10 +9,12 @@ $password = $_POST['user_password'];
 $user = new User();
 $user = Authentication::authenticate_user($id, $password);
 
-if(count($user) == 1) {
+if($user != null) {
 
+    session_name("ShopList");
     session_start();
-    $_SESSION['isAuth'] = $user->userId;
+    $_SESSION['isAuth'] = 1;
+    $_SESSION['user'] = $user;
 
     $session_id = session_id();
 

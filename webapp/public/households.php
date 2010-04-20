@@ -1,5 +1,8 @@
 <?php
+
 include_once('../config/environment.php');
+include_once('../controllers/session.controller.php');
+
 ?>
 <?php
 include_once('includes/html_head.php');?>

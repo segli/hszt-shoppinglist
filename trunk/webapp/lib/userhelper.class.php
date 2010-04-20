@@ -13,10 +13,8 @@ class Userhelper implements iUserhelper {
      * @return 
      */
     public static function get_households_by_userid($user_id) {
-
         $household = DAOFactory::getUserHouseholdDAO()->queryByUserId($user_id);
-
-        return $household[0];
+        return $household;
     }
 
     /**
@@ -25,7 +23,8 @@ class Userhelper implements iUserhelper {
      * @return bool
      */
     public static function get_invitations_by_userid($user_id) {
-        return true;
+        $inventations = DAOFactory::getInvitationDAO()->queryByUserId($user_id);
+        return $inventations;
     }
 
 }

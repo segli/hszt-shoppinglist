@@ -3,7 +3,8 @@ include('lib/authentication.interface.php');
 include('lib/include_dao.php');
 
 class Authentication implements iAuthentication {
-    function __construct(){
+
+    function __construct() {
     
     }
 
@@ -16,17 +17,18 @@ class Authentication implements iAuthentication {
     public static function authenticate_user($email, $password) {
 
         $user = DAOFactory::getUserDAO()->queryByEmail($email);
+        
+		if(count($user) == 1) {
 
-        return $user[0];
+            $hash = sha1($password . $user[0]->salt);
+
+			if($user[0]->password == $hash) {
+				return $user[0];
+			} else {
+                return null;
+            }
+		} else {
+            return null;
+        }
     }
-
-    /**
-     * @static
-     * @param  {string} $id
-     * @return bool
-     */
-    public static function is_user_authenticated($id) {
-        return true;
-    }
-
 }

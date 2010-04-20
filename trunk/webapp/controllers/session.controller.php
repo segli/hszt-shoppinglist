@@ -8,6 +8,3 @@ if( ! isset($_SESSION['isAuth']) OR $_SESSION['isAuth'] != 1) {
     session_destroy();
     header('Location: index.php');
 }
-
-
-exit;

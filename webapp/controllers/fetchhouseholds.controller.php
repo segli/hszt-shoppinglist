@@ -1,16 +1,9 @@
 <?php
 include_once('lib/include_dao.php');
-
-session_start();
-
-if (!isset($_SESSION['isAuth']) || !is_int($_SESSION['isAuth'] * 1)) {
-    // Return to login page
-    header('location: index.php');
-    exit;
-}
+include_once('session.controller.php');
 
 // POST / GET variables
-$user_id = $_SESSION['isAuth'];
+$user_id = $_SESSION['user']->userId;
 
 // Logic
 $households = DAOFactory::getHouseholdDAO()->queryAllByUserId($user_id);

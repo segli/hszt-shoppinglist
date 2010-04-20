@@ -3,15 +3,12 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Apr 12, 2010 at 07:38 PM
+-- Generation Time: Apr 20, 2010 at 08:04 PM
 -- Server version: 5.1.37
 -- PHP Version: 5.2.11
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
-DROP database shoppinglist;
-CREATE database shoppinglist;
-USE shoppinglist;
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -83,6 +80,25 @@ CREATE TABLE `household` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `invitation`
+--
+
+CREATE TABLE `invitation` (
+  `inventation_id` mediumint(9) NOT NULL AUTO_INCREMENT,
+  `user_id` mediumint(9) NOT NULL,
+  `household_id` mediumint(9) NOT NULL,
+  `pending` tinyint(4) NOT NULL,
+  PRIMARY KEY (`inventation_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+--
+-- Dumping data for table `invitation`
+--
+
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `item`
 --
 
@@ -104,7 +120,7 @@ CREATE TABLE `item` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `list`
+-- Table structure for table `shoppinglist`
 --
 
 CREATE TABLE `shoppinglist` (
@@ -116,7 +132,7 @@ CREATE TABLE `shoppinglist` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 --
--- Dumping data for table `list`
+-- Dumping data for table `shoppinglist`
 --
 
 
@@ -134,13 +150,15 @@ CREATE TABLE `user` (
   `firstname` varchar(60) COLLATE utf8_unicode_ci DEFAULT NULL,
   `lastname` varchar(60) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`user_id`),
-  UNIQUE KEY (`email`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+  UNIQUE KEY `email` (`email`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3 ;
 
 --
 -- Dumping data for table `user`
 --
 
+INSERT INTO `user` VALUES(1, 'simon', 'simon', 'simon', 'Simon', 'Egli');
+INSERT INTO `user` VALUES(2, 'thomas', 'thomas', 'thomas', 'Thomas', 'Junghans');
 
 -- --------------------------------------------------------
 

@@ -65,7 +65,7 @@ var Shoppinglist = Shoppinglist || {};
 
                         config.onCreateHousehold();
                    } else {
-                       console.info(data.error, data.message);
+                       log.info(data.error + ': ' + data.message);
                    }
                 }
             });
@@ -88,7 +88,7 @@ var Shoppinglist = Shoppinglist || {};
 }(
 {
     'onCreateHousehold' : function () {
-        console.info('household added');
+        log.info('Household added');
     }
 }
 ));

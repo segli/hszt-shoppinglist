@@ -21,4 +21,7 @@
       <link href="stylesheets/ie6.css" rel="stylesheet" type="text/css" />
     <![endif]-->
 
+    <!-- blackbird js for logging with javascript -->
+    <link href="javascripts/blackbirdjs/blackbird.css" rel="stylesheet" type="text/css" />
+    <script src="javascripts/blackbirdjs/blackbird.js" type="text/javascript"></script>
   </head>

@@ -14,7 +14,10 @@ jQuery(document).ready(function () {
         // load module
         if (Shoppinglist[js_class]) {
             Shoppinglist[js_class].init();
+            log.info('Module init: ' + js_class);
         }
 
    }
+
+
 });

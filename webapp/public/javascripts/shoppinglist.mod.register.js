@@ -31,7 +31,7 @@ var Shoppinglist = Shoppinglist || {};
 
                        config.onRegister();
                    } else {
-                       console.info(data.error, data.message);
+                       log.info(data.error + ': ' + data.message);
                    }
                 }
             });
@@ -45,7 +45,7 @@ var Shoppinglist = Shoppinglist || {};
 }(
 {
     'onRegister' : function () {
-        console.info('user added');
+        log.info('User added');
     }
 }
 ));

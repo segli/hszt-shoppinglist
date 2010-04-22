@@ -65,7 +65,7 @@ var Shoppinglist = Shoppinglist || {};
 
                         config.onCreateShoppinglist();
                    } else {
-                       console.info(data.error, data.message);
+                       log.info(data.error, data.message);
                    }
                 }
             });
@@ -88,7 +88,7 @@ var Shoppinglist = Shoppinglist || {};
 }(
 {
     'onCreateShoppinglist' : function () {
-        console.info('Shoppinglist added');
+        log.info('Shoppinglist added');
     }
 }
 ));

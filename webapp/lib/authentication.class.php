@@ -21,7 +21,7 @@ class Authentication implements iAuthentication {
 		if(count($user) == 1) {
 
             $hash = sha1($password . $user[0]->salt);
-
+           
 			if($user[0]->password == $hash) {
 				return $user[0];
 			} else {

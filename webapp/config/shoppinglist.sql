@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Apr 21, 2010 at 11:19 PM
+-- Generation Time: Apr 23, 2010 at 10:18 PM
 -- Server version: 5.1.44
 -- PHP Version: 5.3.2
 
@@ -27,8 +27,7 @@ USE `shoppinglist`;
 -- Table structure for table `bill`
 --
 
-DROP TABLE IF EXISTS `bill`;
-CREATE TABLE IF NOT EXISTS `bill` (
+CREATE TABLE `bill` (
   `bill_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `date_created` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `cost` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
@@ -48,8 +47,7 @@ CREATE TABLE IF NOT EXISTS `bill` (
 -- Table structure for table `budget`
 --
 
-DROP TABLE IF EXISTS `budget`;
-CREATE TABLE IF NOT EXISTS `budget` (
+CREATE TABLE `budget` (
   `budget_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `time_start` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `time_end` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
@@ -70,12 +68,11 @@ CREATE TABLE IF NOT EXISTS `budget` (
 -- Table structure for table `household`
 --
 
-DROP TABLE IF EXISTS `household`;
-CREATE TABLE IF NOT EXISTS `household` (
+CREATE TABLE `household` (
   `household_id` mediumint(9) NOT NULL AUTO_INCREMENT,
   `name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`household_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=5 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=6 ;
 
 --
 -- Dumping data for table `household`
@@ -85,6 +82,7 @@ INSERT INTO `household` VALUES(1, 'JSWG');
 INSERT INTO `household` VALUES(2, 'Simon Private');
 INSERT INTO `household` VALUES(3, 'Thomas Private');
 INSERT INTO `household` VALUES(4, 'Family');
+INSERT INTO `household` VALUES(5, 'test');
 
 -- --------------------------------------------------------
 
@@ -92,8 +90,7 @@ INSERT INTO `household` VALUES(4, 'Family');
 -- Table structure for table `invitation`
 --
 
-DROP TABLE IF EXISTS `invitation`;
-CREATE TABLE IF NOT EXISTS `invitation` (
+CREATE TABLE `invitation` (
   `inventation_id` mediumint(9) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` mediumint(9) unsigned NOT NULL,
   `household_id` mediumint(9) unsigned NOT NULL,
@@ -113,8 +110,7 @@ CREATE TABLE IF NOT EXISTS `invitation` (
 -- Table structure for table `item`
 --
 
-DROP TABLE IF EXISTS `item`;
-CREATE TABLE IF NOT EXISTS `item` (
+CREATE TABLE `item` (
   `item_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(60) COLLATE utf8_unicode_ci NOT NULL,
   `description` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -122,12 +118,20 @@ CREATE TABLE IF NOT EXISTS `item` (
   `status` tinyint(3) unsigned NOT NULL,
   `shoppinglist_id` mediumint(8) unsigned NOT NULL,
   PRIMARY KEY (`item_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=6 ;
 
 --
 -- Dumping data for table `item`
 --
 
+INSERT INTO `item` VALUES(1, 'spaghetti', 'pasta aus italien', '3.75', 0, 1);
+INSERT INTO `item` VALUES(2, 'tomaten', 'aus spanien', '1.50', 0, 1);
+INSERT INTO `item` VALUES(4, 'salat', 'aus der schweiz', '3.80', 0, 2);
+INSERT INTO `item` VALUES(5, 'joghurt', '', '5.50', 0, 2);
+INSERT INTO `item` VALUES(6, 'spaghetti', 'pasta aus italien', '3.75', 0, 3);
+INSERT INTO `item` VALUES(7, 'tomaten', 'aus spanien', '1.50', 0, 4);
+INSERT INTO `item` VALUES(8, 'salat', 'aus der schweiz', '3.80', 0, 5);
+INSERT INTO `item` VALUES(9, 'joghurt', '', '5.50', 0, 6);
 
 -- --------------------------------------------------------
 
@@ -135,8 +139,7 @@ CREATE TABLE IF NOT EXISTS `item` (
 -- Table structure for table `shoppinglist`
 --
 
-DROP TABLE IF EXISTS `shoppinglist`;
-CREATE TABLE IF NOT EXISTS `shoppinglist` (
+CREATE TABLE `shoppinglist` (
   `shoppinglist_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(60) COLLATE utf8_unicode_ci NOT NULL,
   `status` tinyint(3) unsigned NOT NULL,
@@ -164,8 +167,7 @@ INSERT INTO `shoppinglist` VALUES(6, 'wünsche', 0, '0000-00-00 00:00:00', '0000
 -- Table structure for table `user`
 --
 
-DROP TABLE IF EXISTS `user`;
-CREATE TABLE IF NOT EXISTS `user` (
+CREATE TABLE `user` (
   `user_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `email` varchar(60) COLLATE utf8_unicode_ci NOT NULL,
   `password` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
@@ -189,14 +191,13 @@ INSERT INTO `user` VALUES(2, 'thomas', '0c5a36f8c1150b5960a56ef534f29320672f5fba
 -- Table structure for table `user_household`
 --
 
-DROP TABLE IF EXISTS `user_household`;
-CREATE TABLE IF NOT EXISTS `user_household` (
+CREATE TABLE `user_household` (
   `user_household_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` mediumint(8) unsigned NOT NULL,
   `household_id` mediumint(8) unsigned NOT NULL,
   `is_owner` tinyint(4) DEFAULT NULL,
   PRIMARY KEY (`user_household_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=5 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=6 ;
 
 --
 -- Dumping data for table `user_household`
@@ -206,3 +207,4 @@ INSERT INTO `user_household` VALUES(1, 1, 1, 1);
 INSERT INTO `user_household` VALUES(2, 1, 2, 1);
 INSERT INTO `user_household` VALUES(3, 2, 3, 1);
 INSERT INTO `user_household` VALUES(4, 2, 4, 1);
+INSERT INTO `user_household` VALUES(5, 1, 5, 1);

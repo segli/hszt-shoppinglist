@@ -13,6 +13,7 @@ if($user != null) {
 
     // Set the session cookie name and destroy the old session.
     session_name("ShopList");
+    session_start();
     session_destroy();
 
     // Generate a new session id

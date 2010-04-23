@@ -11,18 +11,23 @@ $user = Authentication::authenticate_user($id, $password);
 
 if($user != null) {
 
-    //session_name("ShopList");
+    // Set the session cookie name and destroy the old session.
+    session_name("ShopList");
+    session_destroy();
+
+    // Generate a new session id
+    $session_id = sha1(uniqid(microtime()) . $_SERVER['REMOTE_ADDR'] . $_SERVER['HTTP_USER_AGENT']);
+    session_id($session_id);
     session_start();
+
+    // Set session data
     $_SESSION['isAuth'] = 1;
     $_SESSION['user'] = $user;
-
-    $session_id = session_id();
 
     // Prepare Data
     $data = array(
         'user_id' => $user->userId,
         'email' => $user->email,
-        'password' => $user->password,
         'firstname' => $user->firstname,
         'lastname' => $user->lastname,
         'session_id' => $session_id

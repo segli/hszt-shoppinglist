@@ -14,6 +14,8 @@ class ShoppinglistMySqlExtDAO extends ShoppinglistMySqlDAO{
         $sql .= ' AND u.household_id = h.household_id';
         $sql .= ' AND h.household_id = s.household_id';
 
+        echo $sql;
+
 		$sqlQuery = new SqlQuery($sql);
 		$sqlQuery->set($uid);
         $sqlQuery->set($hid);

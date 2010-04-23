@@ -2,9 +2,6 @@
 include_once('../config/environment.php');
 include_once('../controllers/session.controller.php');
 
-// household id from which the shoppingslists must be loaded. 
-$household_id = $_GET['hid'];
-
 ?>
 
 <div class="mod modShoppinglists">

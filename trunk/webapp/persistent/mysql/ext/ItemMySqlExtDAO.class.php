@@ -13,11 +13,10 @@ class ItemMySqlExtDAO extends ItemMySqlDAO{
         $sql .= 'WHERE i.shoppinglist_id = s.shoppinglist_id';
         $sql .= 'AND s.household_id = h.household_id';
         $sql .= 'AND u.household_id = h.household_id';
-        $sql .= 'AND u.user_id = ?';
+        $sql .= 'AND u.user_id = '.$uid.'';
         $sql .= 'AND s.household_id = ?';
 
 		$sqlQuery = new SqlQuery($sql);
-		$sqlQuery->set($uid);
         $sqlQuery->set($sid);
 		return $this->getList($sqlQuery);
 	}

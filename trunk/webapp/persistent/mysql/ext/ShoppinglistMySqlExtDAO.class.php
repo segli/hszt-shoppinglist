@@ -10,14 +10,11 @@ class ShoppinglistMySqlExtDAO extends ShoppinglistMySqlDAO{
      public function queryAllByUserIdAndHouseholdId($uid, $hid){
 
 		$sql = 'SELECT s.* FROM user_household u, household h, shoppinglist s';
-		$sql .= ' WHERE u.user_id = ? AND s.household_id = ?';
+		$sql .= ' WHERE u.user_id = '.$uid.' AND s.household_id = ?';
         $sql .= ' AND u.household_id = h.household_id';
         $sql .= ' AND h.household_id = s.household_id';
 
-        echo $sql;
-
 		$sqlQuery = new SqlQuery($sql);
-		$sqlQuery->set($uid);
         $sqlQuery->set($hid);
 		return $this->getList($sqlQuery);
 	}

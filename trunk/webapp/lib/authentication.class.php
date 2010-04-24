@@ -63,7 +63,7 @@ class Authentication implements iAuthentication {
     public static function fields_not_empty($user) {
 
         if($user->firstname == "" OR $user->lastname == "" OR
-           $user->email == "" OR $user-password == "") {
+           $user->email == "" OR $user->password == "") {
             return false;
         } else {
             return true;

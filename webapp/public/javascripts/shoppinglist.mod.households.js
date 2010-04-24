@@ -41,7 +41,7 @@ var Shoppinglist = Shoppinglist || {};
         var tmpHtml = [];
         tmpHtml.push('<ul>');
         for (var i = 0, len = data.households.length; i < len; i++) {
-            tmpHtml.push('<li><a href="#household_' + data.households[i].householdId + '" householdId="' + data.households[i].householdId + '">' + data.households[i].name + '</a></li>');
+            tmpHtml.push('<li><a href="controller_proxy.php?controller=fetchshoppinglists&amp;hid=' + data.households[i].householdId + '">' + data.households[i].name + '</a></li>');
         }
         tmpHtml.push('<ul>');
 

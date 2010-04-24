@@ -56,4 +56,5 @@ header('Expires: 0');
 
 // Send Response
 print($json);
+
 exit;

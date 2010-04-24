@@ -12,8 +12,6 @@ var Shoppinglist = Shoppinglist || {};
 
     config = $.extend({}, defaults, options);
 
-   
-
     init = function () {
         $ctx = $('.modLogin');
         
@@ -39,10 +37,13 @@ var Shoppinglist = Shoppinglist || {};
     return {
         init : init
     };
-}(
-{
+}({
     'onLogin' : function () {
-        location.href = 'households.php';
+        Shoppinglist.load_page({
+        'page' : 'page.households.php',
+        'afterLoad' : function () {
+            Shoppinglist.households.init();
+        }
+    });
     }
-}
-));
+}));

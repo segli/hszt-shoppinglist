@@ -19,6 +19,7 @@ Shoppinglist.load_page = function (options) {
         'success' : function (data) {
             $('#page').html(data);           
             config.afterLoad();
+            log.info('loaded: ' + config.page);
         }
     });
 

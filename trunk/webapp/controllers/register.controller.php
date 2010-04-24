@@ -10,45 +10,50 @@ $user->email = $_POST['user_email'];
 $user->password = $_POST['user_password'];
 $confirm_pw = $_POST['user_confirm_password'];
 
-    //Authentication::is_email_address($user->email);
-    if(Authentication::password_confirmation($user->password, $confirm_pw)) {
-       if(Authentication::password_complexity($user->password)) {
+    if(Authentication::fields_not_empty($user)) {
+        if(Authentication::is_email_address($user->email)) {
+            if(Authentication::password_confirmation($user->password, $confirm_pw)) {
+               if(Authentication::password_complexity($user->password)) {
 
-            $id = Authentication::insert_user($user);
+                    $id = Authentication::insert_user($user);
 
-            if($id != null) {
+                    if($id != null) {
 
-                // Prepare Data
-                $data = array(
-                    'id' => $id
-                );
+                        // Prepare Data
+                        $data = array(
+                            'id' => $id
+                        );
 
+                    } else {
+                        $data = array(
+                            'error' => '2',
+                            'message' => 'User already exists'
+                        );
+                    }
+               } else {
+                    $data = array(
+                        'error' => '2',
+                        'message' => 'Password too weak'
+                    );
+               }
             } else {
-
-                // Prepare Data
                 $data = array(
                     'error' => '2',
-                    'message' => 'User already exists'
+                    'message' => 'Password does not match'
                 );
             }
-       } else {
-
-            // Prepare Data
+        } else {
             $data = array(
                 'error' => '2',
-                'message' => 'Password too weak'
+                'message' => 'Please enter a valid email address'
             );
-       }
+        }
     } else {
-
-         // Prepare Data
         $data = array(
             'error' => '2',
-            'message' => 'Password does not match'
+            'message' => 'Please fill out all fields'
         );
-
     }
-
 
 // Convert to JSON
 $json = json_encode($data);

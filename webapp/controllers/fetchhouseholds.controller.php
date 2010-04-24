@@ -1,5 +1,5 @@
 <?php
-include_once('lib/include_dao.php');
+include_once('../lib/include_dao.php');
 include_once('session.controller.php');
 
 // POST / GET variables

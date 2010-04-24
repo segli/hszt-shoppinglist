@@ -12,7 +12,8 @@ var Shoppinglist = Shoppinglist || {};
 
     defaults = {
         onCreateHousehold : function () {},
-        onFetchHouseholds : function () {}
+        onFetchHouseholds : function () {},
+        viewUpdated : function () {}
     };
 
    
@@ -46,7 +47,10 @@ var Shoppinglist = Shoppinglist || {};
         tmpHtml.push('<ul>');
 
         $('.bdExisting', $ctx).html(tmpHtml.join(''));
+
     };
+
+    
 
     init = function () {
         $ctx = $('.modHouseholds');
@@ -76,6 +80,19 @@ var Shoppinglist = Shoppinglist || {};
             fetch_households_by_user_id(function (data) {
                 update_existing_view(data);
             });
+        });
+
+        $ctx.click(function (e) {
+            if ($(e.target).is('.bdExisting a',$ctx)) {
+                console.info($(e.target).attr('href'));
+                Shoppinglist.load_page({
+                    'page' : 'page.shoppinglists.php',
+                    'afterLoad' : function () {
+                        Shoppinglist.shoppinglists.init();
+                    }
+                });
+                return false;
+           }
         });
 
         $ctx.trigger('householdschanged');

@@ -12,9 +12,9 @@ include_once('../config/environment.php');
             <form method="post" action="">
                 <fieldset>
                     <div><label class="base">E-Mail</label>
-                    <input name="user_email" /></div>
+                    <input name="user_email" autocomplete="off" /></div>
                     <div><label class="base">Password</label>
-                    <input type="password" name="user_password" /></div>
+                    <input type="password" name="user_password" autocomplete="off" /></div>
                     <div><input type="submit" value="login" /></div>
                 </fieldset>
             </form>

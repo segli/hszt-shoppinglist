@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Apr 24, 2010 at 10:58 AM
+-- Generation Time: Apr 24, 2010 at 12:48 PM
 -- Server version: 5.1.44
 -- PHP Version: 5.3.2
 
@@ -82,8 +82,6 @@ INSERT INTO `household` VALUES(1, 'JSWG');
 INSERT INTO `household` VALUES(2, 'Simon Private');
 INSERT INTO `household` VALUES(3, 'Thomas Private');
 INSERT INTO `household` VALUES(4, 'Family');
-INSERT INTO `household` VALUES(5, 'test');
-INSERT INTO `household` VALUES(6, 'asdf');
 
 -- --------------------------------------------------------
 
@@ -125,10 +123,22 @@ CREATE TABLE `item` (
 -- Dumping data for table `item`
 --
 
-INSERT INTO `item` VALUES(1, 'spaghetti', 'pasta aus italien', '3.75', 0, 1);
-INSERT INTO `item` VALUES(2, 'tomaten', 'aus spanien', '1.50', 0, 1);
-INSERT INTO `item` VALUES(4, 'salat', 'aus der schweiz', '3.80', 0, 2);
-INSERT INTO `item` VALUES(5, 'joghurt', '', '5.50', 0, 2);
+INSERT INTO `item` VALUES(1, 'liegestuhl', '', '75.0', 0, 1);
+INSERT INTO `item` VALUES(2, 'sonnenschirm', '', '15.0', 0, 1);
+INSERT INTO `item` VALUES(3, 'salat', 'aus der schweiz', '3.80', 0, 2);
+INSERT INTO `item` VALUES(4, 'butter', '', '5.10', 0, 2);
+INSERT INTO `item` VALUES(5, 'confiture', '', '3.95', 0, 2);
+INSERT INTO `item` VALUES(6, 'eier', '', '1.10', 0, 3);
+INSERT INTO `item` VALUES(7, 'zopf', '', '3.90', 0, 3);
+INSERT INTO `item` VALUES(8, 'weissbrot', '', '3.20', 0, 3);
+INSERT INTO `item` VALUES(9, 'sandwiches', '', '13.50', 0, 4);
+INSERT INTO `item` VALUES(10, 'sandalen', '', '51.0', 0, 4);
+INSERT INTO `item` VALUES(11, 'fernseher', '', '2900', 0, 5);
+INSERT INTO `item` VALUES(12, 'fussball', '', '43.90', 0, 5);
+INSERT INTO `item` VALUES(13, 'zahnpasta', '', '5.75', 0, 6);
+INSERT INTO `item` VALUES(14, 'wc papier', '', '2.50', 0, 6);
+INSERT INTO `item` VALUES(15, 'quark', '', '3.30', 0, 6);
+INSERT INTO `item` VALUES(16, 'guetzli', '', '1.20', 0, 6);
 
 -- --------------------------------------------------------
 
@@ -179,8 +189,9 @@ CREATE TABLE `user` (
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` VALUES(1, 'thomas', 'cfd582b85d869ece9831d31a991a45ea9f7157f15f57ca94333a1adc3ffb6002', '35f97f6b2a7a3', 'Thomas', 'Junghans');
-INSERT INTO `user` VALUES(2, 'simon', '6db056887be232ff7ed8a9494396c03086eea35dbc00fb2745e2101d3c62f0f0', '1a07b20b4bda7', 'Simon', 'Egli');
+INSERT INTO `user` VALUES(1, 'simon', '6db056887be232ff7ed8a9494396c03086eea35dbc00fb2745e2101d3c62f0f0', '1a07b20b4bda7', 'Simon', 'Egli');
+INSERT INTO `user` VALUES(2, 'thomas', 'cfd582b85d869ece9831d31a991a45ea9f7157f15f57ca94333a1adc3ffb6002', '35f97f6b2a7a3', 'Thomas', 'Junghans');
+
 
 -- --------------------------------------------------------
 
@@ -204,5 +215,3 @@ INSERT INTO `user_household` VALUES(1, 1, 1, 1);
 INSERT INTO `user_household` VALUES(2, 1, 2, 1);
 INSERT INTO `user_household` VALUES(3, 2, 3, 1);
 INSERT INTO `user_household` VALUES(4, 2, 4, 1);
-INSERT INTO `user_household` VALUES(5, 1, 5, 1);
-INSERT INTO `user_household` VALUES(6, 1, 6, 1);

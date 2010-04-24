@@ -4,7 +4,6 @@ include_once('session.controller.php');
 
 // POST / GET variables
 $user_id = $_SESSION['user']->userId;
-
 $shoppinglist_id = $_GET['sid'];
 
 if(isset($_GET['sid']) AND $_GET['sid'] >= 0) {
@@ -13,10 +12,10 @@ if(isset($_GET['sid']) AND $_GET['sid'] >= 0) {
     $items = DAOFactory::getItemDAO()->queryAllByUserId($user_id);
 }
 
-if (count($shoppinglists) > 0) {
+if (count($items) > 0) {
     // Prepare Data
     $data = array(
-        'shoppinglists' => $shoppinglists
+        'items' => $items
     );
 
 } else {
@@ -24,7 +23,7 @@ if (count($shoppinglists) > 0) {
     // Prepare Data
     $data = array(
         'error' => '4',
-        'message' => 'The user with the id ' . $user_id . ' has no shoppinglists'
+        'message' => 'The shoppinglist with the id ' . $shoppinglist_id . ' has no items.'
     );
 
 }

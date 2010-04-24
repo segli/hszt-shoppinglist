@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Apr 23, 2010 at 10:18 PM
+-- Generation Time: Apr 24, 2010 at 10:58 AM
 -- Server version: 5.1.44
 -- PHP Version: 5.3.2
 
@@ -72,7 +72,7 @@ CREATE TABLE `household` (
   `household_id` mediumint(9) NOT NULL AUTO_INCREMENT,
   `name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`household_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=6 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=7 ;
 
 --
 -- Dumping data for table `household`
@@ -83,6 +83,7 @@ INSERT INTO `household` VALUES(2, 'Simon Private');
 INSERT INTO `household` VALUES(3, 'Thomas Private');
 INSERT INTO `household` VALUES(4, 'Family');
 INSERT INTO `household` VALUES(5, 'test');
+INSERT INTO `household` VALUES(6, 'asdf');
 
 -- --------------------------------------------------------
 
@@ -128,10 +129,6 @@ INSERT INTO `item` VALUES(1, 'spaghetti', 'pasta aus italien', '3.75', 0, 1);
 INSERT INTO `item` VALUES(2, 'tomaten', 'aus spanien', '1.50', 0, 1);
 INSERT INTO `item` VALUES(4, 'salat', 'aus der schweiz', '3.80', 0, 2);
 INSERT INTO `item` VALUES(5, 'joghurt', '', '5.50', 0, 2);
-INSERT INTO `item` VALUES(6, 'spaghetti', 'pasta aus italien', '3.75', 0, 3);
-INSERT INTO `item` VALUES(7, 'tomaten', 'aus spanien', '1.50', 0, 4);
-INSERT INTO `item` VALUES(8, 'salat', 'aus der schweiz', '3.80', 0, 5);
-INSERT INTO `item` VALUES(9, 'joghurt', '', '5.50', 0, 6);
 
 -- --------------------------------------------------------
 
@@ -176,14 +173,14 @@ CREATE TABLE `user` (
   `lastname` varchar(60) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `email` (`email`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=4 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=9 ;
 
 --
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` VALUES(1, 'simon', 'ccf7e9e8f7e8a763b26d739dc4ce31a2b61f168b', '1234', 'Simon', 'Egli');
-INSERT INTO `user` VALUES(2, 'thomas', '0c5a36f8c1150b5960a56ef534f29320672f5fba', '1234', 'Thomas', 'Junghans');
+INSERT INTO `user` VALUES(1, 'thomas', 'cfd582b85d869ece9831d31a991a45ea9f7157f15f57ca94333a1adc3ffb6002', '35f97f6b2a7a3', 'Thomas', 'Junghans');
+INSERT INTO `user` VALUES(2, 'simon', '6db056887be232ff7ed8a9494396c03086eea35dbc00fb2745e2101d3c62f0f0', '1a07b20b4bda7', 'Simon', 'Egli');
 
 -- --------------------------------------------------------
 
@@ -197,7 +194,7 @@ CREATE TABLE `user_household` (
   `household_id` mediumint(8) unsigned NOT NULL,
   `is_owner` tinyint(4) DEFAULT NULL,
   PRIMARY KEY (`user_household_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=6 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=7 ;
 
 --
 -- Dumping data for table `user_household`
@@ -208,3 +205,4 @@ INSERT INTO `user_household` VALUES(2, 1, 2, 1);
 INSERT INTO `user_household` VALUES(3, 2, 3, 1);
 INSERT INTO `user_household` VALUES(4, 2, 4, 1);
 INSERT INTO `user_household` VALUES(5, 1, 5, 1);
+INSERT INTO `user_household` VALUES(6, 1, 6, 1);

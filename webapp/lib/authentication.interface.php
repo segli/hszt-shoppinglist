@@ -1,6 +1,7 @@
 <?php
 interface iAuthentication {
     public static function authenticate_user($email, $password);
+    public static function fields_not_empty($user);
     public static function hash_password($password, $salt);
     public static function generate_salt();
     public static function is_email_address($email);

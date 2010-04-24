@@ -57,6 +57,21 @@ class Authentication implements iAuthentication {
 
     /**
      * @static
+     * @param  {object} $user
+     * @return boolean
+     */
+    public static function fields_not_empty($user) {
+
+        if($user->firstname == "" OR $user->lastname == "" OR
+           $user->email == "" OR $user-password == "") {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    /**
+     * @static
      * @param  {string} $password
      * @param  {string} $salt
      * @return string $hash
@@ -78,11 +93,16 @@ class Authentication implements iAuthentication {
     * @return boolean
     */
     public static function is_email_address($email) {
+
+        return true;
+        /*
 		if(eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$", $email)) {
 			return true;
 		} else {
 			return false;
 		}
+		*/
+		
 	}
 
     /**

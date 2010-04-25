@@ -6,9 +6,7 @@ include_once('session.controller.php');
 // POST / GET variables
 $user_id = $_SESSION['user']->userId;
 $shoppinglist_name = $_POST['shoppinglist_name'];
-
-// TODO: Remove
-$household_id = 3;
+$household_id = $_POST['hid'];
 
 // Logic
 $shoppinglist = new Shoppinglist();
@@ -19,7 +17,7 @@ $shoppinglist->userId = $user_id;
 //$shoppinglist->dateCreated = time();
 
 
-if(Authorization::auth_create_shoppinglist($user_id, $household_id)) {
+if (Authorization::auth_create_shoppinglist($user_id, $household_id)) {
 
     $id = DAOFactory::getShoppinglistDAO()->insert($shoppinglist);
 

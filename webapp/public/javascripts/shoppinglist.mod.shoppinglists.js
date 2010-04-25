@@ -20,7 +20,6 @@ var Shoppinglist = Shoppinglist || {};
     config = $.extend({}, defaults, options);
 
     fetch_shoppinglists_by_user_id = function (callback) {
-        console.info(Shoppinglist.selected_hid);
         $.ajax({
            'url' : 'controller_proxy.php?controller=fetchshoppinglists&hid=' + Shoppinglist.selected_hid,
            'type' : 'get',
@@ -42,7 +41,7 @@ var Shoppinglist = Shoppinglist || {};
         var tmpHtml = [];
         tmpHtml.push('<ul>');
         for (var i = 0, len = data.shoppinglists.length; i < len; i++) {
-            tmpHtml.push('<li>' + data.shoppinglists[i].name + '</li>');
+            tmpHtml.push('<li><a href="#" sid="' + data.shoppinglists[i].id + '">' + data.shoppinglists[i].name + '</a></li>');
         }
         tmpHtml.push('<ul>');
 
@@ -78,6 +77,20 @@ var Shoppinglist = Shoppinglist || {};
             fetch_shoppinglists_by_user_id(function (data) {
                 update_existing_view(data);
             });
+        });
+
+        $ctx.click(function (e) {
+            if ($(e.target).is('.bdExisting a',$ctx)) {
+                Shoppinglist.selected_sid = $(e.target).attr('sid');
+                Shoppinglist.load_page({
+                    'page' : 'page.items.php',
+
+                    'afterLoad' : function () {
+                        Shoppinglist.items.init();
+                    }
+                });
+                return false;
+           }
         });
 
         $ctx.trigger('shoppinglistschanged');

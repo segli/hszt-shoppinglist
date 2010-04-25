@@ -35,7 +35,6 @@ var Shoppinglist = Shoppinglist || {};
     };
 
     update_existing_view = function (data) {
-        console.info(data);
         var tmpHtml = [];
         tmpHtml.push('<ul>');
         for (var i = 0, len = data.items.length; i < len; i++) {
@@ -47,7 +46,6 @@ var Shoppinglist = Shoppinglist || {};
     };
 
     init = function () {
-        console.info('items init');
         $ctx = $('.modItems');
         $form_create = $('.create_item', $ctx);
         $btn_submit_create = $('input[type="submit"]', $form_create);

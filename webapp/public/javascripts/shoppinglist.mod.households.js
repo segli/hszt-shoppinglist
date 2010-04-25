@@ -11,8 +11,8 @@ var Shoppinglist = Shoppinglist || {};
         update_existing_view = null;
 
     defaults = {
-        onCreateHousehold : function () {},
-        onFetchHouseholds : function () {},
+        onCreate : function () {},
+        onFetch : function () {},
         viewUpdated : function () {}
     };
 
@@ -26,10 +26,11 @@ var Shoppinglist = Shoppinglist || {};
            'type' : 'get',
            'dataType' : 'json',
            'success' : function (data) {
+          
                if (!data.error) {
                    callback(data);
 
-                   config.onFetchHouseholds();
+                   config.onFetch();
                } else {
                    console.info(data.error, data.message);
                }
@@ -38,7 +39,7 @@ var Shoppinglist = Shoppinglist || {};
     };
 
     update_existing_view = function (data) {
-        console.info(data);
+
         var tmpHtml = [];
         tmpHtml.push('<ul>');
         for (var i = 0, len = data.households.length; i < len; i++) {
@@ -54,7 +55,7 @@ var Shoppinglist = Shoppinglist || {};
 
     init = function () {
         $ctx = $('.modHouseholds');
-        $form_create = $('.create_household', $ctx);
+        $form_create = $('form.create', $ctx);
         $btn_submit_create = $('input[type="submit"]', $form_create);
 
         $btn_submit_create.click(function () {
@@ -64,10 +65,11 @@ var Shoppinglist = Shoppinglist || {};
                'type' : $form_create.attr('method'),
                'dataType' : 'json',
                'success' : function (data) {
+                    
                     if (!data.error) {
-                        $ctx.trigger('householdschanged');
+                        $ctx.trigger('dataChanged');
 
-                        config.onCreateHousehold();
+                        config.onCreate();
                    } else {
                        log.info(data.error + ': ' + data.message);
                    }
@@ -76,7 +78,7 @@ var Shoppinglist = Shoppinglist || {};
             return false;
         });
 
-        $ctx.bind('householdschanged', function () {
+        $ctx.bind('dataChanged', function () {
             fetch_households_by_user_id(function (data) {
                 update_existing_view(data);
             });
@@ -96,7 +98,7 @@ var Shoppinglist = Shoppinglist || {};
            }
         });
 
-        $ctx.trigger('householdschanged');
+        $ctx.trigger('dataChanged');
 
     };
 
@@ -105,7 +107,7 @@ var Shoppinglist = Shoppinglist || {};
     };
 }(
 {
-    'onCreateHousehold' : function () {
+    'onCreate' : function () {
         log.info('Household added');
     }
 }

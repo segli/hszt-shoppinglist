@@ -41,7 +41,7 @@ var Shoppinglist = Shoppinglist || {};
         var tmpHtml = [];
         tmpHtml.push('<ul>');
         for (var i = 0, len = data.shoppinglists.length; i < len; i++) {
-            tmpHtml.push('<li><a href="#" sid="' + data.shoppinglists[i].id + '">' + data.shoppinglists[i].name + '</a></li>');
+            tmpHtml.push('<li><a href="#" sid="' + data.shoppinglists[i].shoppinglistId + '">' + data.shoppinglists[i].name + '</a></li>');
         }
         tmpHtml.push('<ul>');
 

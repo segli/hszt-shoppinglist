@@ -17,7 +17,7 @@ include_once('../controllers/session.controller.php');
             <h2 class="base">Create New</h2>
         </div>
         <div class="bd">
-            <form class="create_household" action="controller_proxy.php?controller=createhousehold" method="post">
+            <form class="create" action="controller_proxy.php?controller=createhousehold" method="post">
                 <fieldset>
                     <div><label class="base">Household name</label>
                     <input name="household_name" /></div>

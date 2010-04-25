@@ -49,7 +49,7 @@ var Shoppinglist = Shoppinglist || {};
     };
 
     init = function () {
-
+        console.info('shoppinglists init');
         $ctx = $('.modShoppinglists');
         $form_create = $('.create_shoppinglist', $ctx);
         $btn_submit_create = $('input[type="submit"]', $form_create);

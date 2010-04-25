@@ -42,7 +42,7 @@ var Shoppinglist = Shoppinglist || {};
         var tmpHtml = [];
         tmpHtml.push('<ul>');
         for (var i = 0, len = data.households.length; i < len; i++) {
-            tmpHtml.push('<li><a href="controller_proxy.php?controller=fetchshoppinglists&amp;hid=' + data.households[i].householdId + '">' + data.households[i].name + '</a></li>');
+            tmpHtml.push('<li><a href="controller_proxy.php?controller=fetchshoppinglists&amp;hid=' + data.households[i].householdId + '" hid="' + data.households[i].householdId + '">' + data.households[i].name + '</a></li>');
         }
         tmpHtml.push('<ul>');
 
@@ -84,9 +84,10 @@ var Shoppinglist = Shoppinglist || {};
 
         $ctx.click(function (e) {
             if ($(e.target).is('.bdExisting a',$ctx)) {
-                console.info($(e.target).attr('href'));
+                Shoppinglist.selected_hid = $(e.target).attr('hid');
                 Shoppinglist.load_page({
                     'page' : 'page.shoppinglists.php',
+                
                     'afterLoad' : function () {
                         Shoppinglist.shoppinglists.init();
                     }

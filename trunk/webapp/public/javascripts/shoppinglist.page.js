@@ -5,7 +5,8 @@ Shoppinglist.load_page = function (options) {
     defaults = {
         'beforeLoad' : function () {},
         'afterLoad' : function () {},
-        'page' : 'page.login.php'
+        'page' : 'page.login.php',
+        'data' : null
     };
 
     var config = $.extend({}, defaults, options);
@@ -15,6 +16,7 @@ Shoppinglist.load_page = function (options) {
     $.ajax({
         'url' : config.page,
         'type' : 'get',
+        'data' : config.data,
         'dataType' : 'html',
         'success' : function (data) {
             $('#page').html(data);           

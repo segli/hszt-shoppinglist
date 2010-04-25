@@ -20,8 +20,9 @@ var Shoppinglist = Shoppinglist || {};
     config = $.extend({}, defaults, options);
 
     fetch_shoppinglists_by_user_id = function (callback) {
+        console.info(Shoppinglist.selected_hid);
         $.ajax({
-           'url' : 'controller_proxy.php?controller=fetchshoppinglists',
+           'url' : 'controller_proxy.php?controller=fetchshoppinglists&hid=' + Shoppinglist.selected_hid,
            'type' : 'get',
            'dataType' : 'json',
            'success' : function (data) {
@@ -49,6 +50,7 @@ var Shoppinglist = Shoppinglist || {};
     };
 
     init = function () {
+
         $ctx = $('.modShoppinglists');
         $form_create = $('.create_shoppinglist', $ctx);
         $btn_submit_create = $('input[type="submit"]', $form_create);

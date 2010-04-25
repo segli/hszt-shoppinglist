@@ -14,7 +14,8 @@ include_once('../controllers/session.controller.php');
             <h2 class="base">Create New</h2>
         </div>
         <div class="bd">
-            <form class="create_shoppinglist" action="controller_proxy.php?controller=createshoppinglists" method="post">
+            <form class="create_shoppinglist" action="controller_proxy.php?controller=createshoppinglist
+            " method="post">
                 <fieldset>
                     <div><label class="base">Shoppinglist name</label>
                     <input name="shoppinglist_name" />

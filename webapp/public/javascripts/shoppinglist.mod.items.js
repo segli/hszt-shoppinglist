@@ -1,34 +1,32 @@
 var Shoppinglist = Shoppinglist || {};
 
-(Shoppinglist.shoppinglists = function (options) {
+(Shoppinglist.items = function (options) {
     var $btn_submit_create = null,
         $ctx = null,
         $form_create = null,
         init = {},
         config = null,
         defaults = null,
-        fetch_shoppinglists_by_user_id = null,
+        fetch_items_by_shoppinglist_id = null,
         update_existing_view = null;
 
     defaults = {
-        onCreateShoppinglist : function () {},
-        onFetchShoppinglists : function () {}
+        onCreate : function () {},
+        onFetch : function () {}
     };
-
-
 
     config = $.extend({}, defaults, options);
 
-    fetch_shoppinglists_by_user_id = function (callback) {
+    fetch_items_by_shoppinglist_id = function (callback) {
         $.ajax({
-           'url' : 'controller_proxy.php?controller=fetchshoppinglists&hid=' + Shoppinglist.selected_hid,
+           'url' : 'controller_proxy.php?controller=fetchitems&sid=' + Shoppinglist.selected_sid,
            'type' : 'get',
            'dataType' : 'json',
            'success' : function (data) {
                if (!data.error) {
                    callback(data);
 
-                   config.onFetchShoppinglists();
+                   config.onFetch();
                } else {
                    console.info(data.error, data.message);
                }
@@ -40,8 +38,8 @@ var Shoppinglist = Shoppinglist || {};
         console.info(data);
         var tmpHtml = [];
         tmpHtml.push('<ul>');
-        for (var i = 0, len = data.shoppinglists.length; i < len; i++) {
-            tmpHtml.push('<li><a href="#" sid="' + data.shoppinglists[i].id + '">' + data.shoppinglists[i].name + '</a></li>');
+        for (var i = 0, len = data.items.length; i < len; i++) {
+            tmpHtml.push('<li><a href="#" sid="' + data.items[i].id + '">' + data.items[i].name + '</a></li>');
         }
         tmpHtml.push('<ul>');
 
@@ -50,11 +48,10 @@ var Shoppinglist = Shoppinglist || {};
 
     init = function () {
 
-        $ctx = $('.modShoppinglists');
-        $form_create = $('.create_shoppinglist', $ctx);
+        $ctx = $('.modItems');
+        $form_create = $('.create_item', $ctx);
         $btn_submit_create = $('input[type="submit"]', $form_create);
-        $form_create.append('<input type="hidden" name="hid" value="' + Shoppinglist.selected_hid + '" />');
-        
+
         $btn_submit_create.click(function () {
             $.ajax({
                'url' : $form_create.attr('action'),

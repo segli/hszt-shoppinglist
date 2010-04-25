@@ -51,10 +51,8 @@ var Shoppinglist = Shoppinglist || {};
 
     };
 
-    
-
-    init = function () {
-        $ctx = $('.modHouseholds');
+    // TODO: prepare is common function used for households, shoppinglist and items. Apply OOP!!!
+    var prepare = function ($ctx) {
         $form_create = $('form.create', $ctx);
         $btn_submit_create = $('input[type="submit"]', $form_create);
 
@@ -65,7 +63,7 @@ var Shoppinglist = Shoppinglist || {};
                'type' : $form_create.attr('method'),
                'dataType' : 'json',
                'success' : function (data) {
-                    
+
                     if (!data.error) {
                         $ctx.trigger('dataChanged');
 
@@ -77,6 +75,15 @@ var Shoppinglist = Shoppinglist || {};
             });
             return false;
         });
+
+    };
+
+    
+
+    init = function () {
+        var $ctx = $('.modHouseholds');
+
+        prepare($ctx);
 
         $ctx.bind('dataChanged', function () {
             fetch_households_by_user_id(function (data) {

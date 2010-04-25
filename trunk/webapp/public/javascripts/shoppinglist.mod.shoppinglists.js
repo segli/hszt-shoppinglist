@@ -11,8 +11,8 @@ var Shoppinglist = Shoppinglist || {};
         update_existing_view = null;
 
     defaults = {
-        onCreateShoppinglist : function () {},
-        onFetchShoppinglists : function () {}
+        onCreate : function () {},
+        onFetch : function () {}
     };
 
 
@@ -28,7 +28,7 @@ var Shoppinglist = Shoppinglist || {};
                if (!data.error) {
                    callback(data);
 
-                   config.onFetchShoppinglists();
+                   config.onFetch();
                } else {
                    console.info(data.error, data.message);
                }
@@ -37,7 +37,6 @@ var Shoppinglist = Shoppinglist || {};
     };
 
     update_existing_view = function (data) {
-        console.info(data);
         var tmpHtml = [];
         tmpHtml.push('<ul>');
         for (var i = 0, len = data.shoppinglists.length; i < len; i++) {
@@ -48,10 +47,38 @@ var Shoppinglist = Shoppinglist || {};
         $('.bdExisting', $ctx).html(tmpHtml.join(''));
     };
 
+    // TODO: prepare is common function also used for shoppinglist and items!!!
+    var prepare = function ($ctx) {
+        $form_create = $('form.create', $ctx);
+        $btn_submit_create = $('input[type="submit"]', $form_create);
+
+        $btn_submit_create.click(function () {
+            $.ajax({
+               'url' : $form_create.attr('action'),
+               'data' : $form_create.serialize(),
+               'type' : $form_create.attr('method'),
+               'dataType' : 'json',
+               'success' : function (data) {
+
+                    if (!data.error) {
+                        $ctx.trigger('dataChanged');
+
+                        config.onCreate();
+                   } else {
+                       log.info(data.error + ': ' + data.message);
+                   }
+                }
+            });
+            return false;
+        });
+
+    };
+
     init = function () {
-        console.info('shoppinglists init');
+
         $ctx = $('.modShoppinglists');
-        $form_create = $('.create_shoppinglist', $ctx);
+
+        $form_create = $('form.create', $ctx);
         $btn_submit_create = $('input[type="submit"]', $form_create);
         $form_create.append('<input type="hidden" name="hid" value="' + Shoppinglist.selected_hid + '" />');
         
@@ -63,9 +90,9 @@ var Shoppinglist = Shoppinglist || {};
                'dataType' : 'json',
                'success' : function (data) {
                     if (!data.error) {
-                        $ctx.trigger('shoppinglistschanged');
+                        $ctx.trigger('dataChanged');
 
-                        config.onCreateShoppinglist();
+                        config.onCreate();
                    } else {
                        log.info(data.error, data.message);
                    }
@@ -74,7 +101,7 @@ var Shoppinglist = Shoppinglist || {};
             return false;
         });
 
-        $ctx.bind('shoppinglistschanged', function () {
+        $ctx.bind('dataChanged', function () {
             fetch_shoppinglists_by_user_id(function (data) {
                 update_existing_view(data);
             });
@@ -94,7 +121,7 @@ var Shoppinglist = Shoppinglist || {};
            }
         });
 
-        $ctx.trigger('shoppinglistschanged');
+        $ctx.trigger('dataChanged');
 
     };
 
@@ -103,7 +130,7 @@ var Shoppinglist = Shoppinglist || {};
     };
 }(
 {
-    'onCreateShoppinglist' : function () {
+    'onCreate' : function () {
         log.info('Shoppinglist added');
     }
 }

@@ -39,7 +39,7 @@ var Shoppinglist = Shoppinglist || {};
         var tmpHtml = [];
         tmpHtml.push('<ul>');
         for (var i = 0, len = data.items.length; i < len; i++) {
-            tmpHtml.push('<li><a href="#" sid="' + data.items[i].id + '">' + data.items[i].name + '</a></li>');
+            tmpHtml.push('<li><a href="#" iid="' + data.items[i].id + '">' + data.items[i].name + '</a></li>');
         }
         tmpHtml.push('<ul>');
 
@@ -47,11 +47,12 @@ var Shoppinglist = Shoppinglist || {};
     };
 
     init = function () {
-
+        console.info('items init');
         $ctx = $('.modItems');
         $form_create = $('.create_item', $ctx);
         $btn_submit_create = $('input[type="submit"]', $form_create);
-
+        $form_create.append('<input type="hidden" name="sid" value="' + Shoppinglist.selected_sid + '" />');
+        
         $btn_submit_create.click(function () {
             $.ajax({
                'url' : $form_create.attr('action'),
@@ -60,9 +61,9 @@ var Shoppinglist = Shoppinglist || {};
                'dataType' : 'json',
                'success' : function (data) {
                     if (!data.error) {
-                        $ctx.trigger('shoppinglistschanged');
+                        $ctx.trigger('itemschanged');
 
-                        config.onCreateShoppinglist();
+                        config.onCreate();
                    } else {
                        log.info(data.error, data.message);
                    }
@@ -71,27 +72,20 @@ var Shoppinglist = Shoppinglist || {};
             return false;
         });
 
-        $ctx.bind('shoppinglistschanged', function () {
-            fetch_shoppinglists_by_user_id(function (data) {
+        $ctx.bind('itemschanged', function () {
+            fetch_items_by_shoppinglist_id(function (data) {
                 update_existing_view(data);
             });
         });
 
         $ctx.click(function (e) {
             if ($(e.target).is('.bdExisting a',$ctx)) {
-                Shoppinglist.selected_sid = $(e.target).attr('sid');
-                Shoppinglist.load_page({
-                    'page' : 'page.items.php',
-
-                    'afterLoad' : function () {
-                        Shoppinglist.items.init();
-                    }
-                });
+               
                 return false;
            }
         });
 
-        $ctx.trigger('shoppinglistschanged');
+        $ctx.trigger('itemschanged');
 
     };
 
@@ -100,8 +94,8 @@ var Shoppinglist = Shoppinglist || {};
     };
 }(
 {
-    'onCreateShoppinglist' : function () {
-        log.info('Shoppinglist added');
+    'onCreate' : function () {
+        log.info('Item added');
     }
 }
 ));

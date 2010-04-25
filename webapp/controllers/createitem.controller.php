@@ -5,15 +5,13 @@ include_once('session.controller.php');
 
 // POST / GET variables
 $user_id = $_SESSION['user']->userId;
-$item_name = $POST['item_name'];
-
-// TODO: Remove
-$shoppinglist_id = 3; // Muss aus POST oder GET gelesen werden.
+$item_name = $_POST['item_name'];
+$shoppinglist_id = $_POST['sid'];
 
 // Logic
 $item = new Item();
 $item->name = $item_name;
-$item->status = 0;
+$item->status = 1;
 $item->shoppinglistId = $shoppinglist_id;
 
 
@@ -22,13 +20,13 @@ if(Authorization::auth_create_item($user_id, $shoppinglist_id)) {
 
     if ($id > 0) {
         $data = array(
-            'shoppinglistId' => $id
+            'itemId' => $id
         );
 
     } else {
         $data = array(
             'error' => '5',
-            'message' => 'Something went wrong during the shoppinglist creation process.'
+            'message' => 'Something went wrong during the item creation process.'
         );
 
     }

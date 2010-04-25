@@ -5,3 +5,4 @@
         <script type="text/javascript" src="javascripts/shoppinglist.mod.register.js"></script>
         <script type="text/javascript" src="javascripts/shoppinglist.mod.households.js"></script>
         <script type="text/javascript" src="javascripts/shoppinglist.mod.shoppinglists.js"></script>
+        <script type="text/javascript" src="javascripts/shoppinglist.mod.items.js"></script>

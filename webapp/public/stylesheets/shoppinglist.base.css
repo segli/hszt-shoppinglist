@@ -11,3 +11,9 @@ h2.base {
 label.base {
     display: block
 }
+
+
+
+a.delete {
+    color: red;
+}

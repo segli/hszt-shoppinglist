@@ -15,8 +15,6 @@ var Shoppinglist = Shoppinglist || {};
         onFetch : function () {}
     };
 
-
-
     config = $.extend({}, defaults, options);
 
     fetch_shoppinglists_by_user_id = function (callback) {

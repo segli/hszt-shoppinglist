@@ -19,8 +19,6 @@ include_once('../config/environment.php');
                 </fieldset>
             </form>
         </div>
-        <div class="bd">
-            <a href="register.php">Register</a>
-        </div>
+
     </div>
 </div>

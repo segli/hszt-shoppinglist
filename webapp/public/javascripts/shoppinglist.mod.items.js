@@ -35,12 +35,26 @@ var Shoppinglist = Shoppinglist || {};
     };
 
     update_existing_view = function (data) {
-        var tmpHtml = [];
-        tmpHtml.push('<ul>');
-        for (var i = 0, len = data.items.length; i < len; i++) {
-            tmpHtml.push('<li><a href="#" iid="' + data.items[i].id + '">' + data.items[i].name + '</a></li>');
+        var tmpHtml = [],
+            i = 0,
+            len = 0,
+            current_item = null;
+        
+        tmpHtml.push('<table class="items">');
+        
+        for (i = 0, len = data.items.length; i < len; i++) {
+            current_item = data.items[i];
+            
+            tmpHtml.push('<tr>');
+            tmpHtml.push('<td><input type="checkbox" name="got_it" /></td>');
+            tmpHtml.push('<td><a href="#" iid="' + current_item.id + '">' + current_item.name + '</a></td>');
+            tmpHtml.push('<td><input name="howmany_of" size="2" /></td>');
+            tmpHtml.push('<td><input name="price" value="' + current_item.price + '" size="4" /></td>');
+            tmpHtml.push('<td><a href="#" iid="' + current_item.id + '"><img src="images/delete.gif" alt="delete item" /></a></td>');
+            tmpHtml.push('</tr>');
         }
-        tmpHtml.push('<ul>');
+        
+        tmpHtml.push('<table>');
 
         $('.bdExisting', $ctx).html(tmpHtml.join(''));
     };

@@ -37,9 +37,12 @@
 	require_once('persistent/dto/User.class.php');
 	require_once('persistent/mysql/UserMySqlDAO.class.php');
 	require_once('persistent/mysql/ext/UserMySqlExtDAO.class.php');
-	require_once('persistent/dao/UserHouseholdDAO.class.php');
+    require_once('persistent/dao/UserHouseholdDAO.class.php');
 	require_once('persistent/dto/UserHousehold.class.php');
 	require_once('persistent/mysql/UserHouseholdMySqlDAO.class.php');
 	require_once('persistent/mysql/ext/UserHouseholdMySqlExtDAO.class.php');
+
+    // Custom. See descriptipon in file.
+    require_once('persistent/dto/UserHouseholdComplete.class.php');
 
 ?>

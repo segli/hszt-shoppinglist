@@ -39,15 +39,18 @@ var Shoppinglist = Shoppinglist || {};
     };
 
     update_existing_view = function (data) {
-
-        var tmpHtml = [];
-        tmpHtml.push('<ul>');
+        
+        var tmpHtml = new Shoppinglist.helper.HtmlString();
+        tmpHtml.add('<ul>');
         for (var i = 0, len = data.households.length; i < len; i++) {
-            tmpHtml.push('<li><a href="controller_proxy.php?controller=fetchshoppinglists&amp;hid=' + data.households[i].householdId + '" hid="' + data.households[i].householdId + '">' + data.households[i].name + '</a></li>');
+            tmpHtml.add('<li>');
+            tmpHtml.add('<a href="controller_proxy.php?controller=fetchshoppinglists&amp;hid=' + data.households[i].householdId + '" hid="' + data.households[i].householdId + '">' + data.households[i].name + '</a>');
+            tmpHtml.add('<a class="delete" href="controller_proxy.php?controller=deletehousehold&amp;hid=' + data.households[i].householdId + '" hid="' + data.households[i].householdId + '">[delete]</a>');
+            tmpHtml.add('</li>');
         }
-        tmpHtml.push('<ul>');
+        tmpHtml.add('<ul>');
 
-        $('.bdExisting', $ctx).html(tmpHtml.join(''));
+        $('.bdExisting', $ctx).html(tmpHtml.toString());
 
     };
 

@@ -6,10 +6,13 @@ include_once('session.controller.php');
 $user_id = $_SESSION['user']->userId;
 
 // Logic
-$households = DAOFactory::getHouseholdDAO()->queryAllByUserId($user_id);
+$households = DAOFactory::getUserHouseholdDAO()->queryCompleteByUserId($user_id);
 
 if (count($households) > 0) {
     // Prepare Data
+
+    
+
     $data = array(
         'households' => $households
     );

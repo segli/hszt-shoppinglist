@@ -4,14 +4,17 @@ include_once('session.controller.php');
 
 // POST / GET variables
 $user_id = $_SESSION['user']->userId;
-
+$household_id = $_GET['household_id'];
 // Logic
-$households = DAOFactory::getUserHouseholdDAO()->queryCompleteByUserId($user_id);
+    // delete household
+    // delete userhousehold
+    // delete shoppinglist
+    // delete item
 
-if (count($households) > 0) {
+if (true) {
     // Prepare Data
     $data = array(
-        'households' => $households
+        'household_id' => $household_id
     );
 
 } else {

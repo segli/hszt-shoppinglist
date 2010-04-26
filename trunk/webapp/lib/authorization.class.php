@@ -35,6 +35,16 @@ class Authorization implements iAuthorization {
         return false;
     }
 
+    public static function auth_create_invitation($user_id, $household_id) {
+
+        $user = DAOFactory::getUserHouseholdDAO()->queryAllByUserIdAndHouseholdIdAndOwner($user_id, $household_id);
+
+        if(count($user) == 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     
 }

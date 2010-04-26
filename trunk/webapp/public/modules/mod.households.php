@@ -20,8 +20,17 @@ include_once('../controllers/session.controller.php');
             <form class="create" action="controller_proxy.php?controller=createhousehold" method="post">
                 <fieldset>
                     <div><label class="base">Household name</label>
-                    <input name="household_name" /></div>
+                    <input name="household_name" autocomplete="off" /></div>
                     <input type="submit" value="create household" />
+                </fieldset>
+            </form>
+        </div>
+        <div class="bd">
+            <form class="invite" action="controller_proxy.php?controller=createinvitation" method="post">
+                <fieldset>
+                    <div><label class="base">Send invitation to:</label>
+                    <input name="email" autocomplete="off" /></div>
+                    <input type="submit" value="invite" />
                 </fieldset>
             </form>
         </div>

@@ -92,6 +92,7 @@ INSERT INTO `household` VALUES(4, 'Family');
 CREATE TABLE `invitation` (
   `inventation_id` mediumint(9) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` mediumint(9) unsigned NOT NULL,
+  `email` varchar(60) COLLATE utf8_unicode_ci NOT NULL,
   `household_id` mediumint(9) unsigned NOT NULL,
   `pending` tinyint(4) unsigned NOT NULL,
   `date_created` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',

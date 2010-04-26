@@ -106,7 +106,9 @@ var Shoppinglist = Shoppinglist || {};
         });
 
         $ctx.click(function (e) {
-            if ($(e.target).is('.bdExisting a',$ctx)) {
+            if ($(e.target).is('.bdExisting a.delete',$ctx)) {
+                
+            } else if ($(e.target).is('.bdExisting a',$ctx)) {
                 Shoppinglist.selected_sid = $(e.target).attr('sid');
                 Shoppinglist.load_page({
                     'page' : 'page.items.php',

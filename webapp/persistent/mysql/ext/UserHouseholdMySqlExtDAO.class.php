@@ -14,7 +14,7 @@ class UserHouseholdMySqlExtDAO extends UserHouseholdMySqlDAO{
 	}
 
     /**
-	 * Read row
+	 * Read row for queryCompleteByUserId
 	 *
 	 * @return UserHouseholdMySql
 	 */

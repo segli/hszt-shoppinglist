@@ -40,12 +40,20 @@ var Shoppinglist = Shoppinglist || {};
 
     update_existing_view = function (data) {
         
-        var tmpHtml = new Shoppinglist.helper.HtmlString();
+        var tmpHtml = new Shoppinglist.helper.HtmlString(),
+            i = 0,
+            len = 0,
+            current_item = null;
+        
         tmpHtml.add('<ul>');
-        for (var i = 0, len = data.households.length; i < len; i++) {
+        for (i = 0, len = data.households.length; i < len; i++) {
+            current_item = data.households[i];
             tmpHtml.add('<li>');
-            tmpHtml.add('<a href="controller_proxy.php?controller=fetchshoppinglists&amp;hid=' + data.households[i].householdId + '" hid="' + data.households[i].householdId + '">' + data.households[i].name + '</a>');
-            tmpHtml.add('<a class="delete" href="controller_proxy.php?controller=deletehousehold&amp;hid=' + data.households[i].householdId + '" hid="' + data.households[i].householdId + '">[delete]</a>');
+            tmpHtml.add('<a href="controller_proxy.php?controller=fetchshoppinglists&amp;hid=' + current_item.householdId + '" hid="' + current_item.householdId + '">' + current_item.name + '</a>');
+
+            if (parseInt(current_item.isOwner, 10) === 1) {
+                tmpHtml.add('<a class="delete" href="controller_proxy.php?controller=deletehousehold&amp;hid=' + current_item.householdId + '" hid="' + current_item.householdId + '">[delete]</a>');    
+            }
             tmpHtml.add('</li>');
         }
         tmpHtml.add('<ul>');
@@ -95,7 +103,24 @@ var Shoppinglist = Shoppinglist || {};
         });
 
         $ctx.click(function (e) {
-            if ($(e.target).is('.bdExisting a',$ctx)) {
+            var $target = $(e.target);
+            if ($target.is('.bdExisting a.delete',$ctx)) {
+                
+                $.ajax({
+                   'url' : 'controller_proxy.php?controller=deletehouseholds&household_id=' + $target.attr('hid'),
+                   'type' : 'get',
+                   'dataType' : 'json',
+                   'success' : function (data) {
+                        if (!data.error) {
+                            $ctx.trigger('dataChanged');
+                            config.onDelete();
+                       } else {
+                           log.info(data.error + ': ' + data.message);
+                       }
+                    }
+                });
+                return false;
+            } else if ($target.is('.bdExisting a',$ctx)) {
                 Shoppinglist.selected_hid = $(e.target).attr('hid');
                 Shoppinglist.load_page({
                     'page' : 'page.shoppinglists.php',
@@ -119,6 +144,9 @@ var Shoppinglist = Shoppinglist || {};
 {
     'onCreate' : function () {
         log.info('Household added');
+    },
+    'onDelete' : function () {
+        log.info('Household deleted');
     }
 }
 ));

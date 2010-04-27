@@ -8,7 +8,6 @@ include_once('session.controller.php');
 $user_id = $_SESSION['user']->userId;
 $household_id = $_GET['hid'];
 
-
 if(Authorization::auth_delete_household($user_id, $household_id)) {
 
     // Get all shoppinglists of this household.

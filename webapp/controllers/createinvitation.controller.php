@@ -23,8 +23,8 @@ if(Authorization::auth_create_invitation($user_id, $household_id)) {
 
             $inv = new Invitation();
             $inv->householdId = $household_id;
-            $inv->email = $user[0]->email;
-            $inv->userId = $user[0]->userId;
+            $inv->email = $user[0]->email;  // Email of the person to invitate!
+            $inv->userId = $user_id;        // UserId of the creator!
             $inv->pending = 1;
             $inv->dateCreated = time();
             DAOFactory::getInvitationDAO()->insert($inv);
@@ -40,9 +40,11 @@ if(Authorization::auth_create_invitation($user_id, $household_id)) {
         }
 
     } else {
+        // User is not registered
         $inv = new Invitation();
         $inv->householdId = $household_id;
-        $inv->email = $email;
+        $inv->email = $email;       // Email of the person to invitate!
+        $inv->userId = $user_id;    // UserId of the creator!
         $inv->pending = 1;
         $inv->dateCreated = time();
         DAOFactory::getInvitationDAO()->insert($inv);
@@ -54,7 +56,7 @@ if(Authorization::auth_create_invitation($user_id, $household_id)) {
     }
 } else {
 
-    $msg = new Message ('Not authorized to create a shoppinglist in this household!', 'error');
+    $msg = new Message ('Not authorized to create an invitation for this household!', 'error');
     $data = $msg->to_array();
 }
 

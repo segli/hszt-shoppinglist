@@ -5,8 +5,9 @@ include_once('session.controller.php');
 
 // POST / GET variables
 $user_id = $_SESSION['user']->userId;
+$user_email = $_SESSION['user']->email;
 
-$invitations = DAOFactory::getInvitationDAO()->queryAllByUserId($user_id);
+$invitations = DAOFactory::getInvitationDAO()->queryAllByEmail($user_email);
 
 if (count($invitations) > 0) {
 

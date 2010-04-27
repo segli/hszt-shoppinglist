@@ -1,6 +1,8 @@
 <?php
-include_once('../lib/authentication.class.php');
-include_once('../lib/inputvalidation.class.php');
+include_once('../config/environment.php');
+include_once('lib/authentication.class.php');
+include_once('lib/inputvalidation.class.php');
+include_once('lib/message.class.php');
 
 // POST / GET variables
 $id = $_POST['user_email'];
@@ -38,10 +40,8 @@ $user = Authentication::authenticate_user($id, $password);
     } else {
 
         // Prepare Data
-        $data = array(
-            'error' => '1',
-            'message' => 'Incorrect creditentials'
-        );
+        $msg = new Message ('Incorrect creditentials', 'error');
+        $data = $msg->to_array();
 
     }
 

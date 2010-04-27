@@ -21,7 +21,7 @@ if (true) {
 
     // Prepare Data
     $data = array(
-        'error' => '4',
+        'code' => '4',
         'message' => 'The user with the id ' . $user_id . ' has no households'
     );
 

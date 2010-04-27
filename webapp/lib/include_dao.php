@@ -44,5 +44,6 @@
 
     // Custom. See descriptipon in file.
     require_once('persistent/dto/UserHouseholdComplete.class.php');
+    require_once('persistent/dto/InvitationComplete.class.php');
 
 ?>

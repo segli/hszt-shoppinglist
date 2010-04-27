@@ -79,6 +79,13 @@ class Authorization implements iAuthorization {
     }
 
     public static function auth_delete_shoppinglist($user_id, $shoppinglist_id) {
-        
+
+        $shoppinglist = DAOFactory::getShoppinglistDAO()->queryAllByShoppinglistIdAndOwnerId($user_id, $shoppinglist_id);
+
+        if(count($shoppinglist) == 1) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

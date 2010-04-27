@@ -31,6 +31,19 @@ class ShoppinglistMySqlExtDAO extends ShoppinglistMySqlDAO{
 		return $this->getList($sqlQuery);
 	}
 
+    public function queryAllByShoppinglistIdAndOwnerId($shoppinglist_id, $user_id){
+
+		$sql = 'SELECT s.* FROM shoppinglist s';
+		$sql .= ' WHERE s.shoppinglist_id = ?';
+        $sql .= ' AND s.user_id = '. $user_id .'';
+
+		$sqlQuery = new SqlQuery($sql);
+		$sqlQuery->set($shoppinglist_id);
+		return $this->getList($sqlQuery);
+	}
+
+
+
 	
 }
 ?>

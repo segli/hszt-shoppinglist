@@ -107,7 +107,7 @@ var Shoppinglist = Shoppinglist || {};
             if ($target.is('.bdExisting a.delete',$ctx)) {
                 
                 $.ajax({
-                   'url' : 'controller_proxy.php?controller=deletehouseholds&household_id=' + $target.attr('hid'),
+                   'url' : 'controller_proxy.php?controller=deletehouseholds&hid=' + $target.attr('hid'),
                    'type' : 'get',
                    'dataType' : 'json',
                    'success' : function (data) {

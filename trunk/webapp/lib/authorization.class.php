@@ -46,5 +46,39 @@ class Authorization implements iAuthorization {
         }
     }
 
-    
+    public static function auth_create_bill($user_id, $shoppinglist_id) {
+        // TODO: Implement auth_create_bill() method.
+    }
+
+    public static function auth_create_budget($user_id, $household_id) {
+        // TODO: Implement auth_create_budget() method.
+    }
+
+    public static function auth_delete_household($user_id, $household_id) {
+
+        $user = DAOFactory::getUserHouseholdDAO()->queryAllByUserIdAndHouseholdIdAndOwner($user_id, $household_id);
+
+        if(count($user) == 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public static function auth_delete_item($user_id, $item_id) {
+
+        $items = DAOFactory::getItemDAO()->queryAllByUserId($user_id);
+
+        for($i = 0; $i < count($items); $i++) {
+            if($items[$i]->itemId == $item_id) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public static function auth_delete_shoppinglist($user_id, $shoppinglist_id) {
+        
+    }
 }

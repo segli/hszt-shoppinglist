@@ -1,5 +1,6 @@
 <?php
-include_once('../lib/include_dao.php');
+include_once('lib/include_dao.php');
+include_once('lib/message.class.php');
 include_once('session.controller.php');
 
 // POST / GET variables
@@ -30,16 +31,12 @@ if(Authorization::auth_create_invitation($user_id, $household_id)) {
 
             // TODO: Send email to invited user! To: $email
 
-            $data = array(
-                'error' => '5',
-                'message' => 'Invitation created.'
-            );
+            $msg = new Message ('Invitation created!', 'message');
+            $data = $msg->to_array();
 
         } else {
-            $data = array(
-                'error' => '5',
-                'message' => 'User already in this household!'
-            );
+            $msg = new Message ('The user is already in this household.', 'error');
+            $data = $msg->to_array();
         }
 
     } else {
@@ -52,16 +49,13 @@ if(Authorization::auth_create_invitation($user_id, $household_id)) {
 
         // TODO: Send email to invited user! To: $email
         
-        $data = array(
-            'error' => '5',
-            'message' => 'Invitation created.'
-        );
+        $msg = new Message ('Invitation created!', 'message');
+        $data = $msg->to_array();
     }
 } else {
-    $data = array(
-        'error' => '5',
-        'message' => 'Not authorized to create a shoppinglist in this household!'
-    );
+
+    $msg = new Message ('Not authorized to create a shoppinglist in this household!', 'error');
+    $data = $msg->to_array();
 }
 
 // Convert to JSON

@@ -1,6 +1,7 @@
 <?php
-include_once('../lib/include_dao.php');
-include_once('../lib/authorization.class.php');
+include_once('lib/include_dao.php');
+include_once('lib/authorization.class.php');
+include_once('lib/message.class.php');
 include_once('session.controller.php');
 
 // POST / GET variables
@@ -27,16 +28,14 @@ if (Authorization::auth_create_shoppinglist($user_id, $household_id)) {
         );
 
     } else {
-        $data = array(
-            'error' => '5',
-            'message' => 'Something went wrong during the shoppinglist creation process.'
-        );
+
+        $msg = new Message ('Something went wrong during the shoppinglist creation process.', 'error');
+        $data = $msg->to_array();
     }
 } else {
-    $data = array(
-        'error' => '5',
-        'message' => 'Not authorized to create a shoppinglist in this household!'
-    );
+
+    $msg = new Message ('Not authorized to create a shoppinglist in this household!', 'error');
+    $data = $msg->to_array();
 }
 
 

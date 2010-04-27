@@ -11,6 +11,8 @@ $household_id = $_GET['household_id'];
     // delete shoppinglist
     // delete item
 
+// TODO: Authorization check!
+
 if (true) {
     // Prepare Data
     $data = array(

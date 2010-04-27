@@ -1,5 +1,6 @@
 <?php
-include_once('../lib/include_dao.php');
+include_once('lib/include_dao.php');
+include_once('lib/message.class.php');
 include_once('session.controller.php');
 
 // POST / GET variables
@@ -19,13 +20,8 @@ if (count($items) > 0) {
     );
 
 } else {
-
-    // Prepare Data
-    $data = array(
-        'error' => '4',
-        'message' => 'The shoppinglist with the id ' . $shoppinglist_id . ' has no items.'
-    );
-
+    $msg = new Message ('The shoppinglist with the id ' . $shoppinglist_id . ' has no items.', 'error');
+    $data = $msg->to_array();
 }
 
 // Convert to JSON

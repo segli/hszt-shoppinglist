@@ -1,5 +1,6 @@
 <?php
-include_once('../lib/include_dao.php');
+include_once('lib/include_dao.php');
+include_once('lib/message.class.php');
 include_once('session.controller.php');
 
 // POST / GET variables
@@ -12,7 +13,6 @@ if(isset($_GET['hid']) AND $_GET['hid'] >= 0) {
     $shoppinglists = DAOFactory::getShoppinglistDAO()->queryAllByUserId($user_id);
 }
 
-
 if (count($shoppinglists) > 0) {
     // Prepare Data
     $data = array(
@@ -20,13 +20,8 @@ if (count($shoppinglists) > 0) {
     );
 
 } else {
-
-    // Prepare Data
-    $data = array(
-        'error' => '4',
-        'message' => 'The user with the id ' . $user_id . ' has no shoppinglists'
-    );
-
+    $msg = new Message ('The user with the id ' . $user_id . ' has no shoppinglists', 'error');
+    $data = $msg->to_array();
 }
 
 // Convert to JSON

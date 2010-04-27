@@ -1,6 +1,7 @@
 <?php
-include_once('../lib/include_dao.php');
-include_once('../lib/authorization.class.php');
+include_once('lib/include_dao.php');
+include_once('lib/message.class.php');
+include_once('lib/authorization.class.php');
 include_once('session.controller.php');
 
 // POST / GET variables
@@ -24,17 +25,14 @@ if(Authorization::auth_create_item($user_id, $shoppinglist_id)) {
         );
 
     } else {
-        $data = array(
-            'error' => '5',
-            'message' => 'Something went wrong during the item creation process.'
-        );
 
+        $msg = new Message ('Something went wrong during the item creation process.', 'error');
+        $data = $msg->to_array();
     }
 } else {
-    $data = array(
-        'error' => '5',
-        'message' => 'Not authorized to insert an item to this shoppinglist.'
-    );
+
+    $msg = new Message ('Not authorized to insert an item to this shoppinglist.', 'error');
+    $data = $msg->to_array();
 }
 
 

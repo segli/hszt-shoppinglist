@@ -1,5 +1,6 @@
 <?php
-include_once('../lib/include_dao.php');
+include_once('lib/include_dao.php');
+include_once('lib/message.class.php');
 include_once('session.controller.php');
 
 // POST / GET variables
@@ -15,13 +16,8 @@ if (count($households) > 0) {
     );
 
 } else {
-
-    // Prepare Data
-    $data = array(
-        'error' => '4',
-        'message' => 'The user with the id ' . $user_id . ' has no households'
-    );
-
+    $msg = new Message ('The user with the id ' . $user_id . ' has no households!', 'error');
+    $data = $msg->to_array();
 }
 
 // Convert to JSON

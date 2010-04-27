@@ -1,6 +1,8 @@
 <?php
-include_once('../lib/authentication.class.php');
-include_once('../lib/inputvalidation.class.php');
+include_once('../config/environment.php');
+include_once('lib/authentication.class.php');
+include_once('lib/inputvalidation.class.php');
+include_once('lib/message.class.php');
 
 // POST / GET variables
 $user = new User();
@@ -25,34 +27,27 @@ $confirm_pw = $_POST['user_confirm_password'];
                         );
 
                     } else {
-                        $data = array(
-                            'error' => '2',
-                            'message' => 'User already exists'
-                        );
+                        $msg = new Message ('User already exists', 'error');
+                        $data = $msg->to_array();
                     }
                } else {
-                    $data = array(
-                        'error' => '2',
-                        'message' => 'Password too weak'
-                    );
+                   $msg = new Message ('Password too weak', 'error');
+                   $data = $msg->to_array();
                }
             } else {
-                $data = array(
-                    'error' => '2',
-                    'message' => 'Password does not match'
-                );
+                $msg = new Message ('Password does not match', 'error');
+                $data = $msg->to_array();
+               
             }
         } else {
-            $data = array(
-                'error' => '2',
-                'message' => 'Please enter a valid email address'
-            );
+            $msg = new Message ('Please enter a valid email address', 'error');
+            $data = $msg->to_array();
+            
         }
     } else {
-        $data = array(
-            'error' => '2',
-            'message' => 'Please fill out all fields'
-        );
+        $msg = new Message ('Please fill out all fields', 'error');
+        $data = $msg->to_array();
+        
     }
 
 // Convert to JSON

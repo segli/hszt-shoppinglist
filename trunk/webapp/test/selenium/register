@@ -13,7 +13,12 @@
 </thead><tbody>
 <tr>
 	<td>open</td>
-	<td>register.php</td>
+	<td>http://local.shoppinglist/index.php</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=Register</td>
 	<td></td>
 </tr>
 <tr>

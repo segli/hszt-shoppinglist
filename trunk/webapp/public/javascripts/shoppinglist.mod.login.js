@@ -7,7 +7,8 @@ var Shoppinglist = Shoppinglist || {};
         defaults = null;
 
     defaults = {
-        onLogin : function () {}    
+        onLogin : function () {},
+        onMessage : function () {}
     };
 
     config = $.extend({}, defaults, options);
@@ -24,9 +25,10 @@ var Shoppinglist = Shoppinglist || {};
                'type' : 'post',
                'dataType' : 'json',
                'success' : function (data) {
-                   if (!data.error) {
-                       $($('.bd', $ctx).get(0)).append('<div>Your session id: ' + data.session_id + '</div>');
+                   if (!data.message) {
                        config.onLogin();
+                   } else {
+                       config.onMessage(data);
                    }
                 }
             });
@@ -40,10 +42,13 @@ var Shoppinglist = Shoppinglist || {};
 }({
     'onLogin' : function () {
         Shoppinglist.load_page({
-        'page' : 'page.households.php',
-        'afterLoad' : function () {
-            Shoppinglist.households.init();
-        }
-    });
+            'page' : 'page.households.php',
+            'afterLoad' : function () {
+                Shoppinglist.households.init();
+            }
+        });
+    },
+    'onMessage' : function (data) {
+        log.error(data.message);    
     }
 }));

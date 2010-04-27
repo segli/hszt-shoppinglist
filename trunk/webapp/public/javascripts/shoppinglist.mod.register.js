@@ -7,7 +7,8 @@ var Shoppinglist = Shoppinglist || {};
         defaults = null;
 
     defaults = {
-        onRegister : function () {}    
+        onRegister : function () {},
+        onMessage : function () {}
     };
 
     config = $.extend({}, defaults, options);
@@ -26,12 +27,12 @@ var Shoppinglist = Shoppinglist || {};
                'type' : 'post',
                'dataType' : 'json',
                'success' : function (data) {
-                   if (!data.error) {
+                   if (!data.message) {
                        $($('.bd', $ctx).get(0)).append('<div>New user id: ' + data.id + '</div>');
 
                        config.onRegister();
                    } else {
-                       log.info(data.error + ': ' + data.message);
+                       config.onMessage(data);
                    }
                 }
             });
@@ -46,6 +47,9 @@ var Shoppinglist = Shoppinglist || {};
 {
     'onRegister' : function () {
         log.info('User added');
+    },
+    'onMessage' : function (data) {
+        log[data.type](data.message);
     }
 }
 ));

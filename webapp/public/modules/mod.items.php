@@ -18,7 +18,7 @@ include_once('../controllers/session.controller.php');
                 <fieldset>
                     <div>
                         <label class="base">Item</label>
-                        <input name="item_name" />
+                        <input name="item_name" autocomplete="off" />
                     </div>
                     <input type="submit" value="add item" />
                 </fieldset>

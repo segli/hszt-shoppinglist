@@ -1,3 +1,4 @@
+var Shoppinglist = Shoppinglist || {};
 Shoppinglist.helper = {};
 
 (function () {

@@ -1,3 +1,4 @@
+/*global jQuery, log $ */
 var Shoppinglist = Shoppinglist || {};
 
 (Shoppinglist.households = function (options) {
@@ -8,6 +9,7 @@ var Shoppinglist = Shoppinglist || {};
         config = null,
         defaults = null,
         fetch_households_by_user_id = null,
+        prepare = null,
         update_existing_view = null;
 
     defaults = {
@@ -23,18 +25,18 @@ var Shoppinglist = Shoppinglist || {};
 
     fetch_households_by_user_id = function (callback) {
         $.ajax({
-           'url' : 'controller_proxy.php?controller=fetchhouseholds',
-           'type' : 'get',
-           'dataType' : 'json',
-           'success' : function (data) {
+            'url' : 'controller_proxy.php?controller=fetchhouseholds',
+            'type' : 'get',
+            'dataType' : 'json',
+            'success' : function (data) {
           
-               if (!data.error) {
-                   callback(data);
+                if (!data.error) {
+                    callback(data);
 
-                   config.onFetch();
-               } else {
-                   console.info(data.error, data.message);
-               }
+                    config.onFetch();
+                } else {
+                    console.info(data.error, data.message);
+                }
             }
         });
     };
@@ -53,7 +55,10 @@ var Shoppinglist = Shoppinglist || {};
             tmpHtml.add('<a href="controller_proxy.php?controller=fetchshoppinglists&amp;hid=' + current_item.householdId + '" hid="' + current_item.householdId + '">' + current_item.name + '</a>');
 
             if (parseInt(current_item.isOwner, 10) === 1) {
+                tmpHtml.add('<span class="actions">');
                 tmpHtml.add('<a class="delete" href="controller_proxy.php?controller=deletehousehold&amp;hid=' + current_item.householdId + '" hid="' + current_item.householdId + '">[delete]</a>');    
+                tmpHtml.add('<a class="invite" href="?hid=' + current_item.householdId + '" hid="' + current_item.householdId + '">[invite]</a>');
+                tmpHtml.add('</span>');
             }
             tmpHtml.add('</li>');
         }
@@ -64,25 +69,25 @@ var Shoppinglist = Shoppinglist || {};
     };
 
     // TODO: prepare is common function used for households, shoppinglist and items. Apply OOP!!!
-    var prepare = function ($ctx) {
+    prepare = function ($ctx) {
         $form_create = $('form.create', $ctx);
         $btn_submit_create = $('input[type="submit"]', $form_create);
 
         $btn_submit_create.click(function () {
             $.ajax({
-               'url' : $form_create.attr('action'),
-               'data' : $form_create.serialize(),
-               'type' : $form_create.attr('method'),
-               'dataType' : 'json',
-               'success' : function (data) {
+                'url' : $form_create.attr('action'),
+                'data' : $form_create.serialize(),
+                'type' : $form_create.attr('method'),
+                'dataType' : 'json',
+                'success' : function (data) {
 
                     if (!data.error) {
                         $ctx.trigger('dataChanged');
 
                         config.onCreate();
-                   } else {
-                       log.info(data.error + ': ' + data.message);
-                   }
+                    } else {
+                        log.info(data.error + ': ' + data.message);
+                    }
                 }
             });
             return false;
@@ -103,26 +108,26 @@ var Shoppinglist = Shoppinglist || {};
             });
         });
 
-        $ctx.click(function (e) {
-            var $target = $(e.target);
-            if ($target.is('.bdExisting a.delete', $ctx)) {
-                
-                $.ajax({
-                   'url' : 'controller_proxy.php?controller=deletehousehold&hid=' + $target.attr('hid'),
-                   'type' : 'get',
-                   'dataType' : 'json',
-                   'success' : function (data) {
-                        if (data.message && data.type !== 'error') {
-                            $ctx.trigger('dataChanged');
-                            config.onDelete(data);
-                       } else {
-                           config.onError(data);
-                       }
+
+        $ctx.delegate('.actions a.delete', 'click', function () {
+            $.ajax({
+                'url' : 'controller_proxy.php?controller=deletehousehold&hid=' + $(this).attr('hid'),
+                'type' : 'get',
+                'dataType' : 'json',
+                'success' : function (data) {
+                    if (data.message && data.type !== 'error') {
+                        $ctx.trigger('dataChanged');
+                        config.onDelete(data);
+                    } else {
+                        config.onError(data);
                     }
-                });
-                return false;
-            } else if ($target.is('.bdExisting a',$ctx)) {
-                Shoppinglist.selected_hid = $(e.target).attr('hid');
+                }
+            });
+            return false;
+        }); 
+
+        $ctx.delegate('.bdExisting li>a', 'click', function () {
+                Shoppinglist.selected_hid = $(this).attr('hid');
                 Shoppinglist.load_page({
                     'page' : 'page.shoppinglists.php',
                 
@@ -131,7 +136,19 @@ var Shoppinglist = Shoppinglist || {};
                     }
                 });
                 return false;
-           }
+        });
+
+        $ctx.delegate('.actions a.invite', 'click', function () {
+            Shoppinglist.selected_hid = $(this).attr('hid');
+            Shoppinglist.load_page({
+                'page' : 'page.invite.php',
+
+                'afterLoad' : function () {
+                    //Shoppinglist.invite.init();
+                    log.info('init invite');
+                }
+            });
+            return false;
         });
 
         $ctx.trigger('dataChanged');

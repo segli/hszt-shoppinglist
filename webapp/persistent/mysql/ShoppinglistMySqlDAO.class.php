@@ -61,7 +61,7 @@ class ShoppinglistMySqlDAO implements ShoppinglistDAO{
 		$sqlQuery = new SqlQuery($sql);
 		
 		$sqlQuery->set($shoppinglist->name);
-		$sqlQuery->setNumber($shoppinglist->status);
+		$sqlQuery->set($shoppinglist->status);
 		$sqlQuery->set($shoppinglist->dateCreated);
 		$sqlQuery->set($shoppinglist->dateClosed);
 		$sqlQuery->set($shoppinglist->householdId);
@@ -82,7 +82,7 @@ class ShoppinglistMySqlDAO implements ShoppinglistDAO{
 		$sqlQuery = new SqlQuery($sql);
 		
 		$sqlQuery->set($shoppinglist->name);
-		$sqlQuery->setNumber($shoppinglist->status);
+		$sqlQuery->set($shoppinglist->status);
 		$sqlQuery->set($shoppinglist->dateCreated);
 		$sqlQuery->set($shoppinglist->dateClosed);
 		$sqlQuery->set($shoppinglist->householdId);

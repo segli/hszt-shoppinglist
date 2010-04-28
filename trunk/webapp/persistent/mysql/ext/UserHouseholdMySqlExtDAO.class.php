@@ -20,7 +20,7 @@ class UserHouseholdMySqlExtDAO extends UserHouseholdMySqlDAO {
         $sql .= ' AND u.household_id = h.household_id';
         $sql .= ' AND u.household_id = ?';
         $sql .= ' AND is_owner = 1';
-
+        
 		$sqlQuery = new SqlQuery($sql);
 		$sqlQuery->set($household_id);
 		return $this->getListComplete($sqlQuery);

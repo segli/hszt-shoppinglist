@@ -16,12 +16,13 @@ class UserHouseholdMySqlExtDAO extends UserHouseholdMySqlDAO {
 
     public function queryAllByUserIdAndHouseholdIdAndOwner($user_id, $household_id){
 		$sql = 'SELECT u.*, h.name FROM user_household u, household h';
-        $sql .= ' WHERE u.user_id = '. $user_id .'';
+        $sql .= ' WHERE u.user_id = ?';
         $sql .= ' AND u.household_id = h.household_id';
         $sql .= ' AND u.household_id = ?';
         $sql .= ' AND is_owner = 1';
         
 		$sqlQuery = new SqlQuery($sql);
+        $sqlQuery->set($user_id);
 		$sqlQuery->set($household_id);
 		return $this->getListComplete($sqlQuery);
 	}

@@ -17,7 +17,7 @@ if(Authorization::auth_delete_shoppinglist($user_id, $shoppinglist_id)) {
     // Delete shoppinglist itself
     DAOFactory::getShoppinglistDAO()->delete($shoppinglist_id);
 
-    $msg = new Message ('Shoppinglist deleted', 'message');
+    $msg = new Message ('Shoppinglist deleted', 'info');
     $data = $msg->to_array();
 
 } else {

@@ -1,8 +1,9 @@
 <?php
+include_once('../config/environment.php');
 include_once('lib/include_dao.php');
-include_once('lib/authorization.class.php');
 include_once('lib/message.class.php');
-include_once('session.controller.php');
+include_once('lib/authorization.class.php');
+include_once('controllers/session.controller.php');
 
 // POST / GET variables
 $user_id = $_SESSION['user']->userId;
@@ -14,10 +15,9 @@ if(isset($_POST['private']) AND $_POST['private'] == "on") { $private = 1; } els
 $shoppinglist = new Shoppinglist();
 $shoppinglist->name = $shoppinglist_name;
 $shoppinglist->status = $private;
-$shoppinglist->dateCreated = time();
 $shoppinglist->householdId = $household_id;
 $shoppinglist->userId = $user_id;
-$shoppinglist->dateCreated = time();
+$shoppinglist->dateCreated = date('Y-m-d H:i:s', time());
 
 
 if (Authorization::auth_create_shoppinglist($user_id, $household_id)) {

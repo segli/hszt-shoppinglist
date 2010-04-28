@@ -1,23 +1,24 @@
 <?php
+include_once('../config/environment.php');
 include_once('lib/include_dao.php');
 include_once('lib/message.class.php');
 include_once('lib/authorization.class.php');
-include_once('controller/session.controller.php');
+include_once('controllers/session.controller.php');
 
 // POST / GET variables
 $user_id = $_SESSION['user']->userId;
 $item_id = $_POST['iid'];
-$status_id = $_POST['status'];
+$status_id = $_POST['status']; // Status: 0 = new, 1 = selected, 2 = commited
 
 if(Authorization::auth_status_item($user_id, $shoppinglist_id)) {
 
-    if($status_id >= 0 AND $status_id < 5) {
+    if($status_id >= 0 AND $status_id < 3) {
 
         $item = DAOFactory::getItemDAO()->load($item_id);
         $item->status = $status_id;
         DAOFactory::getItemDAO()->update($item);
 
-        $msg = new Message ('Status updated!', 'message');
+        $msg = new Message ('Status updated!', 'info');
         $data = $msg->to_array();
     }
 } else {

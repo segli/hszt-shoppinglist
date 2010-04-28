@@ -12,6 +12,7 @@ var Shoppinglist = Shoppinglist || {};
 
     defaults = {
         onCreate : function () {},
+        onDelete : function () {},
         onFetch : function () {}
     };
 

@@ -35,10 +35,12 @@ class ShoppinglistMySqlExtDAO extends ShoppinglistMySqlDAO{
 
 		$sql = 'SELECT s.* FROM shoppinglist s';
 		$sql .= ' WHERE s.shoppinglist_id = ?';
-        $sql .= ' AND s.user_id = '. $user_id .'';
+        $sql .= ' AND s.user_id = ?';
 
 		$sqlQuery = new SqlQuery($sql);
+
 		$sqlQuery->set($shoppinglist_id);
+        $sqlQuery->set($user_id);
 		return $this->getList($sqlQuery);
 	}
 

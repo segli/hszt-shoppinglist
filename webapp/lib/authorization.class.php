@@ -38,7 +38,7 @@ class Authorization implements iAuthorization {
     public static function auth_create_invitation($user_id, $household_id) {
 
         $user = DAOFactory::getUserHouseholdDAO()->queryAllByUserIdAndHouseholdIdAndOwner($user_id, $household_id);
-
+        
         if(count($user) == 1) {
             return true;
         } else {
@@ -53,6 +53,7 @@ class Authorization implements iAuthorization {
     public static function auth_create_budget($user_id, $household_id) {
         // TODO: Implement auth_create_budget() method.
     }
+
 
     public static function auth_delete_household($user_id, $household_id) {
 
@@ -82,6 +83,31 @@ class Authorization implements iAuthorization {
 
         $shoppinglist = DAOFactory::getShoppinglistDAO()->queryAllByShoppinglistIdAndOwnerId($shoppinglist_id, $user_id);
         
+        if(count($shoppinglist) == 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+    public static function auth_status_item($user_id, $shoppinglist_id) {
+
+        $shoppinglists = DAOFactory::getShoppinglistDAO()->queryAllByUserId($user_id);
+
+        for($i = 0; $i < count($shoppinglists); $i++) {
+            if($shoppinglists[$i]->shoppinglistId == $shoppinglist_id) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public static function auth_status_shoppinglist($user_id, $shoppinglist_id) {
+
+        $shoppinglist = DAOFactory::getShoppinglistDAO()->queryAllByShoppinglistIdAndOwnerId($user_id, $shoppinglist_id);
+
         if(count($shoppinglist) == 1) {
             return true;
         } else {

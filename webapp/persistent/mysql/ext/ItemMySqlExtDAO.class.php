@@ -35,6 +35,17 @@ class ItemMySqlExtDAO extends ItemMySqlDAO{
 		$sqlQuery->set($uid);
 		return $this->getList($sqlQuery);
 	}
-	
+
+    public function queryAllByShoppinglistIdAndItemName($shoppinglist_id, $item_name) {
+
+        $sql = 'SELECT i.* FROM item i';
+        $sql .= ' WHERE i.shoppinglist_id = '. $shoppinglist_id .'';
+        $sql .= ' AND i.name = ?';
+
+		$sqlQuery = new SqlQuery($sql);
+		$sqlQuery->set($item_name);
+		return $this->getList($sqlQuery);
+    }
+
 }
 ?>

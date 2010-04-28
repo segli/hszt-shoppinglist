@@ -8,32 +8,40 @@ include_once('session.controller.php');
 $user_id = $_SESSION['user']->userId;
 $shoppinglist_name = $_POST['shoppinglist_name'];
 $household_id = $_POST['hid'];
+if(isset($_POST['private']) AND $_POST['private'] == "on") { $private = 1; } else { $private = 0;}
 
 // Logic
 $shoppinglist = new Shoppinglist();
 $shoppinglist->name = $shoppinglist_name;
-$shoppinglist->status = 1;
+$shoppinglist->status = $private;
+$shoppinglist->dateCreated = time();
 $shoppinglist->householdId = $household_id;
 $shoppinglist->userId = $user_id;
-//$shoppinglist->dateCreated = time();
+$shoppinglist->dateCreated = time();
 
 
 if (Authorization::auth_create_shoppinglist($user_id, $household_id)) {
 
-    $id = DAOFactory::getShoppinglistDAO()->insert($shoppinglist);
+    $exist = DAOFactory::getShoppinglistDAO()->queryAllByHouseholdIdAndShoppinglistName($household_id, $shoppinglist_name);
 
-    if ($id > 0) {
-        $data = array(
-            'shoppinglistId' => $id
-        );
+    if(count($exist) == 0) {
 
+        $id = DAOFactory::getShoppinglistDAO()->insert($shoppinglist);
+
+        if ($id > 0) {
+            $data = array(
+                'shoppinglistId' => $id
+            );
+
+        } else {
+            $msg = new Message ('Something went wrong during the shoppinglist creation process.', 'error');
+            $data = $msg->to_array();
+        }
     } else {
-
-        $msg = new Message ('Something went wrong during the shoppinglist creation process.', 'error');
+        $msg = new Message ('A shoppinglist with this name already exist in this household!', 'error');
         $data = $msg->to_array();
     }
 } else {
-
     $msg = new Message ('Not authorized to create a shoppinglist in this household!', 'error');
     $data = $msg->to_array();
 }

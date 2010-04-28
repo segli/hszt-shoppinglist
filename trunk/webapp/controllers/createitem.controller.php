@@ -17,16 +17,25 @@ $item->shoppinglistId = $shoppinglist_id;
 
 
 if(Authorization::auth_create_item($user_id, $shoppinglist_id)) {
-    $id = DAOFactory::getItemDAO()->insert($item);
 
-    if ($id > 0) {
-        $data = array(
-            'itemId' => $id
-        );
+    $exist = DAOFactory::getItemDAO()->queryAllByShoppinglistIdAndItemName($shoppinglist_id, $item_name);
 
+    if(count($exist) == 0) {
+
+        $id = DAOFactory::getItemDAO()->insert($item);
+
+        if ($id > 0) {
+            $data = array(
+                'itemId' => $id
+            );
+
+        } else {
+
+            $msg = new Message ('Something went wrong during the item creation process.', 'error');
+            $data = $msg->to_array();
+        }
     } else {
-
-        $msg = new Message ('Something went wrong during the item creation process.', 'error');
+        $msg = new Message ('An item with this name already exist on this shoppinglist!', 'error');
         $data = $msg->to_array();
     }
 } else {

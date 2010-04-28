@@ -1,5 +1,7 @@
 <?php
-include_once('../lib/include_dao.php');
+include_once('lib/include_dao.php');
+include_once('lib/message.class.php');
+include_once('lib/authorization.class.php');
 include_once('session.controller.php');
 
 // POST / GET variables
@@ -25,13 +27,8 @@ if ($userhousehold_id > 0) {
     );
 
 } else {
-
-    // Prepare Data
-    $data = array(
-        'error' => '3',
-        'message' => 'Something went wrong during the household creation process.'
-    );
-
+    $msg = new Message ('Something went wrong during the household creation process.', 'error');
+    $data = $msg->to_array();
 }
 
 // Convert to JSON

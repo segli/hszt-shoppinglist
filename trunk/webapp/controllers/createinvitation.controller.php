@@ -31,7 +31,7 @@ if(Authorization::auth_create_invitation($user_id, $household_id)) {
 
             // TODO: Send email to invited user! To: $email
 
-            $msg = new Message ('Invitation created!', 'message');
+            $msg = new Message ('Invitation created!', 'info');
             $data = $msg->to_array();
 
         } else {
@@ -51,7 +51,7 @@ if(Authorization::auth_create_invitation($user_id, $household_id)) {
 
         // TODO: Send email to invited user! To: $email
         
-        $msg = new Message ('Invitation created!', 'message');
+        $msg = new Message ('Invitation created!', 'info');
         $data = $msg->to_array();
     }
 } else {

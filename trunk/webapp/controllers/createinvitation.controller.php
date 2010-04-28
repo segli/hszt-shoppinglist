@@ -1,8 +1,9 @@
 <?php
+include_once('../config/environment.php');
 include_once('lib/include_dao.php');
 include_once('lib/message.class.php');
 include_once('lib/authorization.class.php');
-include_once('session.controller.php');
+include_once('controllers/session.controller.php');
 
 // POST / GET variables
 $user_id = $_SESSION['user']->userId;
@@ -28,12 +29,12 @@ if($email != $_SESSION['user']->email) {
                 $inv->email = $user[0]->email;  // Email of the person to invitate!
                 $inv->userId = $user_id;        // UserId of the creator!
                 $inv->pending = 1;
-                $inv->dateCreated = time();
+                $inv->dateCreated = date( 'Y-m-d H:i:s', time());;
                 DAOFactory::getInvitationDAO()->insert($inv);
 
                 // TODO: Send email to invited user! To: $email
 
-                $msg = new Message ('Invitation created!', 'message');
+                $msg = new Message ('Invitation created!', 'info');
                 $data = $msg->to_array();
 
             } else {
@@ -48,12 +49,12 @@ if($email != $_SESSION['user']->email) {
             $inv->email = $email;       // Email of the person to invitate!
             $inv->userId = $user_id;    // UserId of the creator!
             $inv->pending = 1;
-            $inv->dateCreated = time();
+            $inv->dateCreated = date( 'Y-m-d H:i:s', time());;
             DAOFactory::getInvitationDAO()->insert($inv);
 
             // TODO: Send email to invited user! To: $email
 
-            $msg = new Message ('Invitation created!', 'message');
+            $msg = new Message ('Invitation created!', 'info');
             $data = $msg->to_array();
         }
     } else {

@@ -14,7 +14,7 @@ if(Authorization::auth_delete_item($user_id, $item_id)) {
     // Delete items
     DAOFactory::getItemDAO()->delete($item_id);
 
-    $msg = new Message ('Item deleted', 'message');
+    $msg = new Message ('Item deleted', 'info');
     $data = $msg->to_array();
 
 } else {

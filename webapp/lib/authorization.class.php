@@ -82,6 +82,8 @@ class Authorization implements iAuthorization {
 
         $shoppinglist = DAOFactory::getShoppinglistDAO()->queryAllByShoppinglistIdAndOwnerId($user_id, $shoppinglist_id);
 
+        return array('shlist' => $shoppinglist, 'uid' => $user_id, 'sid' => $shoppinglist_id);
+
         if(count($shoppinglist) == 1) {
             return true;
         } else {

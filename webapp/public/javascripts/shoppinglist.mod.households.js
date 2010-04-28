@@ -13,7 +13,8 @@ var Shoppinglist = Shoppinglist || {};
     defaults = {
         onCreate : function () {},
         onFetch : function () {},
-        viewUpdated : function () {}
+        viewUpdated : function () {},
+        onError : function () {}
     };
 
    
@@ -104,18 +105,18 @@ var Shoppinglist = Shoppinglist || {};
 
         $ctx.click(function (e) {
             var $target = $(e.target);
-            if ($target.is('.bdExisting a.delete',$ctx)) {
+            if ($target.is('.bdExisting a.delete', $ctx)) {
                 
                 $.ajax({
                    'url' : 'controller_proxy.php?controller=deletehousehold&hid=' + $target.attr('hid'),
                    'type' : 'get',
                    'dataType' : 'json',
                    'success' : function (data) {
-                        if (!data.error) {
+                        if (data.message && data.type !== 'error') {
                             $ctx.trigger('dataChanged');
-                            config.onDelete();
+                            config.onDelete(data);
                        } else {
-                           log.info(data.error + ': ' + data.message);
+                           config.onError(data);
                        }
                     }
                 });
@@ -145,8 +146,11 @@ var Shoppinglist = Shoppinglist || {};
     'onCreate' : function () {
         log.info('Household added');
     },
-    'onDelete' : function () {
-        log.info('Household deleted');
+    'onDelete' : function (data) {
+        log[data.type](data.message);
+    },
+    'onError' : function (data) {
+        log[data.type](data.message);
     }
 }
 ));

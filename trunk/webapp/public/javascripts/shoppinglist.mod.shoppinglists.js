@@ -35,14 +35,23 @@ var Shoppinglist = Shoppinglist || {};
     };
 
     update_existing_view = function (data) {
-        var tmpHtml = [];
-        tmpHtml.push('<ul>');
-        for (var i = 0, len = data.shoppinglists.length; i < len; i++) {
-            tmpHtml.push('<li><a href="#" sid="' + data.shoppinglists[i].shoppinglistId + '">' + data.shoppinglists[i].name + '</a></li>');
-        }
-        tmpHtml.push('<ul>');
+        var tmpHtml = new Shoppinglist.helper.HtmlString(),
+            i = 0,
+            len = 0,
+            current_item = null;
 
-        $('.bdExisting', $ctx).html(tmpHtml.join(''));
+        tmpHtml.add('<ul>');
+
+        for (i = 0, len = data.shoppinglists.length; i < len; i++) {
+            current_item = data.shoppinglists[i];
+            tmpHtml.add('<li>');
+            tmpHtml.add('<a href="#" sid="' + current_item.shoppinglistId + '">' + current_item.name + '</a>');
+            tmpHtml.add('<a class="delete" href="controller_proxy.php?controller=deleteshoppinglist&amp;sid=' + current_item.shoppinglistId + '" sid="' + current_item.shoppinglistId + '">[delete]</a>');
+            tmpHtml.add('</li>');
+        }
+        tmpHtml.add('<ul>');
+
+        $('.bdExisting', $ctx).html(tmpHtml.toString());
     };
 
     // TODO: prepare is common function also used for shoppinglist and items!!!
@@ -107,7 +116,20 @@ var Shoppinglist = Shoppinglist || {};
 
         $ctx.click(function (e) {
             if ($(e.target).is('.bdExisting a.delete',$ctx)) {
-                
+                $.ajax({
+                   'url' : $(e.target).attr('href'),
+                   'type' : 'get',
+                   'dataType' : 'json',
+                   'success' : function (data) {
+                        if (data.message && data.type !== 'error') {
+                            $ctx.trigger('dataChanged');
+                            config.onDelete(data);
+                       } else {
+                           config.onError(data);
+                       }
+                    }
+                });
+                return false;    
             } else if ($(e.target).is('.bdExisting a',$ctx)) {
                 Shoppinglist.selected_sid = $(e.target).attr('sid');
                 Shoppinglist.load_page({
@@ -132,6 +154,12 @@ var Shoppinglist = Shoppinglist || {};
 {
     'onCreate' : function () {
         log.info('Shoppinglist added');
+    },
+    'onDelete' : function (data) {
+        log[data.type](data.message);
+    },
+    'onError' : function (data) {
+        log[data.type](data.message);
     }
 }
 ));

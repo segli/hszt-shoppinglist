@@ -8,7 +8,8 @@ include_once('session.controller.php');
 $user_id = $_SESSION['user']->userId;
 $shoppinglist_id = $_GET['sid'];
 
-
+$data = array('authed' => Authorization::auth_delete_shoppinglist($user_id, $shoppinglist_id));
+/*
 if(Authorization::auth_delete_shoppinglist($user_id, $shoppinglist_id)) {
 
     // Delete items on this shoppinglist
@@ -25,7 +26,7 @@ if(Authorization::auth_delete_shoppinglist($user_id, $shoppinglist_id)) {
     $msg = new Message ('Not authorized to delete this shoppinglist!', 'error');
     $data = $msg->to_array();
 }
-
+*/
 // Convert to JSON
 $json = json_encode($data);
 

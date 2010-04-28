@@ -30,7 +30,7 @@ if(Authorization::auth_delete_household($user_id, $household_id)) {
     // Delete household
     DAOFactory::getHouseholdDAO()->delete($household_id);
 
-    $msg = new Message ('Household deleted', 'message');
+    $msg = new Message ('Household deleted', 'info');
     $data = $msg->to_array();
 
 } else {

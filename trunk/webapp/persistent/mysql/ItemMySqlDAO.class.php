@@ -63,7 +63,7 @@ class ItemMySqlDAO implements ItemDAO{
 		$sqlQuery->set($item->name);
 		$sqlQuery->set($item->description);
 		$sqlQuery->set($item->price);
-		$sqlQuery->setNumber($item->status);
+		$sqlQuery->set($item->status);
 		$sqlQuery->set($item->shoppinglistId);
 
 		$id = $this->executeInsert($sqlQuery);	
@@ -83,7 +83,7 @@ class ItemMySqlDAO implements ItemDAO{
 		$sqlQuery->set($item->name);
 		$sqlQuery->set($item->description);
 		$sqlQuery->set($item->price);
-		$sqlQuery->setNumber($item->status);
+		$sqlQuery->set($item->status);
 		$sqlQuery->set($item->shoppinglistId);
 
 		$sqlQuery->set($item->itemId);

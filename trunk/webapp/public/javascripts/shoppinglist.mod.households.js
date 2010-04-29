@@ -144,8 +144,8 @@ var Shoppinglist = Shoppinglist || {};
                 'page' : 'page.invite.php',
 
                 'afterLoad' : function () {
-                    //Shoppinglist.invite.init();
-                    log.info('init invite');
+                    Shoppinglist.invite.init();
+
                 }
             });
             return false;

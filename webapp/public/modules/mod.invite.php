@@ -10,7 +10,7 @@ include_once('../controllers/session.controller.php');
         </div>
         
         <div class="bd">
-            <form class="invite" action="controller_proxy.php?controller=createinvitation" method="post">
+            <form class="create" action="controller_proxy.php?controller=createinvitation" method="post">
                 <fieldset>
                     <div><label class="base">Send invitation to:</label>
                     <input name="email" autocomplete="off" /></div>

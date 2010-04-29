@@ -7,7 +7,7 @@ var Shoppinglist = Shoppinglist || {};
         defaults = null;
 
     defaults = {
-        onLogin : function () {},
+        onError : function () {},
         onMessage : function () {}
     };
 
@@ -28,7 +28,7 @@ var Shoppinglist = Shoppinglist || {};
                    if (!data.message) {
                        config.onLogin();
                    } else {
-                       config.onMessage(data);
+                       config.onError(data);
                    }
                 }
             });
@@ -48,7 +48,7 @@ var Shoppinglist = Shoppinglist || {};
             }
         });
     },
-    'onMessage' : function (data) {
+    'onError' : function (data) {
         log.error(data.message);    
     }
 }));

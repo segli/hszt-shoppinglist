@@ -40,17 +40,17 @@ var Shoppinglist = Shoppinglist || {};
             len = 0,
             current_item = null;
         
-        tmpHtml.push('<table class="items">');
+        tmpHtml.push('<table class="items" width="100%">');
         
         for (i = 0, len = data.items.length; i < len; i++) {
             current_item = data.items[i];
             
             tmpHtml.push('<tr>');
-            tmpHtml.push('<td><input type="checkbox" name="got_it" /></td>');
+            tmpHtml.push('<td width="30"><input type="checkbox" class="checkbox" name="got_it" /></td>');
             tmpHtml.push('<td><a href="#" iid="' + current_item.id + '">' + current_item.name + '</a></td>');
             tmpHtml.push('<td><input name="howmany_of" size="2" /></td>');
             tmpHtml.push('<td><input name="price" value="' + current_item.price + '" size="4" /></td>');
-            tmpHtml.push('<td><a href="#" iid="' + current_item.id + '"><img src="images/delete.gif" alt="delete item" /></a></td>');
+            tmpHtml.push('<td><a href="#" iid="' + current_item.id + '"><img src="images/icon_delete.png" height="20" width="20" alt="delete item" /></a></td>');
             tmpHtml.push('</tr>');
         }
         

@@ -9,7 +9,7 @@ body {
 #header {
     background: url(../images/bgheader.jpg) repeat-x fixed #000;    
     height:26px;
-    padding:15px;
+    padding:10px;
     margin-bottom: 15px;
 }
 
@@ -18,7 +18,7 @@ body {
 }
 
 #page {
-    margin: 0 10px;
+    margin: 0;
 
 }
 
@@ -33,7 +33,7 @@ h2.base {
     font-size: 16px;
     font-weight: bold;
     font:20px Helvetica;
-    margin: 6px 0;
+    margin: 10px 0 6px 0;
 }
 
 label.base {
@@ -65,10 +65,23 @@ input.checkbox {
     width: 20px;
 }
 
-table .item {
+table.items {
+    font:16px Helvetica;
     border: 1px solid #ccc;
     background-color: #eee;
 }
+
+table.items tr {
+    border-top: 1px solid #ccc;
+    height:60px;
+    padding: 10px;
+
+}
+
+table.items td {
+    padding-left: 10px;
+}
+
 
 a,
 a:link,
@@ -79,14 +92,14 @@ a:visited {
 }
 a:hover {
 	font-weight:bold;
-	color:#000;
+	color:#111;
 	text-decoration:none;
 }
 
 
 
 a.delete {
-
+    margin-left: 8px;
     float: right;
     color: #a62a00;
 }

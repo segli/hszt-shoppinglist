@@ -1,6 +1,6 @@
 <?php
 include_once('../config/environment.php');
-include_once('../controllers/session.controller.php');
+include_once('controllers/session.controller.php');
 
 ?>
 
@@ -18,9 +18,9 @@ include_once('../controllers/session.controller.php');
                 <fieldset>
                     <div>
                         <label class="base">Item</label>
-                        <input name="item_name" autocomplete="off" />
+                        <input name="item_name" class="text" autocomplete="off" />
                     </div>
-                    <input type="submit" value="add item" />
+                    <input type="submit" class="button" value="Add Item" />
                 </fieldset>
             </form>
         </div>

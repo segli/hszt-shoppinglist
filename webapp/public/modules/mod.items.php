@@ -16,10 +16,7 @@ include_once('controllers/session.controller.php');
         <div class="bd">
             <form class="create_item" action="controller_proxy.php?controller=createitem" method="post">
                 <fieldset>
-                    <div>
-                        <label class="base">Item</label>
-                        <input name="item_name" class="text" autocomplete="off" />
-                    </div>
+                    <div><input name="item_name" class="text" autocomplete="off" /></div>
                     <input type="submit" class="button" value="Add Item" />
                 </fieldset>
             </form>

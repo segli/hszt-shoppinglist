@@ -57,8 +57,12 @@ var Shoppinglist = Shoppinglist || {};
 
             if (parseInt(current_item.isOwner, 10) === 1) {
                 tmpHtml.add('<span class="actions">');
-                tmpHtml.add('<a class="delete" onclick="javascript:return confirm(\'Are you sure?\')" href="controller_proxy.php?controller=deletehousehold&amp;hid=' + current_item.householdId + '" hid="' + current_item.householdId + '">[delete]</a>');    
-                tmpHtml.add('<a class="invite" href="?hid=' + current_item.householdId + '" hid="' + current_item.householdId + '">[invite]</a>');
+                tmpHtml.add('<a class="delete" title="delete" onclick="javascript:return confirm(\'Are you sure?\')" href="controller_proxy.php?controller=deletehousehold&amp;hid=' + current_item.householdId + '" hid="' + current_item.householdId + '">');
+                tmpHtml.add('<img src="images/icon_delete.png" height="20" width="20" border="0"');
+                tmpHtml.add('</a>&nbsp;&nbsp;&nbsp;');
+                tmpHtml.add('<a class="invite" title="invite" href="?hid=' + current_item.householdId + '" hid="' + current_item.householdId + '">');
+                tmpHtml.add('<img src="images/icon_invite.png" height="20" width="20" border="0"');
+                tmpHtml.add('</a>');
                 tmpHtml.add('</span>');
             }
             tmpHtml.add('</li>');

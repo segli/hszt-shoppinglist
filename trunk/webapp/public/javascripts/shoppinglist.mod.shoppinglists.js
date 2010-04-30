@@ -48,7 +48,9 @@ var Shoppinglist = Shoppinglist || {};
             tmpHtml.add('<li>');
             tmpHtml.add('<img src="images/icon_note.png" height="20" width="20" border="0">');
             tmpHtml.add('<a href="#" sid="' + current_item.shoppinglistId + '">' + current_item.name + '</a>');
-            tmpHtml.add('<a class="delete" onclick="javascript:return confirm(\'Are you sure?\')" href="controller_proxy.php?controller=deleteshoppinglist&amp;sid=' + current_item.shoppinglistId + '" sid="' + current_item.shoppinglistId + '">[delete]</a>');
+            tmpHtml.add('<a class="delete" title="delete" onclick="javascript:return confirm(\'Are you sure?\')" href="controller_proxy.php?controller=deleteshoppinglist&amp;sid=' + current_item.shoppinglistId + '" sid="' + current_item.shoppinglistId + '">');
+            tmpHtml.add('<img src="images/icon_delete.png" height="20" width="20" border="0"');
+            tmpHtml.add('</a>');
             tmpHtml.add('</li>');
         }
         tmpHtml.add('<ul>');

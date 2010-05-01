@@ -19,8 +19,8 @@ if($email != $_SESSION['user']->email) {
         // Check if invited user is already registered
         if(count($user) > 0) {
 
-            $households = DAOFactory::getUserHouseholdDAO()->queryAllByUserIdAndHouseholdId($user[0]->userId, $household_id);
-DAOFactory::getUserHouseholdDAO()->
+            $households = DAOFactory::getUserHouseholdDAO()->queryAllByUserIdAndHouseholdIdAndOwner($user[0]->userId, $household_id);
+
             // Check if user is already in this household.
             if(count($households) == 0) {
 

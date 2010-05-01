@@ -62,7 +62,7 @@ var Shoppinglist = Shoppinglist || {};
                 'dataType' : 'json',
                 'success' : function (data) {
 
-                    if (data.message && data.type !== 'error') {
+                    if (data.message && data.type === 'info') {
 
                         config.onCreate(data);
                     } else {
@@ -91,6 +91,14 @@ var Shoppinglist = Shoppinglist || {};
 {
     'onCreate' : function (data) {
         log[data.type](data.message);
+        Shoppinglist.load_page({
+            'page' : 'page.households.php',
+
+            'afterLoad' : function () {
+                Shoppinglist.households.init();
+
+            }
+        });
     },
  
     'onError' : function (data) {

@@ -22,6 +22,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>waitForTextPresent</td>
+	<td></td>
+	<td>Confirm</td>
+</tr>
+<tr>
 	<td>type</td>
 	<td>user_first_name</td>
 	<td>Thomas</td>
@@ -47,9 +52,14 @@
 	<td>1234</td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
+	<td>click</td>
 	<td>//input[@value='Register']</td>
 	<td></td>
+</tr>
+<tr>
+	<td>waitForTextPresent</td>
+	<td></td>
+	<td>User already exists</td>
 </tr>
 
 </tbody></table>

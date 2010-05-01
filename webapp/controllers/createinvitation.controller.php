@@ -20,7 +20,7 @@ if($email != $_SESSION['user']->email) {
         if(count($user) > 0) {
 
             $households = DAOFactory::getUserHouseholdDAO()->queryAllByUserIdAndHouseholdId($user[0]->userId, $household_id);
-
+DAOFactory::getUserHouseholdDAO()->
             // Check if user is already in this household.
             if(count($households) == 0) {
 

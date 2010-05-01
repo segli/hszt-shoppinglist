@@ -41,10 +41,13 @@ jQuery(document).ready(function () {
     });
 
     $('body').delegate('#mainNavigation a', 'click', function () {
+        
             var $this = $(this),
+                page_url = '',
+                module_name = '';
 
             // DRY this
-                page_url = $this.attr('href').split('#')[1].split('_').join('.') + '.php',
+                page_url = $this.attr('href').split('#')[1].split('_').join('.') + '.php';
                 module_name = $this.attr('href').split('#')[1].split('_')[1];
 
             Shoppinglist.load_page({
@@ -53,7 +56,7 @@ jQuery(document).ready(function () {
                     Shoppinglist[module_name].init();
                 }
             });
-        
+        return false;
     });
 
 

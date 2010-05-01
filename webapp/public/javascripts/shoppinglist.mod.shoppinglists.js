@@ -53,7 +53,7 @@ var Shoppinglist = Shoppinglist || {};
             tmpHtml.add('</a>');
             tmpHtml.add('</li>');
         }
-        tmpHtml.add('<ul>');
+        tmpHtml.add('</ul>');
 
         $('.bdExisting', $ctx).html(tmpHtml.toString());
     };

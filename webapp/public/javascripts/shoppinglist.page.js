@@ -26,6 +26,8 @@ Shoppinglist.load_page = function (options) {
         }
     });
 
+
+
 };
 
 // Load first page
@@ -38,9 +40,8 @@ jQuery(document).ready(function () {
         }
     });
 
-    $('body').click(function (e) {
-        if ($(e.target).is('#mainNavigation a')) {
-            var $this = $(e.target),
+    $('body').delegate('#mainNavigation a', 'click', function () {
+            var $this = $(this),
 
             // DRY this
                 page_url = $this.attr('href').split('#')[1].split('_').join('.') + '.php',
@@ -52,7 +53,8 @@ jQuery(document).ready(function () {
                     Shoppinglist[module_name].init();
                 }
             });
-        }
+        
     });
+
 
 });

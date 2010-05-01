@@ -9,7 +9,9 @@ var Shoppinglist = Shoppinglist || {};
         config = null,
         defaults = null,
         fetch_households_by_user_id = null,
+        fetch_invitations_by_user_email = null,
         prepare = null,
+        update_invitations_view = null,
         update_existing_view = null;
 
     defaults = {
@@ -19,8 +21,6 @@ var Shoppinglist = Shoppinglist || {};
         onError : function () {}
     };
 
-   
-
     config = $.extend({}, defaults, options);
 
     fetch_households_by_user_id = function (callback) {
@@ -29,20 +29,35 @@ var Shoppinglist = Shoppinglist || {};
             'type' : 'get',
             'dataType' : 'json',
             'success' : function (data) {
-          
-                if (!data.error) {
+
+                if (data.households) {
                     callback(data);
 
                     config.onFetch();
-                } else {
-                    console.info(data.error, data.message);
+                } else if (data.type && data.type === 'error') {
+                    config.onError(data);
                 }
             }
         });
     };
 
+    fetch_invitations_by_user_email = function (callback) {
+        $.ajax({
+            'url' : 'controller_proxy.php?controller=fetchinvitations',
+            'type' : 'get',
+            'dataType' : 'json',
+            'success' : function (data) {
+                if (!data.type) {
+                    callback(data);
+                    config.onFetch();
+                } else {
+                    confog.onError(data.error, data.message);
+                }
+            }
+        });    
+    };
+
     update_existing_view = function (data) {
-        
         var tmpHtml = new Shoppinglist.helper.HtmlString(),
             i = 0,
             len = 0,
@@ -57,7 +72,7 @@ var Shoppinglist = Shoppinglist || {};
 
             if (parseInt(current_item.isOwner, 10) === 1) {
                 tmpHtml.add('<span class="actions">');
-                tmpHtml.add('<a class="delete" title="delete" onclick="javascript:return confirm(\'Are you sure?\')" href="controller_proxy.php?controller=deletehousehold&amp;hid=' + current_item.householdId + '" hid="' + current_item.householdId + '">');
+                tmpHtml.add('<a class="delete" title="delete" onclick="return confirm(\'Are you sure?\')" href="controller_proxy.php?controller=deletehousehold&amp;hid=' + current_item.householdId + '" hid="' + current_item.householdId + '">');
                 tmpHtml.add('<img src="images/icon_delete.png" height="20" width="20" border="0"');
                 tmpHtml.add('</a>&nbsp;&nbsp;&nbsp;');
                 tmpHtml.add('<a class="invite" title="invite" href="?hid=' + current_item.householdId + '" hid="' + current_item.householdId + '">');
@@ -67,10 +82,30 @@ var Shoppinglist = Shoppinglist || {};
             }
             tmpHtml.add('</li>');
         }
-        tmpHtml.add('<ul>');
+        tmpHtml.add('</ul>');
 
         $('.bdExisting', $ctx).html(tmpHtml.toString());
 
+    };
+
+    update_invitations_view = function (data) {
+        var tmpHtml = new Shoppinglist.helper.HtmlString(),
+            i = 0,
+            len = 0,
+            current_item = null;
+
+        tmpHtml.add('<ul>');
+        for (i = 0, len = data.invitations.length; i < len; i++) {
+            current_item = data.invitations[i];
+            tmpHtml.add('<li>');
+            tmpHtml.add('<img src="images/icon_house.png" height="20" width="20" border="0">');
+            tmpHtml.add('dummy');
+           // tmpHtml.add('<a href="controller_proxy.php?controller=fetchshoppinglists&amp;hid=' + current_item.householdId + '" hid="' + current_item.householdId + '">' + current_item.name + '</a>');
+            tmpHtml.add('</li>');
+        }
+        tmpHtml.add('</ul>');
+
+        $('.bdInvitations', $ctx).html(tmpHtml.toString());
     };
 
     // TODO: prepare is common function used for households, shoppinglist and items. Apply OOP!!!
@@ -85,13 +120,12 @@ var Shoppinglist = Shoppinglist || {};
                 'type' : $form_create.attr('method'),
                 'dataType' : 'json',
                 'success' : function (data) {
-
-                    if (!data.error) {
+                    
+                    if (data.message && data.type === 'info') {
                         $ctx.trigger('dataChanged');
-
-                        config.onCreate();
+                        config.onCreate(data);
                     } else {
-                        log.info(data.error + ': ' + data.message);
+                        config.onError(data);
                     }
                 }
             });
@@ -107,8 +141,15 @@ var Shoppinglist = Shoppinglist || {};
 
         prepare($ctx);
 
+        fetch_invitations_by_user_email(function () {
+           log.info('invitations were fetched');
+           update_invitations_view();
+        });
+
         $ctx.bind('dataChanged', function () {
+
             fetch_households_by_user_id(function (data) {
+   
                 update_existing_view(data);
             });
         });
@@ -165,8 +206,8 @@ var Shoppinglist = Shoppinglist || {};
     };
 }(
 {
-    'onCreate' : function () {
-        log.info('Household added');
+    'onCreate' : function (data) {
+        log[data.type](data.message);
     },
     'onDelete' : function (data) {
         log[data.type](data.message);

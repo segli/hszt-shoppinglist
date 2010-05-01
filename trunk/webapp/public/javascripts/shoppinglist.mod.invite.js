@@ -75,8 +75,6 @@ var Shoppinglist = Shoppinglist || {};
 
     };
 
-    
-
     init = function () {
         var $ctx = $('.modInvite');
 
@@ -84,8 +82,6 @@ var Shoppinglist = Shoppinglist || {};
 
         $('form.create', $ctx).append('<input type="hidden" name="hid" value="' + Shoppinglist.selected_hid + '" />');
         
-   
-
     };
 
     return {

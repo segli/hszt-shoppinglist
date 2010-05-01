@@ -23,9 +23,8 @@ $userhousehold_id = DAOFactory::getUserHouseholdDAO()->insert($userhousehold);
 
 if ($userhousehold_id > 0) {
     // Prepare Data
-    $data = array(
-        'userhouseholdid' => $userhousehold_id
-    );
+    $msg = new Message ('New Household ' . $household_name . ' created.', 'info');
+    $data = $msg->to_array();
 
 } else {
     $msg = new Message ('Something went wrong during the household creation process.', 'error');

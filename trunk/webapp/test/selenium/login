@@ -28,7 +28,7 @@
 </tr>
 <tr>
 	<td>click</td>
-	<td>//input[@value='login']</td>
+	<td>//input[@value='Login']</td>
 	<td></td>
 </tr>
 <tr>

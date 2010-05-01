@@ -14,6 +14,10 @@ var Shoppinglist = Shoppinglist || {};
         update_invitations_view = null,
         update_existing_view = null;
 
+    /**
+     * Default parameters
+     * @param callback
+     */
     defaults = {
         onCreate : function () {},
         onFetch : function () {},
@@ -23,38 +27,42 @@ var Shoppinglist = Shoppinglist || {};
 
     config = $.extend({}, defaults, options);
 
-    fetch_households_by_user_id = function (callback) {
+    /**
+     *
+     * @param {string} controller name eg. fetchhouseholds or createhousehold. This is the same value of the key "controller" in controller_proxy.php?controller=fetchhouseholds 
+     * @param {string} data_root_object. The object name returned by the controller_proxy.php
+     * @param {function} callback
+     */
+    var talk_to_controller = function (controller, data_root_object, callback) {
+
+        if (arguments.length != 3 || !$.isFunction(callback)) {
+            return false;
+        }
+
         $.ajax({
-            'url' : 'controller_proxy.php?controller=fetchhouseholds',
+            'url' : 'controller_proxy.php?controller=' + controller,
             'type' : 'get',
             'dataType' : 'json',
             'success' : function (data) {
 
-                if (data.households) {
+                if (data[data_root_object]) {
                     callback(data);
-
                     config.onFetch();
                 } else if (data.type && data.type === 'error') {
                     config.onError(data);
                 }
             }
         });
+
+        return true;
+    };
+
+    fetch_households_by_user_id = function (callback) {
+        return talk_to_controller('fetchhouseholds', 'households', callback);
     };
 
     fetch_invitations_by_user_email = function (callback) {
-        $.ajax({
-            'url' : 'controller_proxy.php?controller=fetchinvitations',
-            'type' : 'get',
-            'dataType' : 'json',
-            'success' : function (data) {
-                if (!data.type) {
-                    callback(data);
-                    config.onFetch();
-                } else {
-                    confog.onError(data.error, data.message);
-                }
-            }
-        });    
+        return talk_to_controller('fetchinvitations', 'invitations', callback);
     };
 
     update_existing_view = function (data) {
@@ -89,6 +97,7 @@ var Shoppinglist = Shoppinglist || {};
     };
 
     update_invitations_view = function (data) {
+
         var tmpHtml = new Shoppinglist.helper.HtmlString(),
             i = 0,
             len = 0,
@@ -99,8 +108,7 @@ var Shoppinglist = Shoppinglist || {};
             current_item = data.invitations[i];
             tmpHtml.add('<li>');
             tmpHtml.add('<img src="images/icon_house.png" height="20" width="20" border="0">');
-            tmpHtml.add('dummy');
-           // tmpHtml.add('<a href="controller_proxy.php?controller=fetchshoppinglists&amp;hid=' + current_item.householdId + '" hid="' + current_item.householdId + '">' + current_item.name + '</a>');
+            tmpHtml.add('<a href="controller_proxy.php?controller=fetchshoppinglists&amp;hid=' + current_item.householdId + '" hid="' + current_item.householdId + '">' + current_item.householdName + '</a>');
             tmpHtml.add('</li>');
         }
         tmpHtml.add('</ul>');
@@ -141,9 +149,8 @@ var Shoppinglist = Shoppinglist || {};
 
         prepare($ctx);
 
-        fetch_invitations_by_user_email(function () {
-           log.info('invitations were fetched');
-           update_invitations_view();
+        fetch_invitations_by_user_email(function (data) {
+           update_invitations_view(data);
         });
 
         $ctx.bind('dataChanged', function () {

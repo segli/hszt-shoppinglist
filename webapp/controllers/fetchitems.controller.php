@@ -22,7 +22,7 @@ if (count($items) > 0) {
     );
 
 } else {
-    $msg = new Message ('The shoppinglist with the id ' . $shoppinglist_id . ' has no items or the list is closed.', 'info');
+    $msg = new Message ('The shoppinglist with the id ' . $shoppinglist_id . ' has no items or the list is closed.', 'error ');
     $data = $msg->to_array();
 }
 

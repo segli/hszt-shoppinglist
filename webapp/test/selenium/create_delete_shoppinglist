@@ -4,12 +4,12 @@
 <head profile="http://selenium-ide.openqa.org/profiles/test-case">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="selenium.base" href="" />
-<title>Create and Delete Shoppinglist</title>
+<title>create_delete_shoppinglist</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">Create and Delete Shoppinglist</td></tr>
+<tr><td rowspan="1" colspan="3">create_delete_shoppinglist</td></tr>
 </thead><tbody>
 <tr>
 	<td>open</td>
@@ -28,7 +28,7 @@
 </tr>
 <tr>
 	<td>click</td>
-	<td>//input[@value='login']</td>
+	<td>//input[@value='Login']</td>
 	<td></td>
 </tr>
 <tr>
@@ -53,7 +53,7 @@
 </tr>
 <tr>
 	<td>click</td>
-	<td>//input[@value='add shoppinglist']</td>
+	<td>//input[@value='Add Shoppinglist']</td>
 	<td></td>
 </tr>
 <tr>

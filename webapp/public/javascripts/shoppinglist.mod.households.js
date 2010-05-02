@@ -22,7 +22,8 @@ var Shoppinglist = Shoppinglist || {};
         onCreate : function () {},
         onFetch : function () {},
         viewUpdated : function () {},
-        onError : function () {}
+        onError : function () {},
+        onDelete : function () {}
     };
 
     config = $.extend({}, defaults, options);

@@ -26,9 +26,8 @@ if($item_name != "") {
             $id = DAOFactory::getItemDAO()->insert($item);
 
             if ($id > 0) {
-                $data = array(
-                    'itemId' => $id
-                );
+                $msg = new Message ('New item added to shoppinglist.', 'info');
+                $data = $msg->to_array();
 
             } else {
 

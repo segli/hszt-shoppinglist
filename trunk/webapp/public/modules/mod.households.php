@@ -5,14 +5,8 @@ include_once('controllers/session.controller.php');
 
 <div class="mod modHouseholds">
     <div class="inner">
-        <div class="hd">
-            <h2 class="base">My Households</h2>
-        </div>
-        <div class="bd bdExisting"></div>
-        <div class="hd">
-            <h2 class="base">Pending Invitations</h2>
-        </div>
-        <div class="bd bdInvitations"></div>
+        <div class="bd bdExisting bdHidden"></div>
+        <div class="bd bdInvitations bdHidden"></div>
         <div class="hd">
             <h2 class="base">Create New</h2>
         </div>

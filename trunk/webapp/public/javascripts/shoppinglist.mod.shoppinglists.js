@@ -51,11 +51,13 @@ var Shoppinglist = Shoppinglist || {};
         for (i = 0, len = data.shoppinglists.length; i < len; i++) {
             current_item = data.shoppinglists[i];
             tmpHtml.add('<li>');
-            tmpHtml.add('<img src="images/icon_note.png" height="20" width="20" border="0">');
-            tmpHtml.add('<a href="#" sid="' + current_item.shoppinglistId + '">' + current_item.name + '</a>');
-            tmpHtml.add('<a class="delete" title="delete" onclick="javascript:return confirm(\'Are you sure?\')" href="controller_proxy.php?controller=deleteshoppinglist&amp;sid=' + current_item.shoppinglistId + '" sid="' + current_item.shoppinglistId + '">');
-            tmpHtml.add('<img src="images/icon_delete.png" height="20" width="20" border="0"');
+            tmpHtml.add('<img src="images/icon_note.png" height="20" width="20" class="base" />');
+            tmpHtml.add('<a href="controller_proxy.php?controller=fetchitems&amp;sid=' + current_item.shoppinglistId + '" sid="' + current_item.shoppinglistId + '">' + current_item.name + '</a>');
+            tmpHtml.add('<span class="actions">');
+            tmpHtml.add('<a class="delete" title="delete" onclick="return confirm(\'Are you sure?\')" href="controller_proxy.php?controller=deleteshoppinglist&amp;sid=' + current_item.shoppinglistId + '" sid="' + current_item.shoppinglistId + '">');
+            tmpHtml.add('<img src="images/icon_delete.png" height="20" width="20" class="base" />');
             tmpHtml.add('</a>');
+            tmpHtml.add('</span>');
             tmpHtml.add('</li>');
         }
         tmpHtml.add('</ul>');
@@ -84,8 +86,8 @@ var Shoppinglist = Shoppinglist || {};
                         $ctx.trigger('dataChanged');
 
                         config.onCreate();
-                   } else {
-                       log.info(data.error + ': ' + data.message);
+                   } else if (data.message && data.type === 'error') {
+                       config.Error(data);
                    }
                 }
             });
@@ -129,34 +131,35 @@ var Shoppinglist = Shoppinglist || {};
             });
         });
 
-        $ctx.click(function (e) {
-            if ($(e.target).is('.bdExisting a.delete',$ctx)) {
-                $.ajax({
-                   'url' : $(e.target).attr('href'),
-                   'type' : 'get',
-                   'dataType' : 'json',
-                   'success' : function (data) {
-                        if (data.message && data.type !== 'error') {
-                            $ctx.trigger('dataChanged');
-                            config.onDelete(data);
-                       } else {
-                           config.onError(data);
-                       }
-                    }
-                });
-                return false;    
-            } else if ($(e.target).is('.bdExisting a',$ctx)) {
-                Shoppinglist.selected_sid = $(e.target).attr('sid');
-                Shoppinglist.load_page({
-                    'page' : 'page.items.php',
-
-                    'afterLoad' : function () {
-                        Shoppinglist.items.init();
-                    }
-                });
-                return false;
-           }
+        $ctx.delegate('.bdExisting a.delete', 'click', function () {
+            $.ajax({
+               'url' : $(this).attr('href'),
+               'type' : 'get',
+               'dataType' : 'json',
+               'success' : function (data) {
+                    if (data.message && data.type !== 'error') {
+                        $ctx.trigger('dataChanged');
+                        config.onDelete(data);
+                   } else {
+                       config.onError(data);
+                   }
+                }
+            });
+            return false;
         });
+
+        $ctx.delegate('.bdExisting li>a', 'click', function () {
+            Shoppinglist.selected_sid = $(this).attr('sid');
+            Shoppinglist.load_page({
+                'page' : 'page.items.php',
+
+                'afterLoad' : function () {
+                    Shoppinglist.items.init();
+                }
+            });
+            return false;
+        });
+
 
         $ctx.trigger('dataChanged');
 

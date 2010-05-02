@@ -12,6 +12,8 @@
 <tr><td><a href="login">login</a></td></tr>
 <tr><td><a href="fullnavigation">fullnavigation</a></td></tr>
 <tr><td><a href="incorrect_login">incorrect_login</a></td></tr>
+<tr><td><a href="login_simon">login_simon</a></td></tr>
+<tr><td><a href="create_delete_shoppinglist">create_delete_shoppinglist</a></td></tr>
 </tbody></table>
 </body>
 </html>

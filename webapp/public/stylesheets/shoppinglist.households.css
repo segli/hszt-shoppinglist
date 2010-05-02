@@ -1,3 +1,10 @@
 .modHouseholds .bd {
     margin-bottom: 10px;
 }
+
+.modHouseholds .bdHidden {
+    left: -5000px;
+    position: absolute;
+    top: -5000px;
+    visibility: hidden;
+}

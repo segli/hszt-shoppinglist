@@ -41,6 +41,10 @@ label.base {
     margin: 4px 0;
 }
 
+img.base {
+    border: none;
+}
+
 input.text {
     border: 1px solid #ccc;
     width: 95%;
@@ -100,18 +104,11 @@ a:hover {
 
 a.delete {
     margin-left: 8px;
-    float: right;
     color: #a62a00;
 }
 
 a.invite {
-    float: right;
     color: #439400;
-}
-
-span .action {
-    position: absolute;
-    text-align: right;
 }
 
 ul {
@@ -119,8 +116,18 @@ ul {
     margin: 6px 0;
 }
 
+ul.menu li {
+    overflow: hidden;
+}
+
+ul.menu li .actions {
+    float: right;
+    width: 55px;
+}
+
 li {
     border: 1px solid #ccc;
     padding: 10px 10px;
     background-color: #eee;
 }
+

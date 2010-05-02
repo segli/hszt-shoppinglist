@@ -35,13 +35,18 @@ var Shoppinglist = Shoppinglist || {};
         });
     };
 
-    update_existing_view = function (data) {
+    update_existing_view = function (data, callback) {
         var tmpHtml = new Shoppinglist.helper.HtmlString(),
             i = 0,
             len = 0,
             current_item = null;
 
-        tmpHtml.add('<ul>');
+        if (data.shoppinglists.length === 0) {
+            return false;
+        }
+
+        tmpHtml.add('<h2 class="base">My Shoppinglists</h2>');
+        tmpHtml.add('<ul class="menu">');
 
         for (i = 0, len = data.shoppinglists.length; i < len; i++) {
             current_item = data.shoppinglists[i];
@@ -56,6 +61,10 @@ var Shoppinglist = Shoppinglist || {};
         tmpHtml.add('</ul>');
 
         $('.bdExisting', $ctx).html(tmpHtml.toString());
+
+        callback();
+        
+        return true;
     };
 
     // TODO: prepare is common function also used for shoppinglist and items!!!
@@ -114,7 +123,9 @@ var Shoppinglist = Shoppinglist || {};
 
         $ctx.bind('dataChanged', function () {
             fetch_shoppinglists_by_user_id(function (data) {
-                update_existing_view(data);
+                update_existing_view(data, function () {
+                    $('.bdExisting', $ctx).removeClass('bdHidden');
+                });
             });
         });
 

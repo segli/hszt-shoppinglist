@@ -6,10 +6,8 @@ include_once('controllers/session.controller.php');
 
 <div class="mod modShoppinglists">
     <div class="inner">
-        <div class="hd">
-            <h2 class="base">My Shoppinglists</h2>
-        </div>
-        <div class="bd bdExisting"></div>
+
+        <div class="bd bdExisting bdHidden"></div>
         <div class="hd">
             <h2 class="base">Create New</h2>
         </div>

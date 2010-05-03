@@ -35,7 +35,7 @@ if($email != $_SESSION['user']->email) {
                     $inv->email = $user[0]->email;  // Email of the person to invitate!
                     $inv->userId = $user_id;        // UserId of the creator!
                     $inv->pending = 1;
-                    $inv->dateCreated = date( 'Y-m-d H:i:s', time());;
+                    $inv->dateCreated = date( 'Y-m-d H:i:s', time());
                     DAOFactory::getInvitationDAO()->insert($inv);
 
                     // TODO: Send email to invited user! To: $email
@@ -55,7 +55,7 @@ if($email != $_SESSION['user']->email) {
                 $inv->email = $email;       // Email of the person to invitate!
                 $inv->userId = $user_id;    // UserId of the creator!
                 $inv->pending = 1;
-                $inv->dateCreated = date( 'Y-m-d H:i:s', time());;
+                $inv->dateCreated = date( 'Y-m-d H:i:s', time());
                 DAOFactory::getInvitationDAO()->insert($inv);
 
                 // TODO: Send email to invited user! To: $email

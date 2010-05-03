@@ -47,6 +47,17 @@ class InvitationMySqlExtDAO extends InvitationMySqlDAO{
         return $this-getList($sqlQuery);
     }
 
+    public function queryAllByEmailAndHouseholdId($email, $household_id) {
+
+        $sql = 'SELECT i.* FROM invitation i';
+        $sql .= ' WHERE i.email = ?';
+        $sql .= ' AND i.household_id = ?';
+
+        $sqlQuery = new SqlQuery($sql);
+        $sqlQuery->set($email);
+        $sqlQuery->set($household_id);
+        return $this-getList($sqlQuery);
+    }
 
     /**
 	 * Read row for queryAllByEmail

@@ -12,4 +12,5 @@ interface iAuthorization {
 
     public static function auth_status_shoppinglist($user_id, $household_id);
     public static function auth_status_item($user_id, $shoppinglist_id);
+    public static function auth_status_invitation($user_id, $invitation_id);
 }

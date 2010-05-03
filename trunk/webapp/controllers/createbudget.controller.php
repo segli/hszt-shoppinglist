@@ -14,6 +14,7 @@ $quota = $_POST['quota'];
 
 if (Authorization::auth_create_budget($user_id, $household_id)) {
 
+    // Check if variables are empty!
     $budget = new Budget();
     $budget->timeStart = $time_start;
     $budget->timeEnd = $time_end;

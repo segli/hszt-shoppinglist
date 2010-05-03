@@ -1,0 +1,3 @@
+.modItems .items tr.selected {
+    background-color: lightgreen;
+}

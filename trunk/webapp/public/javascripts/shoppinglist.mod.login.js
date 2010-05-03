@@ -15,6 +15,9 @@ var Shoppinglist = Shoppinglist || {};
 
     init = function () {
         $ctx = $('.modLogin');
+
+
+        $($('input').get(0)).focus();
         
         $btn_submit = $('input[type="submit"]', $ctx);
 

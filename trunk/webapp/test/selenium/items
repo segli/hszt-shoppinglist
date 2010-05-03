@@ -4,12 +4,12 @@
 <head profile="http://selenium-ide.openqa.org/profiles/test-case">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="selenium.base" href="" />
-<title>fullnavigation</title>
+<title>items</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">fullnavigation</td></tr>
+<tr><td rowspan="1" colspan="3">items</td></tr>
 </thead><tbody>
 <tr>
 	<td>open</td>
@@ -37,7 +37,7 @@
 	<td>Households</td>
 </tr>
 <tr>
-	<td>waitForTextPresent</td>
+	<td>verifyTextPresent</td>
 	<td></td>
 	<td>Thomas Private</td>
 </tr>
@@ -47,7 +47,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForTextPresent</td>
+	<td>verifyTextPresent</td>
 	<td></td>
 	<td>haushalt wg</td>
 </tr>
@@ -55,6 +55,11 @@
 	<td>click</td>
 	<td>link=haushalt wg</td>
 	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td></td>
+	<td>Items in List</td>
 </tr>
 
 </tbody></table>

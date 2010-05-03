@@ -16,7 +16,7 @@ var Shoppinglist = Shoppinglist || {};
         onError : function () {},
         onDelete : function () {}
     };
-
+    
     config = $.extend({}, defaults, options);
 
     fetch_items_by_shoppinglist_id = function (callback) {
@@ -88,13 +88,62 @@ var Shoppinglist = Shoppinglist || {};
             return false;
         });
 
+        var calculate_total = function ($ctx, callback) {
+            var $item_prices = $('.bdExisting .items input[name="price"]', $ctx);
+            var total = 0;
+
+            for (var i = 0, len = $item_prices.length; i < len; i++) {
+                current = (+$($item_prices.get(i)).val()) * 100;
+                if (isNaN(current)) {
+                    continue;
+                }
+                
+                total += current;
+            }
+
+            total = total / 100;
+
+            if ($.isFunction(callback)) {
+                callback(total, $ctx);
+            }
+
+            return total;
+        };
+
         $ctx.bind('dataChanged', function () {
             fetch_items_by_shoppinglist_id(function (data) {
                 update_existing_view(data);
             });
         });
 
-        $ctx.delegate('.bdExisting li>a', 'click', function () {
+        $ctx.delegate('.bdExisting .items a', 'click', function () {
+            return false;
+        });
+
+        $ctx.bind('itemStateChanged', function (e, data) {
+           $('.bdExisting .items input:checkbox', $ctx).get(data.index).checked = data.selected;
+           calculate_total($ctx, function (total) {
+                log.info('Total : ' + total);
+           });
+        });
+        
+
+        $ctx.delegate('.bdExisting .items tr', 'click', function () {
+            var $tr = $(this);
+
+            $tr.toggleClass('selected');
+
+            var data = {
+                'index' : $('.bdExisting .items tr').index($tr),
+                'selected' : $tr.hasClass('selected')
+            };
+            
+            $ctx.trigger('itemStateChanged', [data]);
+              
+        });
+
+        // don't change state when focusing to input text
+        $ctx.delegate('.bdExisting .items input:text', 'click', function () {
             return false;
         });
 

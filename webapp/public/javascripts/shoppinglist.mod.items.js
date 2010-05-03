@@ -5,6 +5,7 @@ var Shoppinglist = Shoppinglist || {};
         $ctx = null,
         $form_create = null,
         init = {},
+        calculate_total = null,
         config = null,
         defaults = null,
         fetch_items_by_shoppinglist_id = null,
@@ -18,6 +19,28 @@ var Shoppinglist = Shoppinglist || {};
     };
     
     config = $.extend({}, defaults, options);
+
+    calculate_total = function ($ctx, callback) {
+            var $item_prices = $('.bdExisting .items input[name="price"]', $ctx);
+            var total = 0;
+
+            for (var i = 0, len = $item_prices.length; i < len; i++) {
+                current = (+$($item_prices.get(i)).val()) * 100;
+                if (isNaN(current)) {
+                    continue;
+                }
+
+                total += current;
+            }
+
+            total = total / 100;
+
+            if ($.isFunction(callback)) {
+                callback(total, $ctx);
+            }
+
+            return total;
+        };
 
     fetch_items_by_shoppinglist_id = function (callback) {
         $.ajax({
@@ -52,9 +75,10 @@ var Shoppinglist = Shoppinglist || {};
             tmpHtml.add('<td><input name="howmany_of" size="2" /></td>');
             tmpHtml.add('<td><input name="price" value="' + current_item.price + '" size="4" /></td>');
             tmpHtml.add('<td>');
-            tmpHtml.add('<a class="delete" title="delete" onclick="return confirm(\'Are you sure?\')" href="controller_proxy.php?controller=deleteitem&amp;iid=' + current_item.itemId + '" iid="' + current_item.itemId + '"><img src="images/icon_delete.png" height="20" width="20" alt="delete item" /></a>');
+            tmpHtml.add('<a class="delete" title="delete" href="controller_proxy.php?controller=deleteitem&amp;iid=' + current_item.itemId + '" iid="' + current_item.itemId + '"><img src="images/icon_delete.png" height="20" width="20" alt="delete item" /></a>');
             tmpHtml.add('</td>');
             tmpHtml.add('</tr>');
+            //onclick="return confirm(\'Are you sure?\')"
         }
         
         tmpHtml.add('<table>');
@@ -88,36 +112,12 @@ var Shoppinglist = Shoppinglist || {};
             return false;
         });
 
-        var calculate_total = function ($ctx, callback) {
-            var $item_prices = $('.bdExisting .items input[name="price"]', $ctx);
-            var total = 0;
-
-            for (var i = 0, len = $item_prices.length; i < len; i++) {
-                current = (+$($item_prices.get(i)).val()) * 100;
-                if (isNaN(current)) {
-                    continue;
-                }
-                
-                total += current;
-            }
-
-            total = total / 100;
-
-            if ($.isFunction(callback)) {
-                callback(total, $ctx);
-            }
-
-            return total;
-        };
+        
 
         $ctx.bind('dataChanged', function () {
             fetch_items_by_shoppinglist_id(function (data) {
                 update_existing_view(data);
             });
-        });
-
-        $ctx.delegate('.bdExisting .items a', 'click', function () {
-            return false;
         });
 
         $ctx.bind('itemStateChanged', function (e, data) {
@@ -144,10 +144,12 @@ var Shoppinglist = Shoppinglist || {};
 
         // don't change state when focusing to input text
         $ctx.delegate('.bdExisting .items input:text', 'click', function () {
+            console.info('aaa');
             return false;
         });
 
-        $ctx.delegate('.bdExisting a.delete', 'click', function () {
+        
+        $ctx.delegate('.bdExisting .items a.delete', 'click', function () {
             $.ajax({
                'url' : $(this).attr('href'),
                'type' : 'get',
@@ -162,8 +164,7 @@ var Shoppinglist = Shoppinglist || {};
                 }
             });
             return false;
-        });
-
+        }); 
         
         $ctx.trigger('dataChanged');
 

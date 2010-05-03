@@ -132,4 +132,15 @@ class Authorization implements iAuthorization {
             return false;
         }
     }
+
+    public static function auth_status_invitation($user_id, $email, $invitation_id) {
+
+        $invitation = DAOFactory::getInvitationDAO()->queryAllByInvitationIdAndUserIdOrEmail($email, $invitation_id);
+
+        if(count($invitation) == 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

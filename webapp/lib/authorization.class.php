@@ -55,11 +55,35 @@ class Authorization implements iAuthorization {
     }
 
     public static function auth_create_bill($user_id, $shoppinglist_id) {
-        // TODO: Implement auth_create_bill() method.
+
+        $shoppinglists = DAOFactory::getShoppinglistDAO()->queryAllByUserIdNotClosed($user_id);
+
+        for($i = 0; $i < count($shoppinglists); $i++) {
+            if($shoppinglists[$i]->shoppinglistId == $shoppinglist_id) {
+
+                $status = $shoppinglists[$i]->status;
+
+                // True if shoppinglist is open or private but user is owner.
+                if($status == 0 OR ($status == 1 AND $shoppinglists[$i]->userId == $user_id)) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        }
+
+        return false;
     }
 
     public static function auth_create_budget($user_id, $household_id) {
-        // TODO: Implement auth_create_budget() method.
+
+        $user = DAOFactory::getBudgetDAO()->queryAllByUserIdAndHouseholdIdAndIsOwner($user_id, $household_id);
+
+        if(count($user) == 1) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 

@@ -34,8 +34,7 @@ $user = Authentication::authenticate_user($id, $password);
             'email' => $user->email,
             'firstname' => $user->firstname,
             'lastname' => $user->lastname,
-            'session_id' => $session_id
-            
+            'session_id' => $session_id 
         );
 
     } else {

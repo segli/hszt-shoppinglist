@@ -8,7 +8,6 @@ class Authorization implements iAuthorization {
     
     }
 
-
     public static function auth_create_shoppinglist($user_id, $household_id) {
 
         $householdlist = DAOFactory::getHouseholdDAO()->queryAllByUserId($user_id);

@@ -4,7 +4,7 @@ var Shoppinglist = Shoppinglist || {};
     var $btn_submit_create = null,
         $ctx = null,
         $form_create = null,
-        init = {},
+        init = null,
         config = null,
         defaults = null,
         fetch_shoppinglists_by_user_id = null,
@@ -111,13 +111,12 @@ var Shoppinglist = Shoppinglist || {};
                'type' : $form_create.attr('method'),
                'dataType' : 'json',
                'success' : function (data) {
-                    if (!data.error) {
+                    if (data.message && data.type === 'info') {
                         $ctx.trigger('dataChanged');
-
-                        config.onCreate();
-                   } else {
-                       log.info(data.error, data.message);
-                   }
+                        config.onCreate(data);
+                    } else {
+                        config.onError(data);
+                    }
                 }
             });
             return false;
@@ -170,8 +169,8 @@ var Shoppinglist = Shoppinglist || {};
     };
 }(
 {
-    'onCreate' : function () {
-        log.info('Shoppinglist added');
+    'onCreate' : function (data) {
+        log[data.type](data.message);
     },
     'onDelete' : function (data) {
         log[data.type](data.message);

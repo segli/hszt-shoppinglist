@@ -29,9 +29,8 @@ if (Authorization::auth_create_shoppinglist($user_id, $household_id)) {
         $id = DAOFactory::getShoppinglistDAO()->insert($shoppinglist);
 
         if ($id > 0) {
-            $data = array(
-                'shoppinglistId' => $id
-            );
+            $msg = new Message ('Shoppinglist ' . $shoppinglist_name . ' created', 'info');
+            $data = $msg->to_array();
 
         } else {
             $msg = new Message ('Something went wrong during the shoppinglist creation process.', 'error');

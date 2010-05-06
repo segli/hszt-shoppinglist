@@ -1,6 +1,12 @@
 /*global jQuery, log $ */
 var Shoppinglist = Shoppinglist || {};
 
+/**
+ * Global
+ * Shoppinglist.session is populated in Shoppinglist.login on success
+ */
+Shoppinglist.session = null;
+
 jQuery(document).ready(function () {
     // find modules
     var $modules, js_class, i, modules_length;

@@ -8,10 +8,10 @@ include_once('controllers/session.controller.php');
 // POST / GET variables
 $user_id = $_SESSION['user']->userId;
 $shoppinglist_id = $_POST['sid'];
-// ITEMS AUSLESEN!
+// TODO: ITEMS AUSLESEN!!
 $cost = $_POST['cost'];
 
-if($price != "") {
+if($cost != "") {
     if(Authorization::auth_create_bill($user_id, $shoppinglist_id)) {
 
         // Create bill

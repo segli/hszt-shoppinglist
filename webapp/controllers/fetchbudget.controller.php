@@ -4,6 +4,7 @@ include_once('lib/include_dao.php');
 include_once('lib/message.class.php');
 include_once('lib/authorization.class.php');
 include_once('controllers/session.controller.php');
+include_once('lib/inputvalidation.class.php');
 
 // POST / GET variables
 $user_id = $_SESSION['user']->userId;

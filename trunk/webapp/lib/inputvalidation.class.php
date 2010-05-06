@@ -7,7 +7,8 @@
     *   POST - Special characters allowed but without '"<> etc.
     */
 
-/*
+
+
     while (list($key, $val) = each($_GET)) {
 		if(preg_match('/[^a-zA-Z0-9]/', $val )) {
             unset($_GET[$key]);
@@ -39,7 +40,6 @@
             echo $val;
             unset($_POST[$key]);
 		}
-		
+	    */	
 
 	}
-*/

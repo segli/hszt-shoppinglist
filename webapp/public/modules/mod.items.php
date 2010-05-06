@@ -26,7 +26,8 @@ include_once('controllers/session.controller.php');
             <form class="create_bill" action="controller_proxy.php?controller=createbill" method="post">
                 <fieldset>
                     <input type="hidden" name="sid" value="" />
-                    <input type="submit" class="button" value="Update Bill" />
+                    <input type="text" name="cost" class="text" autocomplete="off" />
+                    <input type="submit" class="button" value="Checkout List" />
                 </fieldset>
             </form>
         </div>

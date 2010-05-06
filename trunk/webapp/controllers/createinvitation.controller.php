@@ -10,7 +10,7 @@ $user_id = $_SESSION['user']->userId;
 $household_id = $_POST['hid'];
 $email = $_POST['email'];
 
-if($email != $_SESSION['user']->email) {
+if($email != $_SESSION['user']->email AND $email != "") {
 
     $invitation = DAOFactory::getInvitationDAO()->queryAllByEmailAndHouseholdId($email, $household_id);
 
@@ -72,7 +72,7 @@ if($email != $_SESSION['user']->email) {
         $data = $msg->to_array();
     }
 } else {
-    $msg = new Message ('Do you want to invite yourself??', 'error');
+    $msg = new Message ('Please enter a email address!', 'error');
     $data = $msg->to_array();
 }
 

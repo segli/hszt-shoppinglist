@@ -4,7 +4,7 @@ var Shoppinglist = Shoppinglist || {};
     var $btn_submit_create = null,
         $ctx = null,
         $form_create = null,
-        init = {},
+        init = null,
         calculate_total = null,
         config = null,
         defaults = null,
@@ -21,10 +21,12 @@ var Shoppinglist = Shoppinglist || {};
     config = $.extend({}, defaults, options);
 
     calculate_total = function ($ctx, callback) {
-            var $item_prices = $('.bdExisting .items input[name="price"]', $ctx);
-            var total = 0;
+            var $item_prices = $('.bdExisting .items input[name="price"]', $ctx),
+                i = 0,
+                len = 0,
+                total = 0;
 
-            for (var i = 0, len = $item_prices.length; i < len; i++) {
+            for (i = 0, len = $item_prices.length; i < len; i++) {
                 current = (+$($item_prices.get(i)).val()) * 100;
                 if (isNaN(current)) {
                     continue;

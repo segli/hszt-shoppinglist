@@ -13,21 +13,26 @@ $household_name = $_POST['household_name'];
 $household = new Household();
 $household->name = $household_name;
 
-$id = DAOFactory::getHouseholdDAO()->insert($household);
-$userhousehold = new UserHousehold();
-$userhousehold->userId = $user_id;
-$userhousehold->householdId = $id;
-$userhousehold->isOwner = 1;
+if($household_name != "") {
+    $id = DAOFactory::getHouseholdDAO()->insert($household);
+    $userhousehold = new UserHousehold();
+    $userhousehold->userId = $user_id;
+    $userhousehold->householdId = $id;
+    $userhousehold->isOwner = 1;
 
-$userhousehold_id = DAOFactory::getUserHouseholdDAO()->insert($userhousehold);
+    $userhousehold_id = DAOFactory::getUserHouseholdDAO()->insert($userhousehold);
 
-if ($userhousehold_id > 0) {
-    // Prepare Data
-    $msg = new Message ('New Household ' . $household_name . ' created.', 'info');
-    $data = $msg->to_array();
+    if ($userhousehold_id > 0) {
+        // Prepare Data
+        $msg = new Message ('New Household ' . $household_name . ' created.', 'info');
+        $data = $msg->to_array();
 
+    } else {
+        $msg = new Message ('Something went wrong during the household creation process.', 'error');
+        $data = $msg->to_array();
+    }
 } else {
-    $msg = new Message ('Something went wrong during the household creation process.', 'error');
+    $msg = new Message ('Please enter a household name!', 'info');
     $data = $msg->to_array();
 }
 

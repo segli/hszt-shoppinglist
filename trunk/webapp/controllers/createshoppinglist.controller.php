@@ -4,6 +4,7 @@ include_once('lib/include_dao.php');
 include_once('lib/message.class.php');
 include_once('lib/authorization.class.php');
 include_once('controllers/session.controller.php');
+include_once('lib/inputvalidation.class.php');
 
 // POST / GET variables
 $user_id = $_SESSION['user']->userId;
@@ -20,7 +21,7 @@ $shoppinglist->userId = $user_id;
 $shoppinglist->dateCreated = date('Y-m-d H:i:s', time());
 
 
-if($shoppinglist_name != "" OR $household_id != "") {
+if($shoppinglist_name != "" AND $household_id != "") {
     if(Authorization::auth_create_shoppinglist($user_id, $household_id)) {
 
         $exist = DAOFactory::getShoppinglistDAO()->queryAllByHouseholdIdAndShoppinglistName($household_id, $shoppinglist_name);

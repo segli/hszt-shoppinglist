@@ -22,6 +22,19 @@ class BudgetMySqlExtDAO extends BudgetMySqlDAO{
 		return $this->getList($sqlQuery);
     }
 
+    public function queryAllByUserIdAndHouseholdId($user_id, $household_id) {
+
+        $sql = 'SELECT b.* FROM budget b, user_household h';
+        $sql .= ' WHERE b.household_id = h.household_id';
+        $sql .= ' AND h.household_id = ?';
+        $sql .= ' AND h.user_id = ?';
+
+        $sqlQuery = new SqlQuery($sql);
+        $sqlQuery->set($household_id);
+        $sqlQuery->set($user_id);
+		return $this->getList($sqlQuery);
+    }
+
     public function queryAllByShoppinglistId($shoppinglist_id) {
 
         $sql = 'SELECT b.* FROM budget b, household h, shoppinglist s';
@@ -33,8 +46,5 @@ class BudgetMySqlExtDAO extends BudgetMySqlDAO{
         $sqlQuery->set($shoppinglist_id);
 		return $this->getList($sqlQuery);
     }
-
-
-
 }
 ?>

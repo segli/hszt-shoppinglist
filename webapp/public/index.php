@@ -12,6 +12,7 @@ include_once('includes/html_head.php');?>
         
         </div>
         <!-- Page End -->
-    <?php include_once('includes/html_javascripts.php');?>        
+    <?php include_once('includes/html_javascripts.php');?>
+  
     </body>
 </html>

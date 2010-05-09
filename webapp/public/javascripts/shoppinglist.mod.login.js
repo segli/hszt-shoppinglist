@@ -40,6 +40,7 @@ var Shoppinglist = Shoppinglist || {};
                'type' : 'post',
                'dataType' : 'json',
                'success' : function (data) {
+                  
                    if (data.session_id) {
                        Shoppinglist.session = data;
                        config.onLogin();

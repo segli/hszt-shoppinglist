@@ -64,6 +64,12 @@ input.button {
     height: 30px;
 }
 
+input.buttonBlue {
+    background-color: #aaccff;
+    border-color: #0000ff;
+
+}
+
 input.checkbox {
     height: 20px;
     width: 20px;

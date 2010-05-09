@@ -10,7 +10,7 @@ include_once('lib/inputvalidation.class.php');
 $user_id = $_SESSION['user']->userId;
 $shoppinglist_id = $_POST['sid'];
 // TODO: ITEMS AUSLESEN!!
-$cost = $_POST['cost'];
+$cost = $_POST['commit_cost'];
 
 if($cost != "") {
     if(Authorization::auth_create_bill($user_id, $shoppinglist_id)) {
@@ -23,8 +23,14 @@ if($cost != "") {
         $bill->shoppinglistId = $shoppinglist_id;
         $id = DAOFactory::getBillDAO()->insert($bill);
 
+        echo $id;
+        
         // Update budget
         $budget = DAOFactory::getBudgetDAO()->queryAllByShoppinglistId($shoppinglist_id);
+
+        var_dump($budget);
+        exit;
+
         $budget->budgetCurrent = $budget->budgetCurrent + $cost;
         DAOFactory::getBudgetDAO()->update($budget);
 

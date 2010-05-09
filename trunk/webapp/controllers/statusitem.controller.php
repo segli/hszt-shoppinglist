@@ -9,6 +9,7 @@ include_once('lib/inputvalidation.class.php');
 // POST / GET variables
 $user_id = $_SESSION['user']->userId;
 $item_id = $_POST['iid'];
+$shoppinglist_id = $_POST['sid'];
 $status_id = $_POST['status']; // Status: 0 = new, 1 = selected, 2 = commited
 
 if(Authorization::auth_status_item($user_id, $shoppinglist_id)) {

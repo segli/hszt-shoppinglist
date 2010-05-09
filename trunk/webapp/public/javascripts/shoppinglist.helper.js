@@ -49,3 +49,49 @@ Shoppinglist.helper = {};
         return true;
     };
 }());
+
+(function () {
+    function Currency(value) {
+        if (isNaN(value)) {
+            return false;
+        }
+
+        var self = this;
+
+        self.value = (Math.round(value * 100) / 100);
+
+        self.currency_output = function (value) {
+
+            value = value + '';
+
+            var cent_length = value.split('.')[1].length;
+
+            var i = 2;
+            while (cent_length < i) {
+                value += '0';
+                i--;
+            }
+
+            return value;
+           
+        };
+
+        self.output_value = self.currency_output(self.value);
+
+        self.get_value = function () {
+            return self.value;
+        };
+
+        self.get_output_value = function () {
+            return self.output_value;
+        };
+
+        return true;
+    }
+
+    Currency.prototype.toString = function () {
+        return this.get_output_value();
+    };
+
+    Shoppinglist.helper.Currency = Currency;
+}());

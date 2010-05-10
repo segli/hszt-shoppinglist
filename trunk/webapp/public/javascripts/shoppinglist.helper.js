@@ -1,6 +1,16 @@
+/*global jQuery, log $ */
 var Shoppinglist = Shoppinglist || {};
+
+/**
+ * Helper Functions Namespace
+ */
 Shoppinglist.helper = {};
 
+/**
+ * Helper for creating larger blocks of html markup
+ * @class HtmlString
+ * @namespace Shoppinglist.helper
+ */
 (function () {
     function HtmlString() {
         this.html_array = [];
@@ -27,9 +37,30 @@ Shoppinglist.helper = {};
      */
     Shoppinglist.helper.talk_to_controller = function (controller, data_root_object, callback) {
 
-        if (arguments.length != 3 || !$.isFunction(callback)) {
+        var config = null,
+            defaults = null,
+            options = null;
+        
+        // Minimum of three paramenters are expected
+        if (arguments.length < 3 || !$.isFunction(callback)) {
             return false;
         }
+
+        // Default values for config (4th parameter)
+        defaults = {
+            onError : function () {},
+            onFetch : function () {}
+        };
+
+
+        if (arguments.length === 4 && typeof(arguments[4]) === 'Object') {
+            options = arguments[3];
+            
+        } else {
+            options = {};
+        }
+
+        config = $.extend({}, defaults, options);
 
         $.ajax({
             'url' : 'controller_proxy.php?controller=' + controller,
@@ -56,7 +87,9 @@ Shoppinglist.helper = {};
             return false;
         }
 
-        var self = this;
+        var i = 0,
+            cent_length = 0,
+            self = this;
 
         self.value = (Math.round(value * 100) / 100);
 
@@ -68,9 +101,10 @@ Shoppinglist.helper = {};
                 return value + '.00';
             }
 
-            var cent_length = value.split('.')[1].length;
+            cent_length = value.split('.')[1].length;
 
-            var i = 2;
+            i = 2;
+
             while (cent_length < i) {
                 value += '0';
                 i--;

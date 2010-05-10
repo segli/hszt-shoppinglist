@@ -1,3 +1,4 @@
+/*global jQuery, log $ */
 var Shoppinglist = Shoppinglist || {};
 
 (Shoppinglist.shoppinglists = function (options) {

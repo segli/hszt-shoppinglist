@@ -29,11 +29,11 @@ var Shoppinglist = Shoppinglist || {};
     config = $.extend({}, defaults, options);
 
     fetch_households_by_user_id = function (callback) {
-        return Shoppinglist.helper.talk_to_controller('fetchhouseholds', 'households', callback);
+        return Shoppinglist.helper.talk_to_controller('fetchhouseholds', 'households', callback, config);
     };
 
     fetch_invitations_by_user_email = function (callback) {
-        return Shoppinglist.helper.talk_to_controller('fetchinvitations', 'invitations', callback);
+        return Shoppinglist.helper.talk_to_controller('fetchinvitations', 'invitations', callback, config);
     };
 
     /**

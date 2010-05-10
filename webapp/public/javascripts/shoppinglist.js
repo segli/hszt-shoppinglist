@@ -6,6 +6,8 @@ var Shoppinglist = Shoppinglist || {};
  * Shoppinglist.session is populated in Shoppinglist.login on success
  */
 Shoppinglist.session = null;
+Shoppinglist.selected_hid = null;
+Shoppinglist.selected_sid = null;
 
 jQuery(document).ready(function () {
     // find modules

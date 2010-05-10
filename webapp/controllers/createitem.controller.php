@@ -14,7 +14,7 @@ $shoppinglist_id = $_POST['sid'];
 // Logic
 $item = new Item();
 $item->name = $item_name;
-$item->status = 1;
+$item->status = 0;
 $item->shoppinglistId = $shoppinglist_id;
 
 if($item_name != "") {

@@ -15,6 +15,8 @@ $cost = $_POST['commit_cost'];
 if($cost != "") {
     if(Authorization::auth_create_bill($user_id, $shoppinglist_id)) {
 
+        $message = '';
+
         // Create bill
         $bill = new Bill();
         $bill->cost = $cost;
@@ -23,20 +25,22 @@ if($cost != "") {
         $bill->shoppinglistId = $shoppinglist_id;
         $id = DAOFactory::getBillDAO()->insert($bill);
 
-        echo $id;
-        
+        $message .= 'Bill created.' . PHP_EOL;
+
         // Update budget
         $budget = DAOFactory::getBudgetDAO()->queryAllByShoppinglistId($shoppinglist_id);
 
-        var_dump($budget);
-        exit;
+        if (count($budget) > 0) {
 
-        $budget->budgetCurrent = $budget->budgetCurrent + $cost;
-        DAOFactory::getBudgetDAO()->update($budget);
+            $budget->budgetCurrent = $budget->budgetCurrent + $cost;
+            DAOFactory::getBudgetDAO()->update($budget);
+            $message .= 'Budget updated.' . PHP_EOL;
+        }
 
         // TODO: Status der ITEMS updaten --> 2 : commited!
+        $result = DAOFactory::getItemDAO()->updateStateToClosedByUserIdAndShoppinglistId($user_id ,$shoppinglist_id);
 
-        $msg = new Message ('Bill created and budget updated!', 'info');
+        $msg = new Message ($message, 'info');
         $data = $msg->to_array();
 
     } else {

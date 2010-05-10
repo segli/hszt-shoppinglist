@@ -64,6 +64,10 @@ Shoppinglist.helper = {};
 
             value = value + '';
 
+            if (value.indexOf('.') < 0) {
+                return value + '.00';
+            }
+
             var cent_length = value.split('.')[1].length;
 
             var i = 2;

@@ -181,6 +181,17 @@ var Shoppinglist = Shoppinglist || {};
             });
         });
 
+        var view_updater = function () {
+            setTimeout(function () {
+                $ctx.trigger('dataChanged');
+               
+                view_updater();
+            },10000);
+        };
+
+        view_updater();
+
+
         $ctx.bind('itemStateChanged', function (e, data) {
             var $checkbox = $($('.bdExisting .items input:checkbox', $ctx).get(data.index));
             $checkbox.get(0).checked = data.selected;

@@ -1,3 +1,4 @@
+/*global jQuery, log $ */
 var Shoppinglist = Shoppinglist || {};
 
 Shoppinglist.load_page_from_url = function (options) {
@@ -7,7 +8,9 @@ Shoppinglist.load_page_from_url = function (options) {
         keyValsPairs = null,
         i = 0,
         len = 0,
-        keyVal = null;
+        module_name = '',
+        keyVal = null,
+        options_override = null;
 
     if (location.indexOf('?') !== -1) {
         keyVals = location.split('?')[1].split('#')[0];
@@ -20,10 +23,9 @@ Shoppinglist.load_page_from_url = function (options) {
             Shoppinglist[keyVal[0]] = keyVal[1];
         }
 
-        console.info(Shoppinglist);
     }
 
-    var module_name = anchor.split('#page_')[1];
+    module_name = anchor.split('#page_')[1];
 
     if (module_name) {
         options_override = {
@@ -40,7 +42,9 @@ Shoppinglist.load_page_from_url = function (options) {
 };
 
 Shoppinglist.load_page = function (options) {
-
+    var config = null,
+        defaults = null;
+    
     defaults = {
         'beforeLoad' : function () {},
         'afterLoad' : function () {},
@@ -48,7 +52,7 @@ Shoppinglist.load_page = function (options) {
         'data' : null
     };
 
-    var config = $.extend({}, defaults, options);
+    config = $.extend({}, defaults, options);
 
     config.beforeLoad();
     
@@ -71,32 +75,25 @@ Shoppinglist.load_page = function (options) {
 
 // Load first page
 jQuery(document).ready(function () {
-/*
-    Shoppinglist.load_page({
-        'page' : 'page.login.php',
-        'afterLoad' : function () {
-            Shoppinglist.login.init(); 
-        }
-    });
-*/
+
     Shoppinglist.load_page_from_url();
     
     $('body').delegate('#mainNavigation a', 'click', function () {
         
-            var $this = $(this),
-                page_url = '',
-                module_name = '';
+        var $this = $(this),
+            page_url = '',
+            module_name = '';
 
-            // DRY this
-                page_url = $this.attr('href').split('#')[1].split('_').join('.') + '.php';
-                module_name = $this.attr('href').split('#')[1].split('_')[1];
+        // DRY this
+        page_url = $this.attr('href').split('#')[1].split('_').join('.') + '.php';
+        module_name = $this.attr('href').split('#')[1].split('_')[1];
 
-            Shoppinglist.load_page({
-                'page' : page_url,
-                'afterLoad' : function () {
-                    Shoppinglist[module_name].init();
-                }
-            });
+        Shoppinglist.load_page({
+            'page' : page_url,
+            'afterLoad' : function () {
+                Shoppinglist[module_name].init();
+            }
+        });
         return false;
     });
 

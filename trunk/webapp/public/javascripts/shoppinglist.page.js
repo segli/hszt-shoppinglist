@@ -1,15 +1,18 @@
 /*global jQuery, log $ */
 var Shoppinglist = Shoppinglist || {};
 
-Shoppinglist.load_page_from_url = function (options) {
+Shoppinglist.load_page_from_url = function () {
     var location = window.location.href,
         anchor = window.location.hash,
+        config = null,
+        defaults = null,
         keyVals = '',
         keyValsPairs = null,
         i = 0,
         len = 0,
         module_name = '',
         keyVal = null,
+        options = null,
         options_override = null;
 
     if (location.indexOf('?') !== -1) {
@@ -25,20 +28,29 @@ Shoppinglist.load_page_from_url = function (options) {
 
     }
 
-    module_name = anchor.split('#page_')[1];
+    if (arguments.length > 0) {
+        options = arguments[0];
+    } else {
+        options = {};
+    }
+
+    if (anchor === '') {
+        module_name = 'login';
+    } else {
+        module_name = anchor.split('#page_')[1];
+    }
 
     if (module_name) {
-        options_override = {
+        defaults = {
             'afterLoad' : function () {
                 Shoppinglist[module_name].init();
             },
             'page' : 'page.' + module_name + '.php'
         };
 
-        options = $.extend(options, options_override);
+        config = $.extend(defaults, options);
     }
-    
-    Shoppinglist.load_page(options);
+    Shoppinglist.load_page(config);
 };
 
 Shoppinglist.load_page = function (options) {
@@ -76,7 +88,14 @@ Shoppinglist.load_page = function (options) {
 // Load first page
 jQuery(document).ready(function () {
 
-    Shoppinglist.load_page_from_url();
+      Shoppinglist.load_page_from_url();
+
+ /*   Shoppinglist.load_page({
+            'page' : 'page.login.php',
+            'afterLoad' : function () {
+                Shoppinglist['login'].init();
+            }
+        }); */
     
     $('body').delegate('#mainNavigation a', 'click', function () {
         
@@ -87,6 +106,7 @@ jQuery(document).ready(function () {
         // DRY this
         page_url = $this.attr('href').split('#')[1].split('_').join('.') + '.php';
         module_name = $this.attr('href').split('#')[1].split('_')[1];
+
 
         Shoppinglist.load_page({
             'page' : page_url,

@@ -151,7 +151,6 @@ var Shoppinglist = Shoppinglist || {};
             Shoppinglist.selected_sid = $(this).attr('sid');
             Shoppinglist.load_page({
                 'page' : 'page.items.php',
-
                 'afterLoad' : function () {
                     Shoppinglist.items.init();
                 }

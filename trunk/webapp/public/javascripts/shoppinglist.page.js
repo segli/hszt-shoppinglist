@@ -1,5 +1,44 @@
 var Shoppinglist = Shoppinglist || {};
 
+Shoppinglist.load_page_from_url = function (options) {
+    var location = window.location.href,
+        anchor = window.location.hash,
+        keyVals = '',
+        keyValsPairs = null,
+        i = 0,
+        len = 0,
+        keyVal = null;
+
+    if (location.indexOf('?') !== -1) {
+        keyVals = location.split('?')[1].split('#')[0];
+        keyValsPairs = keyVals.split('&');
+
+        for (i = 0, len = keyValsPairs.length; i < len; i++) {
+            keyVal = keyValsPairs[i].split('=');
+
+            // TODO: Filter allowed keys for security reasons
+            Shoppinglist[keyVal[0]] = keyVal[1];
+        }
+
+        console.info(Shoppinglist);
+    }
+
+    var module_name = anchor.split('#page_')[1];
+
+    if (module_name) {
+        options_override = {
+            'afterLoad' : function () {
+                Shoppinglist[module_name].init();
+            },
+            'page' : 'page.' + module_name + '.php'
+        };
+
+        options = $.extend(options, options_override);
+    }
+    
+    Shoppinglist.load_page(options);
+};
+
 Shoppinglist.load_page = function (options) {
 
     defaults = {
@@ -32,14 +71,16 @@ Shoppinglist.load_page = function (options) {
 
 // Load first page
 jQuery(document).ready(function () {
-
+/*
     Shoppinglist.load_page({
         'page' : 'page.login.php',
         'afterLoad' : function () {
             Shoppinglist.login.init(); 
         }
     });
-
+*/
+    Shoppinglist.load_page_from_url();
+    
     $('body').delegate('#mainNavigation a', 'click', function () {
         
             var $this = $(this),

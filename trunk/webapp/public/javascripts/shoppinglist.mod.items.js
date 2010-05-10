@@ -93,6 +93,7 @@ var Shoppinglist = Shoppinglist || {};
         for (i = 0, len = data.items.length; i < len; i++) {
             current_item = data.items[i];
 
+            
             if ((+current_item.status) === 1) {
                 tmpHtml.add('<tr class="selected">');
                 checked = 'checked="checked"';
@@ -156,6 +157,7 @@ var Shoppinglist = Shoppinglist || {};
                'type' : $form_create_bill.attr('method'),
                'dataType' : 'json',
                'success' : function (data) {
+
                     if (data.message && data.type === 'info') {
                         $ctx.trigger('dataChanged');
 
@@ -238,8 +240,8 @@ var Shoppinglist = Shoppinglist || {};
                'type' : 'get',
                'dataType' : 'json',
                'success' : function (data) {
+                    $ctx.trigger('dataChanged');
                     if (data.message && data.type !== 'error') {
-                        $ctx.trigger('dataChanged');
                         config.onDelete(data);
                    } else {
                        config.onError(data);

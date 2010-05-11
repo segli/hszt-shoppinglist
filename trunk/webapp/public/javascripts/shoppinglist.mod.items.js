@@ -10,6 +10,9 @@ var Shoppinglist = Shoppinglist || {};
         config = null,
         defaults = null,
         fetch_items_by_shoppinglist_id = null,
+        get_timer = null,
+        set_timer = null,
+        timer = null,
         update_item_status = null,
         update_existing_view = null;
 
@@ -19,6 +22,15 @@ var Shoppinglist = Shoppinglist || {};
         onError : function () {},
         onDelete : function () {},
         onStatus : function () {}
+    };
+
+    set_timer = function (new_timer) {
+        timer = new_timer;
+        return timer;
+    };
+
+    get_timer = function () {
+        return timer;
     };
     
     config = $.extend({}, defaults, options);
@@ -181,15 +193,32 @@ var Shoppinglist = Shoppinglist || {};
             });
         });
 
+
         var view_updater = function () {
-            setTimeout(function () {
+            timer = setTimeout(function () {
                 $ctx.trigger('dataChanged');
-               
                 view_updater();
-            },10000);
+            },3000);
+            return set_timer(timer);
         };
 
-        view_updater();
+
+        // ToDo: Autorun
+        var run_updater = function () {
+            view_updater();
+        };
+
+        $ctx.mouseenter(function () {
+            clearTimeout(get_timer());
+        });
+
+        $ctx.mouseleave(function () {
+           run_updater(); 
+        });
+
+
+
+        
 
 
         $ctx.bind('itemStateChanged', function (e, data) {
@@ -233,11 +262,21 @@ var Shoppinglist = Shoppinglist || {};
               
         });
 
-
-
         // don't change state when focusing to input text
         $ctx.delegate('.bdExisting .items input:text', 'click', function () {
             return false;
+        });
+
+        $ctx.delegate('.bdExisting .items input[name="price"]', 'blur', function () {
+            update_total_field($ctx);
+        });
+
+        $ctx.delegate('.bdExisting .items input[name="price"]', 'focus', function () {
+            console.info('you entered', $('.bdExisting .items input[name="price"]', $ctx).index($(this)));
+        });
+
+        $ctx.delegate('.bdExisting .items input[name="price"]', 'keypress', function () {
+            update_total_field($ctx);
         });
 
         // don't change state when focusing to input text

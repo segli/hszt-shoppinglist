@@ -1,8 +1,3 @@
-<?php
-include_once('../config/environment.php');
-
-?>
-
 <div class="mod modLogin">
     <div class="inner">
         <div class="hd">

@@ -1,9 +1,3 @@
-<?php
-include_once('../config/environment.php');
-include_once('controllers/session.controller.php');
-
-?>
-
 <div class="mod modItems">
     <div class="inner">
         <div class="hd">

@@ -3,18 +3,24 @@ var Shoppinglist = Shoppinglist || {};
 
 (Shoppinglist.items = function (options) {
     var $btn_submit_create = null,
+        $btn_submit_create_bill = null,
         $ctx = null,
         $form_create = null,
+        $form_create_bill = null,
         init = null,
         calculate_total = null,
+        check_input_value = null,
         config = null,
         defaults = null,
         fetch_items_by_shoppinglist_id = null,
         get_timer = null,
+        run_updater = null,
         set_timer = null,
         timer = null,
         update_item_status = null,
-        update_existing_view = null;
+        update_existing_view = null,
+        update_total_field = null,
+        view_updater = null;
 
     defaults = {
         onCreate : function () {},
@@ -36,10 +42,13 @@ var Shoppinglist = Shoppinglist || {};
     config = $.extend({}, defaults, options);
 
     calculate_total = function ($ctx, callback) {
-            var $item_prices = $('.bdExisting .items input[name="price"]', $ctx),
+            var current = 0,
+                $item_prices = null,
                 i = 0,
                 len = 0,
                 total = 0;
+
+            $item_prices = $('.bdExisting .items .selected input[name="price"]', $ctx);
 
             for (i = 0, len = $item_prices.length; i < len; i++) {
                 current = (+$($item_prices.get(i)).val()) * 100;
@@ -61,16 +70,16 @@ var Shoppinglist = Shoppinglist || {};
 
     fetch_items_by_shoppinglist_id = function (callback) {
         $.ajax({
-           'url' : 'controller_proxy.php?controller=fetchitems&sid=' + Shoppinglist.selected_sid,
-           'type' : 'get',
-           'dataType' : 'json',
-           'success' : function (data) {
-               if (data.items) {
-                   callback(data);
-                   config.onFetch();
-               } else if (data.message && data.type === 'error') {
-                   config.onError(data);
-               }
+            'url' : 'controller_proxy.php?controller=fetchitems&sid=' + Shoppinglist.selected_sid,
+            'type' : 'get',
+            'dataType' : 'json',
+            'success' : function (data) {
+                if (data.items) {
+                    callback(data);
+                    config.onFetch();
+                } else if (data.message && data.type === 'error') {
+                    config.onError(data);
+                }
             }
         });
     };
@@ -78,18 +87,18 @@ var Shoppinglist = Shoppinglist || {};
     update_item_status = function (item_id, status, callback) {
 
         $.ajax({
-           'url' : 'controller_proxy.php?controller=statusitem',
-           'data' : '&sid=' + Shoppinglist.selected_sid + '&iid=' + item_id + '&status=' + status,
-           'type' : 'post',
-           'dataType' : 'json',
-           'success' : function (data) {
+            'url' : 'controller_proxy.php?controller=statusitem',
+            'data' : '&sid=' + Shoppinglist.selected_sid + '&iid=' + item_id + '&status=' + status,
+            'type' : 'post',
+            'dataType' : 'json',
+            'success' : function (data) {
                
-               if (data.message && data.type === 'info') {
-                   callback(data);
-                   config.onStatus();
-               } else if (data.message && data.type === 'error') {
-                   config.onError(data);
-               }
+                if (data.message && data.type === 'info') {
+                    callback(data);
+                    config.onStatus();
+                } else if (data.message && data.type === 'error') {
+                    config.onError(data);
+                }
             }
         });
     };
@@ -119,17 +128,36 @@ var Shoppinglist = Shoppinglist || {};
             tmpHtml.add('<td><a class="itemx" href="?iid=' + current_item.itemId + '" iid="' + current_item.itemId + '">' + current_item.name + '</a></td>');
             tmpHtml.add('<td><input name="howmany_of" size="2" /></td>');
             tmpHtml.add('<td><input name="price" value="' + current_item.price + '" size="4" /></td>');
+            tmpHtml.add('<td><span class="item_price_total"></span></td>');
             tmpHtml.add('<td>');
             tmpHtml.add('<a class="delete" title="delete" href="controller_proxy.php?controller=deleteitem&amp;iid=' + current_item.itemId + '" iid="' + current_item.itemId + '"><img src="images/icon_delete.png" height="20" width="20" alt="delete item" /></a>');
             tmpHtml.add('</td>');
             tmpHtml.add('</tr>');
-            //onclick="return confirm(\'Are you sure?\')"
         }
         
         tmpHtml.add('<table>');
 
         $('.bdExisting', $ctx).html(tmpHtml.toString());
     };
+
+    /**
+     * Checks the value of the give input text field to see if it's a number. If not, the value
+     * is set to 1.
+     * @method check_input_value
+     * @param $ctx {jQuery}
+     * @param selector {String}
+     */
+    check_input_value = function ($ctx, selector) {
+            var input_value = 0,
+                $element = null;
+            $element = $(selector, $ctx);
+            input_value = $element.val();
+            if (isNaN(input_value) || input_value <= 0) {
+                input_value = 1;
+                $element.val(input_value);
+            }
+            return input_value;
+        };
 
     init = function () {
         
@@ -140,11 +168,11 @@ var Shoppinglist = Shoppinglist || {};
         
         $btn_submit_create.click(function () {
             $.ajax({
-               'url' : $form_create.attr('action'),
-               'data' : $form_create.serialize(),
-               'type' : $form_create.attr('method'),
-               'dataType' : 'json',
-               'success' : function (data) {
+                'url' : $form_create.attr('action'),
+                'data' : $form_create.serialize(),
+                'type' : $form_create.attr('method'),
+                'dataType' : 'json',
+                'success' : function (data) {
                     if (data.message && data.type === 'info') {
                         $ctx.trigger('dataChanged');
 
@@ -154,6 +182,8 @@ var Shoppinglist = Shoppinglist || {};
                     }
                 }
             });
+
+            $('input[name="item_name"]', $form_create).val('');
             return false;
         });
 
@@ -165,11 +195,11 @@ var Shoppinglist = Shoppinglist || {};
 
             update_total_field($ctx);
             $.ajax({
-               'url' : $form_create_bill.attr('action'),
-               'data' : $form_create_bill.serialize(),
-               'type' : $form_create_bill.attr('method'),
-               'dataType' : 'json',
-               'success' : function (data) {
+                'url' : $form_create_bill.attr('action'),
+                'data' : $form_create_bill.serialize(),
+                'type' : $form_create_bill.attr('method'),
+                'dataType' : 'json',
+                'success' : function (data) {
 
                     if (data.message && data.type === 'info') {
                         $ctx.trigger('dataChanged');
@@ -186,6 +216,31 @@ var Shoppinglist = Shoppinglist || {};
             
         });
 
+        
+
+        $ctx.delegate('input[name="howmany_of"], input[name="price"]', 'keyup', function (e) {
+
+            //8, 190, 46, 48 - 57
+            if (!(e.keyCode === 8 || e.keyCode === 46 || e.keyCode === 190 || (e.keyCode > 47 && e.keyCode < 58))) {
+                return false;
+            }
+
+            var c = null,
+                $tr = null,
+                howmany_of = 0,
+                price = 0;
+
+            $tr = $(this).parents('tr');
+
+            
+
+            howmany_of = check_input_value($tr, 'input[name="howmany_of"]');
+            price = check_input_value($tr, 'input[name="price"]');
+            
+            c = new Shoppinglist.helper.Currency(howmany_of * price);
+
+            $('.item_price_total', $tr).html(c.get_output_value());
+        });
 
         $ctx.bind('dataChanged', function () {
             fetch_items_by_shoppinglist_id(function (data) {
@@ -194,17 +249,17 @@ var Shoppinglist = Shoppinglist || {};
         });
 
 
-        var view_updater = function () {
+        view_updater = function () {
             timer = setTimeout(function () {
                 $ctx.trigger('dataChanged');
                 view_updater();
-            },3000);
+            }, 3000);
             return set_timer(timer);
         };
 
 
         // ToDo: Autorun
-        var run_updater = function () {
+        run_updater = function () {
             view_updater();
         };
 
@@ -213,7 +268,7 @@ var Shoppinglist = Shoppinglist || {};
         });
 
         $ctx.mouseleave(function () {
-           run_updater(); 
+            run_updater(); 
         });
 
 
@@ -222,10 +277,13 @@ var Shoppinglist = Shoppinglist || {};
 
 
         $ctx.bind('itemStateChanged', function (e, data) {
-            var $checkbox = $($('.bdExisting .items input:checkbox', $ctx).get(data.index));
+            var $checkbox = null,
+                status = 0;
+
+            $checkbox = $($('.bdExisting .items input:checkbox', $ctx).get(data.index));
             $checkbox.get(0).checked = data.selected;
 
-            var status = data.selected ? 1 : 0;
+            status = data.selected ? 1 : 0;
 
             update_item_status($checkbox.val(), status, function (data) {
                 
@@ -248,11 +306,14 @@ var Shoppinglist = Shoppinglist || {};
         
 
         $ctx.delegate('.bdExisting .items tr', 'click', function () {
-            var $tr = $(this);
+            var $tr = null,
+                data = null;
+            
+            $tr = $(this);
 
             $tr.toggleClass('selected');
 
-            var data = {
+            data = {
                 'index' : $('.bdExisting .items tr').index($tr),
                 'selected' : $tr.hasClass('selected')
             };
@@ -271,11 +332,7 @@ var Shoppinglist = Shoppinglist || {};
             update_total_field($ctx);
         });
 
-        $ctx.delegate('.bdExisting .items input[name="price"]', 'focus', function () {
-            console.info('you entered', $('.bdExisting .items input[name="price"]', $ctx).index($(this)));
-        });
-
-        $ctx.delegate('.bdExisting .items input[name="price"]', 'keypress', function () {
+        $ctx.delegate('.bdExisting .items input[name="price"]', 'keyup', function () {
             update_total_field($ctx);
         });
 
@@ -287,16 +344,16 @@ var Shoppinglist = Shoppinglist || {};
         
         $ctx.delegate('.bdExisting .items a.delete', 'click', function () {
             $.ajax({
-               'url' : $(this).attr('href'),
-               'type' : 'get',
-               'dataType' : 'json',
-               'success' : function (data) {
+                'url' : $(this).attr('href'),
+                'type' : 'get',
+                'dataType' : 'json',
+                'success' : function (data) {
                     $ctx.trigger('dataChanged');
                     if (data.message && data.type !== 'error') {
                         config.onDelete(data);
-                   } else {
-                       config.onError(data);
-                   }
+                    } else {
+                        config.onError(data);
+                    }
                 }
             });
             return false;

@@ -66,7 +66,7 @@ var Shoppinglist = Shoppinglist || {};
                 tmpHtml.add('<img src="images/icon_invite.png" height="20" width="20" class="base" />');
                 tmpHtml.add('</a>');
                 
-                tmpHtml.add('<a class="delete" title="delete" onclick="return confirm(\'Are you sure?\')" href="controller_proxy.php?controller=deletehousehold&amp;hid=' + current_item.householdId + '" hid="' + current_item.householdId + '">');
+                tmpHtml.add('<a class="delete" title="delete" href="controller_proxy.php?controller=deletehousehold&amp;hid=' + current_item.householdId + '" hid="' + current_item.householdId + '">');
                 tmpHtml.add('<img src="images/icon_delete.png" height="20" width="20" class="base" />');
                 tmpHtml.add('</a>');
 
@@ -179,6 +179,10 @@ var Shoppinglist = Shoppinglist || {};
 
 
         $ctx.delegate('.actions a.delete', 'click', function () {
+            if (!confirm('Are you sure?')) {
+                return false;
+            }
+            
             $.ajax({
                 'url' : 'controller_proxy.php?controller=deletehousehold&hid=' + $(this).attr('hid'),
                 'type' : 'get',
@@ -195,8 +199,8 @@ var Shoppinglist = Shoppinglist || {};
             return false;
         }); 
 
-        $ctx.delegate('.bdExisting li>a', 'click', function () {
-                Shoppinglist.selected_hid = $(this).attr('hid');
+        $ctx.delegate('.bdExisting li', 'click', function () {
+                Shoppinglist.selected_hid = $(this).children('a').attr('hid');
                 Shoppinglist.load_page({
                     'page' : 'page.shoppinglists.php',
                 

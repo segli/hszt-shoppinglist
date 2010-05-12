@@ -18,9 +18,9 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 --
 -- Database: `shoppinglist`
 --
-DROP DATABASE IF EXISTS `shoppinglist`; 
-CREATE DATABASE `shoppinglist`;
-USE `shoppinglist`;
+-- DROP DATABASE IF EXISTS `shoppinglist`;
+-- CREATE DATABASE `shoppinglist`;
+USE `junghans_shlist`;
 -- --------------------------------------------------------
 
 --

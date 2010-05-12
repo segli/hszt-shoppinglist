@@ -55,7 +55,7 @@ var Shoppinglist = Shoppinglist || {};
             tmpHtml.add('<img src="images/icon_note.png" height="20" width="20" class="base" />');
             tmpHtml.add('<a href="controller_proxy.php?controller=fetchitems&amp;sid=' + current_item.shoppinglistId + '" sid="' + current_item.shoppinglistId + '">' + current_item.name + '</a>');
             tmpHtml.add('<span class="actions">');
-            tmpHtml.add('<a class="delete" title="delete" onclick="return confirm(\'Are you sure?\')" href="controller_proxy.php?controller=deleteshoppinglist&amp;sid=' + current_item.shoppinglistId + '" sid="' + current_item.shoppinglistId + '">');
+            tmpHtml.add('<a class="delete" title="delete" href="controller_proxy.php?controller=deleteshoppinglist&amp;sid=' + current_item.shoppinglistId + '" sid="' + current_item.shoppinglistId + '">');
             tmpHtml.add('<img src="images/icon_delete.png" height="20" width="20" class="base" />');
             tmpHtml.add('</a>');
             tmpHtml.add('</span>');
@@ -120,6 +120,9 @@ var Shoppinglist = Shoppinglist || {};
                     }
                 }
             });
+
+            $('input[name="shoppinglist_name"]', $form_create).val('');
+            
             return false;
         });
 
@@ -132,6 +135,10 @@ var Shoppinglist = Shoppinglist || {};
         });
 
         $ctx.delegate('.bdExisting a.delete', 'click', function () {
+            if (!confirm('Are you sure?')) {
+                return false;
+            }
+            
             $.ajax({
                'url' : $(this).attr('href'),
                'type' : 'get',
@@ -148,8 +155,8 @@ var Shoppinglist = Shoppinglist || {};
             return false;
         });
 
-        $ctx.delegate('.bdExisting li>a', 'click', function () {
-            Shoppinglist.selected_sid = $(this).attr('sid');
+        $ctx.delegate('.bdExisting li', 'click', function () {
+            Shoppinglist.selected_sid = $(this).children('a').attr('sid');
             Shoppinglist.load_page({
                 'page' : 'page.items.php',
                 'afterLoad' : function () {

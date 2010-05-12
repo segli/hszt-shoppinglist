@@ -1,8 +1,3 @@
-<?php
-include_once('../config/environment.php');
-
-?>
-
 <div class="mod modRegister">
     <div class="inner">
         <div class="hd">

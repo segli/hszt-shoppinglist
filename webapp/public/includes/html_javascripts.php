@@ -1,4 +1,5 @@
         <script type="text/javascript" src="javascripts/jquery-1.4.2.min.js"></script>
+        <script type="text/javascript" src="javascripts/json2.js"></script>
         <script type="text/javascript" src="javascripts/shoppinglist.js"></script>
         <script type="text/javascript" src="javascripts/shoppinglist.helper.js"></script>
         <script type="text/javascript" src="javascripts/shoppinglist.page.js"></script>
@@ -7,4 +8,6 @@
         <script type="text/javascript" src="javascripts/shoppinglist.mod.households.js"></script>
         <script type="text/javascript" src="javascripts/shoppinglist.mod.shoppinglists.js"></script>
         <script type="text/javascript" src="javascripts/shoppinglist.mod.items.js"></script>
-        <script type="text/javascript" src="javascripts/shoppinglist.mod.invite.js"></script>                
+        <script type="text/javascript" src="javascripts/shoppinglist.mod.invite.js"></script>
+
+                

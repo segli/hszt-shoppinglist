@@ -19,7 +19,7 @@
         <div class="bd">
             <form class="create_bill" action="controller_proxy.php?controller=createbill" method="post">
                 <fieldset>
-                    <input type="text" name="commit_cost" id="commit_cost" class="text" autocomplete="off" />
+                    <input value="0.00" type="text" name="commit_cost" id="commit_cost" class="text" autocomplete="off" />
                     <input type="submit" class="button buttonBlue" value="Checkout List" />
                 </fieldset>
             </form>

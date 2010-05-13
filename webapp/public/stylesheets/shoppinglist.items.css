@@ -1,3 +1,7 @@
 .modItems .items tr.selected {
     background-color: lightgreen;
 }
+
+.item_price_total {
+    font-weight: bold;
+}

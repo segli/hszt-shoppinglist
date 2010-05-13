@@ -10,6 +10,9 @@
     <meta content="text/css" http-equiv="content-style-type" />
     <meta content="text/javascript" http-equiv="content-script-type" />
     <meta content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=no;" name="viewport" />
+    <link rel="apple-touch-icon" href="images/shoppinglist-iphone-logo.png"/>
+
+
     <link href="stylesheets/yui-reset-min.css" media="all" rel="stylesheet" type="text/css"/>
     <link href="stylesheets/yui-fonts-min.css" media="all" rel="stylesheet" type="text/css"/>
     <link href="stylesheets/oocss-grids.css" media="all" rel="stylesheet" type="text/css"/>

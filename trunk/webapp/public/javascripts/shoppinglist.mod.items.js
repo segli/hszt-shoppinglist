@@ -17,6 +17,8 @@ var Shoppinglist = Shoppinglist || {};
         run_updater = null,
         set_timer = null,
         timer = null,
+        update_item = null,
+        update_item_price = null,
         update_item_status = null,
         update_existing_view = null,
         update_total_field = null,
@@ -27,6 +29,7 @@ var Shoppinglist = Shoppinglist || {};
         onFetch : function () {},
         onError : function () {},
         onDelete : function () {},
+        onPrice : function () {},
         onStatus : function () {}
     };
 
@@ -38,35 +41,39 @@ var Shoppinglist = Shoppinglist || {};
     get_timer = function () {
         return timer;
     };
+
+    run_updater = function () {
+        view_updater();
+    };
     
     config = $.extend({}, defaults, options);
 
     calculate_total = function ($ctx, callback) {
-            var current = 0,
-                $item_prices = null,
-                i = 0,
-                len = 0,
-                total = 0;
+        var current = 0,
+            $item_prices = null,
+            i = 0,
+            len = 0,
+            total = 0;
 
-            $item_prices = $('.bdExisting .items .selected input[name="price"]', $ctx);
+        $item_prices = $('.bdExisting .items .selected input[name="price"]', $ctx);
 
-            for (i = 0, len = $item_prices.length; i < len; i++) {
-                current = (+$($item_prices.get(i)).val()) * 100;
-                if (isNaN(current)) {
-                    continue;
-                }
-
-                total += current;
+        for (i = 0, len = $item_prices.length; i < len; i++) {
+            current = (+$($item_prices.get(i)).val()) * 100;
+            if (isNaN(current)) {
+                continue;
             }
 
-            total = total / 100;
+            total += current;
+        }
 
-            if ($.isFunction(callback)) {
-                callback(total, $ctx);
-            }
+        total = total / 100;
 
-            return total;
-        };
+        if ($.isFunction(callback)) {
+            callback(total, $ctx);
+        }
+
+        return total;
+    };
 
     fetch_items_by_shoppinglist_id = function (callback) {
         $.ajax({
@@ -84,23 +91,30 @@ var Shoppinglist = Shoppinglist || {};
         });
     };
 
-    update_item_status = function (item_id, status, callback) {
-
+    update_item = function (url, data, callback) {
         $.ajax({
-            'url' : 'controller_proxy.php?controller=statusitem',
-            'data' : '&sid=' + Shoppinglist.selected_sid + '&iid=' + item_id + '&status=' + status,
+            'url' : url,
+            'data' : data,
             'type' : 'post',
             'dataType' : 'json',
             'success' : function (data) {
-               
+
                 if (data.message && data.type === 'info') {
                     callback(data);
-                    config.onStatus();
+
                 } else if (data.message && data.type === 'error') {
                     config.onError(data);
                 }
             }
         });
+    };
+
+    update_item_status = function (item_id, status, callback) {
+        update_item('controller_proxy.php?controller=statusitem', '&sid=' + Shoppinglist.selected_sid + '&iid=' + item_id + '&status=' + status, callback);
+    };
+
+    update_item_price = function (item_id, price, callback) {     
+        update_item('controller_proxy.php?controller=updatepriceitem', '&sid=' + Shoppinglist.selected_sid + '&iid=' + item_id + '&price=' + price, callback);
     };
 
     update_existing_view = function (data) {
@@ -114,7 +128,8 @@ var Shoppinglist = Shoppinglist || {};
         
         for (i = 0, len = data.items.length; i < len; i++) {
             current_item = data.items[i];
-
+            
+            current_item.price = current_item.price === '' ? '0.00' : current_item.price;
             
             if ((+current_item.status) === 1) {
                 tmpHtml.add('<tr class="selected">');
@@ -126,9 +141,9 @@ var Shoppinglist = Shoppinglist || {};
 
             tmpHtml.add('<td width="30"><input ' + checked + ' type="checkbox" class="checkbox" name="got_it" value="' + current_item.itemId + '" /></td>');
             tmpHtml.add('<td><a class="itemx" href="?iid=' + current_item.itemId + '" iid="' + current_item.itemId + '">' + current_item.name + '</a></td>');
-            tmpHtml.add('<td><input name="howmany_of" size="2" /></td>');
+            tmpHtml.add('<td><input name="howmany_of" size="2" value="1" /> #</td>');
             tmpHtml.add('<td><input name="price" value="' + current_item.price + '" size="4" /></td>');
-            tmpHtml.add('<td><span class="item_price_total"></span></td>');
+            tmpHtml.add('<td><span class="item_price_total">0.00</span></td>');
             tmpHtml.add('<td>');
             tmpHtml.add('<a class="delete" title="delete" href="controller_proxy.php?controller=deleteitem&amp;iid=' + current_item.itemId + '" iid="' + current_item.itemId + '"><img src="images/icon_delete.png" height="20" width="20" alt="delete item" /></a>');
             tmpHtml.add('</td>');
@@ -148,16 +163,16 @@ var Shoppinglist = Shoppinglist || {};
      * @param selector {String}
      */
     check_input_value = function ($ctx, selector) {
-            var input_value = 0,
-                $element = null;
-            $element = $(selector, $ctx);
-            input_value = $element.val();
-            if (isNaN(input_value) || input_value <= 0) {
-                input_value = 1;
-                $element.val(input_value);
-            }
-            return input_value;
-        };
+        var input_value = 0,
+            $element = null;
+        $element = $(selector, $ctx);
+        input_value = $element.val();
+        if (isNaN(input_value) || input_value <= 0) {
+            input_value = 1;
+            $element.val(input_value);
+        }
+        return input_value;
+    };
 
     init = function () {
         
@@ -217,7 +232,6 @@ var Shoppinglist = Shoppinglist || {};
         });
 
         
-
         $ctx.delegate('input[name="howmany_of"], input[name="price"]', 'keyup', function (e) {
 
             //8, 190, 46, 48 - 57
@@ -232,8 +246,6 @@ var Shoppinglist = Shoppinglist || {};
 
             $tr = $(this).parents('tr');
 
-            
-
             howmany_of = check_input_value($tr, 'input[name="howmany_of"]');
             price = check_input_value($tr, 'input[name="price"]');
             
@@ -244,12 +256,20 @@ var Shoppinglist = Shoppinglist || {};
 
         $ctx.bind('dataChanged', function () {
             fetch_items_by_shoppinglist_id(function (data) {
-                update_existing_view(data);
+                // To prevent unneccessary view updates, the received data is saved to compare
+                // with data received in the future
+                if ($ctx.data('item_data') != JSON.stringify(data)) {
+                    $ctx.data('item_data', JSON.stringify(data));
+                    update_existing_view(data);
+                }
             });
         });
 
 
         view_updater = function () {
+            clearTimeout(timer);
+            timer = null;
+     
             timer = setTimeout(function () {
                 $ctx.trigger('dataChanged');
                 view_updater();
@@ -257,11 +277,7 @@ var Shoppinglist = Shoppinglist || {};
             return set_timer(timer);
         };
 
-
-        // ToDo: Autorun
-        run_updater = function () {
-            view_updater();
-        };
+        run_updater();
 
         $ctx.mouseenter(function () {
             clearTimeout(get_timer());
@@ -270,11 +286,6 @@ var Shoppinglist = Shoppinglist || {};
         $ctx.mouseleave(function () {
             run_updater(); 
         });
-
-
-
-        
-
 
         $ctx.bind('itemStateChanged', function (e, data) {
             var $checkbox = null,
@@ -285,13 +296,23 @@ var Shoppinglist = Shoppinglist || {};
 
             status = data.selected ? 1 : 0;
 
-            update_item_status($checkbox.val(), status, function (data) {
+            us($checkbox.val(), status, function (data) {
                 
                 config.onStatus(data);
 
                 update_total_field($ctx);
             });
 
+        });
+
+        $ctx.bind('itemPriceChanged', function (e, data) {
+            var $checkbox = null;
+
+            $checkbox = $($('.bdExisting .items input:checkbox', $ctx).get(data.index));
+
+            update_item_price($checkbox.val(), data.price, function (data) {
+                config.onPrice(data);
+            });
 
         });
 
@@ -304,7 +325,6 @@ var Shoppinglist = Shoppinglist || {};
 
         };
         
-
         $ctx.delegate('.bdExisting .items tr', 'click', function () {
             var $tr = null,
                 data = null;
@@ -318,22 +338,36 @@ var Shoppinglist = Shoppinglist || {};
                 'selected' : $tr.hasClass('selected')
             };
 
-
-            $ctx.trigger('itemStateChanged', [data]);
-              
+            $ctx.trigger('itemStateChanged', [data]);    
         });
 
         // don't change state when focusing to input text
         $ctx.delegate('.bdExisting .items input:text', 'click', function () {
+            var $this = $(this);
+            if (!$this.data('first_click')) {
+                $this.val('');
+                $this.data('first_click', true);
+            }
+
             return false;
         });
 
-        $ctx.delegate('.bdExisting .items input[name="price"]', 'blur', function () {
+        $ctx.delegate('.bdExisting .items input[name="price"]', 'blur, keyup', function () {
             update_total_field($ctx);
-        });
 
-        $ctx.delegate('.bdExisting .items input[name="price"]', 'keyup', function () {
-            update_total_field($ctx);
+            var $tr = null,
+                data = null;
+
+            $tr = $(this).parents('tr');
+
+            data = {
+                'index' : $('.bdExisting .items tr').index($tr),
+                'price' : $(this).val()
+            };
+
+            $ctx.trigger('itemPriceChanged', [data]);
+
+        
         });
 
         // don't change state when focusing to input text
@@ -341,7 +375,6 @@ var Shoppinglist = Shoppinglist || {};
             e.preventDefault();
         });
 
-        
         $ctx.delegate('.bdExisting .items a.delete', 'click', function () {
             $.ajax({
                 'url' : $(this).attr('href'),
@@ -369,6 +402,9 @@ var Shoppinglist = Shoppinglist || {};
 }(
 {
     'onCreate' : function (data) {
+        log[data.type](data.message);
+    },
+    'onPrice' : function (data) {
         log[data.type](data.message);
     },
     'onStatus' : function (data) {

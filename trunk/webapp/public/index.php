@@ -5,7 +5,7 @@ include_once('../config/environment.php');
 include_once('includes/html_head.php');?>
     <body>
         <div id="header">
-            <h1 class="base">Shopping List</h1>
+            <h1 class="base"><a href="/">Shopping List</a></h1>
         </div>
         <!-- Page Start -->
         <div id="page">

@@ -296,7 +296,7 @@ var Shoppinglist = Shoppinglist || {};
 
             status = data.selected ? 1 : 0;
 
-            us($checkbox.val(), status, function (data) {
+            update_item_status($checkbox.val(), status, function (data) {
                 
                 config.onStatus(data);
 

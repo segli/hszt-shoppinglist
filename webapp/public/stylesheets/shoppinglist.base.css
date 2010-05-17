@@ -151,3 +151,9 @@ li {
     background-color: #eee;
 }
 
+a.button {
+    background-color: red;
+    color: #fff;
+    padding: 3px 2px;
+}
+

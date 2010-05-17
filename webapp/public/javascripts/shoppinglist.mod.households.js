@@ -142,12 +142,14 @@ var Shoppinglist = Shoppinglist || {};
                     
                     if (data.message && data.type === 'info') {
                         $ctx.trigger('dataChanged');
+                        
                         config.onCreate(data);
                     } else {
                         config.onError(data);
                     }
                 }
             });
+            $('input[name="household_name"]', $form_create).val('');
             return false;
         });
 

@@ -198,7 +198,8 @@ var Shoppinglist = Shoppinglist || {};
                 }
             });
 
-            $('input[name="item_name"]', $form_create).val('');
+            $('input[name="item_name"]', $form_create).val('').focus();
+            
             return false;
         });
 

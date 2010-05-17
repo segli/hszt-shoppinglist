@@ -85,6 +85,7 @@ var Shoppinglist = Shoppinglist || {};
                     callback(data);
                     config.onFetch();
                 } else if (data.message && data.type === 'error') {
+                    callback(data);
                     config.onError(data);
                 }
             }
@@ -222,6 +223,8 @@ var Shoppinglist = Shoppinglist || {};
 
                         config.onCreate(data);
                     } else if (data.message && data.type === 'error') {
+                        
+                        
                         config.onError(data);
                     }
                 }
@@ -257,6 +260,7 @@ var Shoppinglist = Shoppinglist || {};
 
         $ctx.bind('dataChanged', function () {
             fetch_items_by_shoppinglist_id(function (data) {
+                
                 // To prevent unneccessary view updates, the received data is saved to compare
                 // with data received in the future
                 if ($ctx.data('item_data') != JSON.stringify(data)) {

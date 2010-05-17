@@ -28,8 +28,7 @@ var Shoppinglist = Shoppinglist || {};
                'dataType' : 'json',
                'success' : function (data) {
                    if (!data.message) {
-                       $($('.bd', $ctx).get(0)).append('<div>New user id: ' + data.id + '</div>');
-
+                       
                        config.onRegister();
                    } else {
                        config.onMessage(data);
@@ -47,6 +46,12 @@ var Shoppinglist = Shoppinglist || {};
 {
     'onRegister' : function () {
         log.info('User added');
+        Shoppinglist.load_page({
+            'page' : 'page.login.php',
+            'afterLoad' : function () {
+                Shoppinglist.login.init();
+            }
+        });
     },
     'onMessage' : function (data) {
         log[data.type](data.message);

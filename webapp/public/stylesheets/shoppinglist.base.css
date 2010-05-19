@@ -159,3 +159,18 @@ a.button {
     padding: 5px 4px;
 }
 
+.ajax-loader {
+    background: #ffcc99;
+    border: solid 1px #ff6633;
+    display: none;
+    font-size: 10px;
+    padding: 3px;   
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+
+.show-block {
+    display: block;
+}
+

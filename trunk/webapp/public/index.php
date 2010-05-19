@@ -12,7 +12,7 @@ include_once('includes/html_head.php');?>
         
         </div>
         <!-- Page End -->
+        <div id="global-ajax-loader" class="ajax-loader">Loading&hellip;</div>
     <?php include_once('includes/html_javascripts.php');?>
-  
     </body>
 </html>

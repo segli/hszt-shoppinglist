@@ -35,45 +35,51 @@ Shoppinglist.helper = {};
      * @param {string} data_root_object. The object name returned by the controller_proxy.php
      * @param {function} callback
      */
-    Shoppinglist.helper.talk_to_controller = function (controller, data_root_object, callback) {
+    //Shoppinglist.helper.talk_to_controller = function (controller, data_root_object, callback) {
+    Shoppinglist.helper.talk_to_controller = function (options) {
 
         var config = null,
             defaults = null,
-            options = null;
+            ajax_url = '';
         
         // Minimum of three paramenters are expected
-        if (arguments.length < 3 || !$.isFunction(callback)) {
+        if (arguments.length < 1) {
             return false;
         }
 
         // Default values for config (4th parameter)
         defaults = {
+            controller : null,
+            ajax_data : {},
+            data_root_object : null,
+            callback : function () {},
             onError : function () {},
             onFetch : function () {}
         };
 
-
-        if (arguments.length === 4 && typeof(arguments[4]) === 'Object') {
-            options = arguments[3];
-            
-        } else {
-            options = {};
-        }
-
         config = $.extend({}, defaults, options);
 
+        ajax_url = 'controller_proxy.php?controller=' + config.controller;
+
         $.ajax({
-            'url' : 'controller_proxy.php?controller=' + controller,
+            'url' : ajax_url,
+            'data' : config.ajax_data, 
             'type' : 'get',
             'dataType' : 'json',
             'success' : function (data) {
 
-                if (data[data_root_object]) {
-                    callback(data);
+                if (data[config.data_root_object]) {
+                    config.callback(data);
                     config.onFetch();
                 } else if (data.type && data.type === 'error') {
                     config.onError(data);
                 }
+            },
+            'beforeSend' : function() {
+                $(Shoppinglist).trigger('globalAjaxLoadStart');
+            },
+            'complete' : function() {
+                $(Shoppinglist).trigger('globalAjaxLoadEnd');
             }
         });
 
@@ -132,4 +138,14 @@ Shoppinglist.helper = {};
     };
 
     Shoppinglist.helper.Currency = Currency;
+}());
+
+(function () {
+    $(Shoppinglist).bind('globalAjaxLoadStart', function () {
+        $('#global-ajax-loader').addClass('show-block');
+    });
+
+    $(Shoppinglist).bind('globalAjaxLoadEnd', function () {
+        $('#global-ajax-loader').removeClass('show-block');
+    });
 }());

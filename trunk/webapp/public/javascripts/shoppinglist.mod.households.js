@@ -29,11 +29,19 @@ var Shoppinglist = Shoppinglist || {};
     config = $.extend({}, defaults, options);
 
     fetch_households_by_user_id = function (callback) {
-        return Shoppinglist.helper.talk_to_controller('fetchhouseholds', 'households', callback, config);
+        return Shoppinglist.helper.talk_to_controller({
+            controller : 'fetchhouseholds',
+            data_root_object : 'households',
+            callback : callback
+        });
     };
 
     fetch_invitations_by_user_email = function (callback) {
-        return Shoppinglist.helper.talk_to_controller('fetchinvitations', 'invitations', callback, config);
+        return Shoppinglist.helper.talk_to_controller({
+            controller : 'fetchinvitations',
+            data_root_object : 'invitations',
+            callback : callback
+        });
     };
 
     /**
@@ -134,6 +142,7 @@ var Shoppinglist = Shoppinglist || {};
 
         $btn_submit_create.click(function () {
             $.ajax({
+                
                 'url' : $form_create.attr('action'),
                 'data' : $form_create.serialize(),
                 'type' : $form_create.attr('method'),

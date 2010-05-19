@@ -20,19 +20,13 @@ var Shoppinglist = Shoppinglist || {};
     config = $.extend({}, defaults, options);
 
     fetch_shoppinglists_by_user_id = function (callback) {
-        $.ajax({
-           'url' : 'controller_proxy.php?controller=fetchshoppinglists&hid=' + Shoppinglist.selected_hid,
-           'type' : 'get',
-           'dataType' : 'json',
-           'success' : function (data) {
-               if (!data.error) {
-                   callback(data);
-
-                   config.onFetch();
-               } else {
-                   console.info(data.error, data.message);
-               }
-            }
+        return Shoppinglist.helper.talk_to_controller({
+            controller : 'fetchshoppinglists',
+            data_root_object : 'shoppinglists',
+            ajax_data : {
+               'hid' : Shoppinglist.selected_hid
+           },
+            callback : callback
         });
     };
 

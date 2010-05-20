@@ -159,6 +159,15 @@ a.button {
     padding: 5px 4px;
 }
 
+a.skinButtonPlain {
+    background-color: #ccc;    
+}
+
+a.skinButtonPlain:hover {
+    background-color: #7f7f7f;    
+}
+
+
 .ajax-loader {
     background: #ffcc99;
     border: solid 1px #ff6633;

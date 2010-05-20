@@ -77,7 +77,7 @@ Shoppinglist.load_page = function (options) {
             $('#page').html(data);           
             config.afterLoad();
             location.href = '#page_' + config.page.split('.')[1];
-            log.info('loaded: ' + config.page);
+            //log.info('loaded: ' + config.page);
         }
     });
 

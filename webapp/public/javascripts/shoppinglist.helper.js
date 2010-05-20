@@ -140,7 +140,7 @@ Shoppinglist.helper = {};
     Shoppinglist.helper.Currency = Currency;
 }());
 
-(function () {
+(function ($) {
     $(Shoppinglist).bind('globalAjaxLoadStart', function () {
         $('#global-ajax-loader').addClass('show-block');
     });
@@ -148,4 +148,15 @@ Shoppinglist.helper = {};
     $(Shoppinglist).bind('globalAjaxLoadEnd', function () {
         $('#global-ajax-loader').removeClass('show-block');
     });
-}());
+}(jQuery));
+
+(function ($) {
+    log = {
+        'error' : function (message) {
+            alert('Error: ' + message);
+        },
+        'info' : function (message) {
+            alert('Info: ' + message);
+        }
+    }
+}(jQuery));

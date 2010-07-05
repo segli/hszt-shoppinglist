@@ -81,8 +81,6 @@ Shoppinglist.load_page = function (options) {
         }
     });
 
-
-
 };
 
 // Load first page

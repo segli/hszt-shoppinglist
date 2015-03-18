@@ -1,0 +1,1 @@
+Shoppinglist is a php mysql web application. It is part of a private, non-profit project.
